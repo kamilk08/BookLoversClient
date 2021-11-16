@@ -1,0 +1,20 @@
+$follower-avatar:'.follower-avatar';
+
+#{$follower-avatar}{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0.3rem;
+
+}
+@media only screen and (max-width: 768px){
+  #{$follower-avatar}{
+    display: flex;
+    justify-content: center;
+
+    &__box{
+      width: 4rem !important;
+      height: 4rem !important;
+      line-height: 4rem !important;
+    }
+  }
+}

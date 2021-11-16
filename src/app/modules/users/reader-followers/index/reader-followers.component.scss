@@ -1,0 +1,329 @@
+@import '../../../shared/variables';
+
+$followers:'.followers';
+
+#{$followers}{
+
+  &__header{
+    outline: none;
+  }
+
+  &__statistics{
+    display: flex;
+  }
+
+  &__statistics-item{
+    display: flex;
+    font-size: 1.25rem;
+    margin-right: 1rem;
+    align-items: center;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+
+  &__statistics-item:last-of-type{
+    margin-right: 0rem;
+  }
+
+  &__statistics-item:hover{
+    color: $descriptionGray;
+  }
+
+  &__statistics-item-left{
+    display: flex;
+  }
+
+  &__statistics-item-right{
+    display: flex;
+    align-items: center;
+  }
+
+  &__statistics-text{
+    font-size: 1.25rem;
+    margin: 0rem 0.75rem;
+  }
+
+  &__statistics-value{
+    color: $primaryColor;
+    font-size: 1.25rem;
+  }
+
+  &__statistics-icon{
+    font-size: 1.8rem;
+  }
+
+
+  &__item{
+    display: flex;
+    padding: 1rem 1rem;
+    margin: 1rem 0rem;
+    border-radius: 4px;
+  }
+  &__item:nth-child(even){
+    background-color: $secondaryColor;
+  }
+
+  &__item-left{
+    width: 90%;
+    display: flex;
+    padding: 1rem 0rem;
+  }
+
+  &__user-avatar{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    padding-right: 1rem;
+  }
+
+  &__item-right{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content{
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__username{
+    font-size: 1.15rem;
+    font-weight: $boldWeight;
+    position: relative;
+    cursor: pointer;
+    color: $black;
+    transition: 0.3s color;
+    margin-bottom: 0.35rem;
+  }
+
+  &__username:hover{
+    color: $descriptionGray;
+  }
+
+  &__info{
+    width: 80%;
+  }
+
+  &__info-top{
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__info-middle{
+    display: flex;
+    padding-bottom: 0.5rem;
+  }
+
+  &__info-bottom{
+    display: flex;
+
+  }
+
+  &__info-bottom-item{
+    display: flex;
+    margin-right: 1rem;
+  }
+
+  &__added-books,
+  &__added-authors,
+  &__quotes,
+  &__reviews,
+  &__icon,
+  &__books{
+    font-size: 1.65rem;
+    margin-right: 0.3rem;
+  }
+
+  &__added-books-value,
+  &__added-authors-value,
+  &__quotes-value,
+  &__reviews-value,
+  &__value,
+  &__books-value{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__date,
+  &__city,
+  &__sex,
+  &__role{
+    font-size: 1rem;
+    margin-right: 1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__date-value{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-left: 0.5rem;
+  }
+
+  &__role-value{
+    margin-left: 0.5rem;
+    color:$primaryColor;
+  }
+
+  &__arrow{
+    font-size: 2rem;
+  }
+
+  &__see-bookcase{
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    outline: none;
+  }
+
+  &__menu{
+    background-color: $menuBackground !important;
+  }
+
+  &__spinner-box{
+    text-align: center;
+    padding: 12rem 0rem 12rem 0rem;
+  }
+
+  &__spinner{
+    font-size: 5rem;
+  }
+
+  &__no-followers{
+    padding: 12rem 0rem 12rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: $secondaryBlack;
+  }
+
+  &__follow-user{
+    width: 75%;
+    .followed{
+      background-color: $white;
+      color: $primaryColor;
+      border:2px solid $primaryColor;
+    }
+  }
+
+
+  &__follow-link{
+    width: 100%;
+    padding: 0.75rem;
+    background-color: $primaryColor;
+    color: $white;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    transition: ease-in-out 0.25s color;
+  }
+}
+
+$search-followers:'.search-followers-box';
+
+#{$search-followers}{
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+@media only screen and (max-width: 768px) {
+  #{$followers}{
+    margin: 0rem 2rem;
+
+  &__header::ng-deep>div{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header::ng-deep>div>div:first-of-type{
+    margin-bottom: 1rem;
+  }
+
+    &__date,
+    &__city,
+    &__sex,
+    &__role{
+      font-size: 0.9rem;
+    }
+
+  }
+
+  #{$search-followers}{
+    display: flex;
+    justify-content: flex-start;
+
+    &__component{
+      width: 100%;
+    }
+
+  }
+}
+
+
+@media only screen and (max-width: 606px){
+  #{$followers}{
+    &__item{
+      flex-direction: column;
+    }
+
+    &__item-right{
+      width: initial;
+    }
+
+    &__link{
+      position: absolute;
+      right: 0;
+      top: -13.125rem;
+    }
+
+    &__item-left{
+      width: 100%;
+    }
+
+    &__user-avatar{
+      padding-right: 0rem;
+      padding-bottom: 0.5rem;
+    }
+
+    &__content{
+      flex-direction: column;
+    }
+
+    &__username{
+      margin-bottom: 0rem;
+    }
+
+
+  &__info{
+    width: 100%;
+  }
+
+    &__info-top{
+      justify-content: center;
+      padding-bottom: 1rem;
+    }
+
+    &__info-middle{
+      justify-content: center;
+      padding-bottom: 1rem;
+    }
+
+    &__info-bottom{
+      justify-content: center;
+    }
+
+    &__statistics-text{
+      font-size: 1rem;
+      margin: 0rem 0.25rem;
+    }
+  }
+}

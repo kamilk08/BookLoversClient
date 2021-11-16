@@ -1,0 +1,26 @@
+.tag-item{
+    display: inline-block;
+}
+
+.tag-item__inner{
+    font-size: 1rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 0px;
+    font-weight: 700;
+}
+
+.tag-item__remove-icon{
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s all ease-in ;
+}
+
+.tag-item__remove-box{
+    margin-left: 0.5rem;
+}
+
+.tag-item__remove-icon:hover{
+    color: #7B60EA;
+    transform: scale(1.25);
+}

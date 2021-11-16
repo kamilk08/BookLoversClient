@@ -1,0 +1,71 @@
+<div class="columns book-ticket">
+  <div class="column is-3-fullhd is-3-widescreen is-3-desktop">
+    <div class="book-ticket__cover">
+      <img [src]="this.encodedImage">
+    </div>
+  </div>
+  <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-offset-1">
+    <div class="columns">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop">
+        <div class="book-ticket__top">
+          <div class="book-ticket__book-title title">
+            {{this.content?.basics?.title}}
+          </div>
+          <div class="book-ticket__hashtags">
+            <div class="book-ticket__hashtag-item" *ngFor="let hashTag of this.content?.hashTags">
+              <tag [tagText]="hashTag"></tag>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngFor="let author of this.authors">
+          <div class="book-ticket__author-box">
+            <a class="book-ticket__author">{{author?.basics?.fullName?.value}}</a>
+          </div>
+        </ng-container>
+        <div class="book-ticket__isbn">
+          <div class="book-ticket__isbn-text">
+            ISBN:
+          </div>
+          <div class="book-ticket__isbn-value">{{this.content?.basics?.isbn}}</div>
+        </div>
+        <div class="book-ticket__category">
+          <div class="book-ticket__category-text">Category:</div>
+          <div class="book-ticket__category-value">{{this.getSubCategrory(content?.basics?.subCategory)}}</div>
+        </div>
+        <div class="book-ticket__published">
+          <div class="book-ticket__published-text">Published:</div>
+          <div class="book-ticket__published-value">{{this.content?.basics?.publicationDate | amFromUtc | amDateFormat:
+            'YYYY-MM-DD'}}</div>
+        </div>
+        <div class="book-ticket__details">
+          <div class="book-ticket__pages">
+            <div class="book-ticket__pages-text">Pages:</div>
+            <div class="book-ticket__pages-value">{{this.content?.details?.pages}}</div>
+          </div>
+          <div class="book-ticket__language">
+            <div class="book-ticket__language-text">Language:</div>
+            <div class="book-ticket__language-value">{{this.getLanguage(this.content?.details?.language)}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop">
+        <div class="book-ticket__description mb-1">{{this.content?.description?.content}}</div>
+        <a href="{{this.content?.description?.descriptionSource}}"
+          class="book-ticket__description-source">{{this.content?.description?.descriptionSource}}</a>
+      </div>
+    </div>
+    <ng-container *ngIf="this.manageable">
+      <div class="columns">
+        <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet">
+          <button (click)="approveOrDeclineTicket(true)" class="book-ticket__approve mr-1" nz-button nzSize="large"
+            nzType="primary">Approve ticket</button>
+          <button (click)="approveOrDeclineTicket(false)" class="book-ticket__decline" nz-button nzSize="large"
+            nzType="secondary">Decline ticket</button>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

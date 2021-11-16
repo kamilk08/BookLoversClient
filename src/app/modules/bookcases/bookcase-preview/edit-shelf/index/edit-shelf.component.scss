@@ -1,0 +1,18 @@
+@import "../../../../shared/variables";
+
+$edit-shelf:".edit-shelf";
+
+#{$edit-shelf}{
+
+  &__item{
+    margin-bottom: 0rem;
+  }
+
+  &__name{
+    font-weight: $boldWeight;
+  }
+
+  &__name > label::after {
+    content: '' !important;
+  }
+}

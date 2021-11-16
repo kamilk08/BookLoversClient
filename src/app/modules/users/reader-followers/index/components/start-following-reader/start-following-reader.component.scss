@@ -1,0 +1,17 @@
+@import '../../../../../shared/variables';
+
+$followers:'.followers';
+
+#{$followers}{
+
+  &__start-following{
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+
+  &__start-following-icon{
+    font-size: 1rem;
+    color: $primaryColor;
+  }
+}

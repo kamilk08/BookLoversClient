@@ -1,0 +1,26 @@
+<a class="book" [routerLink]="['/book/',this.bookId]">
+  <div class="book__item">
+    <ng-container *ngIf="!(this.coverLoadError$ | async) else noCover">
+      <img class="book__cover" (load)="onLoad()" (error)="onError()" [src]="this.bookCoverUrl()">
+    </ng-container>
+    <ng-template #noCover>
+      <div *ngIf="(this.coverLoadError$ | async) || !this.isCoverAdded" class="book__no-cover">
+        <div class="book__no-cover-text">Cover<dot></dot>
+        </div>
+      </div>
+    </ng-template>
+    <div class="book__item-bot-overlay"></div>
+    <div class="book__item-bot-panel-overlay">
+      <div class="book__icons">
+        <div class="book__rating-box"><span class="book__rating-value">{{this.average | number:'1.2-2'}}</span><i
+            class="book__rating-icon" nz-icon nzType="star" nzTheme="outline"></i></div>
+        <div class="book__comments-box"><span class="book__comments-value">{{this.reviewsCount}}</span><span
+            class="material-icons book__comments-icon">
+            comment
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="book__title">{{this.title}}</div>
+</a>

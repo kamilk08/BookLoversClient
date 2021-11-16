@@ -1,0 +1,16 @@
+<div class="book-cover">
+  <div class="book-cover__box">
+    <div *ngIf="(this.imageLoadError$ | async) && !this.imageService?.encodedImage" class="book-cover__text-box">
+      <div class="book-cover__text">Add cover<dot></dot>
+      </div>
+    </div>
+    <input (change)="onCoverSelect($event)" class="book-cover__input" type="file">
+      <ng-container *ngIf="this.bookId && !(this.imageLoadError$ | async)">
+        <img (error)="onError()" class="book-cover__image" *ngIf="!this.imageService?.encodedImage"
+          [src]="this.bookCoverUrl()" />
+      </ng-container>
+      <ng-container *ngIf="this.imageService?.encodedImage">
+        <img (error)="onError()" class="book-cover__image" [src]="this.imageService?.encodedImage">
+      </ng-container>
+  </div>
+</div>

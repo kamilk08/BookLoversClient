@@ -1,0 +1,20 @@
+<div class="author-statistics">
+  <div class="author-statistics__item">
+    <div nzTooltipTitle="Books" nzTooltipPlacement="top" nz-tooltip class="author-statistics__top">
+      <i class="icon ion-md-book author-statistics__icon"></i>
+      <div class="author-statistics__value">{{booksCount}}</div>
+    </div>
+  </div>
+  <div nzTooltipTitle="Followers" nzTooltipPlacement="top" nz-tooltip class="author-statistics__item">
+    <div class="author-statistics__top">
+      <i class="icon ion-md-person-add author-statistics__icon"></i>
+      <div class="author-statistics__value">{{followersCount}}</div>
+    </div>
+  </div>
+  <div nzTooltipTitle="Average" nzTooltipPlacement="top" nz-tooltip class="author-statistics__item">
+    <div class="author-statistics__top">
+      <i class="icon ion-md-podium author-statistics__icon"></i>
+      <div class="author-statistics__value">{{booksAverage | number:'1.2-2'}}</div>
+    </div>
+  </div>
+</div>

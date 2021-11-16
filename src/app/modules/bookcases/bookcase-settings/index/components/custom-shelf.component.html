@@ -1,0 +1,12 @@
+<li class="custom-shelf" nzPopoverTrigger="click" [nzPopoverContent]="shelfTemplate" nz-popover
+  nzPopoverPlacement="rightTop">
+  <tag [tagText]="shelf?.name"></tag>
+</li>
+<ng-template #shelfTemplate>
+  <div class="custom-shelf__edit" (click)="edit()">Edit<span class="custom-shelf__icon-box"><i
+        class="icon ion-md-create"></i></span>
+  </div>
+  <div class="custom-shelf__remove" (click)="remove()">Remove
+    <span class="custom-shelf__icon-box"><i class="icon ion-md-remove-circle-outline"></i></span>
+  </div>
+</ng-template>

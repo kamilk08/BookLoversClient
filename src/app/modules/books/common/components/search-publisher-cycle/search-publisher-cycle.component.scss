@@ -1,0 +1,28 @@
+@import "../../../../shared/variables";
+
+$search-publisher-cycle: ".search-publisher-cycle";
+
+#{$search-publisher-cycle} {
+  margin-bottom: 0.75rem;
+
+  &__label ::ng-deep label {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    color:$secondaryBlack;
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+
+  &__icon{
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+  }
+
+  &__input{
+    font-weight: $mediumWeight;
+  }
+}

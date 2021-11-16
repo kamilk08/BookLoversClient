@@ -1,0 +1,70 @@
+<div class="columns">
+    <div class="column is-12">
+        <form nz-form class="add-publisher-cycle" [formGroup]="pageService?.addPublisherCycleForm">
+            <nz-form-item class="add-publisher-cycle__name">
+                <nz-form-label class="add-publisher-cycle__label">
+                    Cycle name
+                </nz-form-label>
+                <div class="add-publisher-cycle__name-box">
+                    <nz-form-control class="add-publisher-cycle__form-control"
+                        [nzErrorTip]="publisherCycleErrorTemplate">
+                        <input class="add-publisher-cycle__input" type="text" formControlName="cycleName" nz-input />
+                    </nz-form-control>
+                    <nz-spin class="add-publisher-cycle__spinner" *ngIf="pageService.cycleName.status === 'PENDING'"
+                        nzSimple>
+                    </nz-spin>
+                    <i *ngIf="pageService.cycleName.status === 'VALID'"
+                        class="icon ion-md-checkmark add-publisher-cycle__is-unique"></i>
+                </div>
+                <ng-template #publisherCycleErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                        <div class="publisher-cycle__form-error"> Publisher cycle is required</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">
+                        <div class="publisher-cycle__form-error">Publisher cycle
+                            should have atleast {{pageService.cycleName.errors.minlength.requiredLength}} characters
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('maxlength') && !control.hasError('minlength')">
+                        <div class="publisher-cycle__form-error">
+                            Publisher cycle cannot have more then {{pageService.cycleName.errors.maxlength.requiredLength}}
+                            characters
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('cycleNotUnique') && !control.hasError('maxlength')">
+                        <div class="publisher-cycle__form-error">Publisher cycle name is not unique</div>
+                    </ng-container>
+                </ng-template>
+            </nz-form-item>
+            <nz-form-item class="add-publisher-cycle__publisher">
+                <div class="add-publisher-cycle__publisher-box">
+                    <nz-form-control [nzErrorTip]="publisherErrorTemplate">
+                        <nz-form-label class="add-publisher-cycle__label">
+                            Publisher
+                        </nz-form-label>
+                        <nz-select class="add-publisher-cycle__select-publisher" formControlName="publisher" nzMode="default" nzPlaceHolder="Select publisher"
+                            nzAllowClear nzShowSearch nzServerSearch (nzOnSearch)="onSearch($event)">
+                            <ng-container *ngFor="let o of (this.publisherFacade?.searchedPublishers$ | async)">
+                                <nz-option *ngIf="!(this.publisherFacade?.isFiltered$ | async)" [nzValue]="o"
+                                    [nzLabel]="o.name">
+                                </nz-option>
+                            </ng-container>
+                            <nz-option *ngIf="(this.publisherFacade?.isFiltered$ | async)" nzDisabled nzCustomContent>
+                                <i nz-icon nzType="loading"></i>
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </div>
+                <ng-template #publisherErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                        <div class="add-publisher-cycle__form-error"> Publisher is required</div>
+                    </ng-container>
+                </ng-template>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div *nzModalFooter class="actions">
+    <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+    <button class="actions__submit" nz-button nzType="primary" (click)="submit()">Submit</button>
+</div>

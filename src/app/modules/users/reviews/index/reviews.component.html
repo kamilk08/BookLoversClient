@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="columns is-centered is-mobile mt-2 mb-2">
+    <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+        <header headerText='Reviews'
+          [countNumber]="this.pagiantionFacade?.readerReviewsTotalCount$(readerId) | async"></header>
+      </ng-container>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile mt-1">
+    <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+        <ng-container
+          *ngIf="!(this.pagiantionFacade?.processingReaderReviewsPage$ | async) else processing">
+          <ng-container
+            *ngIf="(this.pagiantionFacade?.readerPageResultReviews$(readerId) | async)?.length > 0 else noResults">
+            <ng-container
+              *ngFor="let review of this.pagiantionFacade?.readerPageResultReviews$(readerId) | async">
+              <review-item class="item" [review]="review"
+                [reader]="this.readersFacade.reader$(readerId) | async"
+                [book]="this.booksFacade?.bookById$(review?.reviewedBook?.bookId) | async"
+                [author]="this.bookFirstAuthor$(review?.reviewedBook?.bookId) | async"
+                [rating]="this.ratingsOverviewFacade?.currentRating$(review?.reviewedBook?.bookId,readerId) | async"
+                [shelves]="this.bookcaseFacade?.bookOnShelves$(readerId,review?.reviewedBook?.bookId) | async">
+                <review-item-cover class="item__cover" [bookId]="review?.reviewedBook?.bookId"></review-item-cover>
+              </review-item>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-template #processing>
+          <div class="reviews__spinner-box">
+            <ng-template #indicatorTemplate>
+              <div><i nz-icon nzType="loading" class="reviews__spinner"></i></div>
+            </ng-template>
+            <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+          </div>
+        </ng-template>
+        <ng-template #noResults>
+          <div class="no-reviews">
+            No reviews<dot></dot>
+          </div>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+        <reviews-pagination (pageChange)="onPageChange($event)" [pageSize]="this.pageFacade?.pageSize$ | async"
+          [currentPage]="this.pagiantionFacade?.currentReaderReviewsPage$(readerId) | async"
+          [totalItems]="this.pagiantionFacade?.readerReviewsTotalCount$(readerId) | async">
+        </reviews-pagination>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

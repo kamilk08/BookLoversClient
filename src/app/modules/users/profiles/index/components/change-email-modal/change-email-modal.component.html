@@ -1,0 +1,100 @@
+<div class="columns container change-email">
+  <div class="column is-11-fullhd">
+    <ng-container *ngIf="this.pageFacade?.changeEmailForm$ | async as form">
+      <form nz-form [formGroup]="form">
+        <div class="columns mb-0">
+          <div class="column is-2-fullhd mr-1">
+            <nz-form-label class="change-email__label">Old email</nz-form-label>
+          </div>
+          <div class="column is-10-fullhd">
+            <nz-form-item class="mb-0">
+              <nz-form-control [nzErrorTip]="emailErrorTemplate">
+                <nz-input-group>
+                  <input class="change-email__old" formControlName="oldEmail" nz-input />
+                </nz-input-group>
+                <ng-template #emailErrorTemplate let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    <div class="change-email__error">Old email is required</div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('email') && !control.hasError('required')">
+                    <div class="change-email__error">Email is not valid</div>
+                  </ng-container>
+                </ng-template>
+                <ng-template #emailIndicatorTemplate><i nz-icon nzType="loading" class="change-email__spinner"></i>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div class="columns mb-0">
+          <div class="column is-2-fullhd mr-1">
+            <nz-form-label class="change-email__label">New email</nz-form-label>
+          </div>
+          <div class="column is-10-fullhd">
+            <nz-form-item class="mb-0">
+              <nz-form-control [nzErrorTip]="emailErrorTemplate">
+                <nz-input-group [nzSuffix]="emailSpinnerTempalte">
+                  <input class="change-email__new" formControlName="newEmail" nz-input />
+                </nz-input-group>
+                <ng-template #emailErrorTemplate let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    <div>New Email is required</div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('email') && !control.hasError('required')">
+                    <div> Email is not valid</div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('emailNotUnique') && !control.hasError('email')">
+                    <div> Email is not unique</div>
+                  </ng-container>
+                </ng-template>
+                <ng-template #emailIndicatorTemplate><i nz-icon nzType="loading" class="change-email__spinner"></i>
+                </ng-template>
+                <ng-template #emailSpinnerTempalte>
+                  <nz-spin *ngIf="form?.get('newEmail')?.status === 'PENDING'" nzSimple
+                    [nzIndicator]="emailIndicatorTemplate"></nz-spin>
+                  <i *ngIf="form?.get('newEmail')?.status === 'VALID'"
+                    class="icon ion-md-checkmark change-email__valid"></i>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div class="columns mb-0">
+          <div class="column is-2-fullhd mr-1">
+            <nz-form-label class="change-email__label">Password</nz-form-label>
+          </div>
+          <div class="column is-10-fullhd">
+            <nz-form-item class="mb-0">
+              <nz-form-control [nzErrorTip]="passwordErrorTemplate">
+                <input type="password" formControlName="password" class="change-email__password" nz-input />
+                <ng-template #passwordErrorTemplate let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    <div>
+                      Password is required
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('hasUpperCase') && !control.hasError('required')">
+                    <div>Password should have atleast one
+                      uppercase letter
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('hasNumber') && !control.hasError('hasUpperCase')">
+                    <div>Password should contain atleast one number</div>
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('minlength') && !control.hasError('hasNumber')">
+                    <div>Password should have atleast
+                      {{form?.get('password')?.errors?.minlength?.requiredLength}} characters.</div>
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div class="change-email__footer" *nzModalFooter>
+          <button class="change-email__close" nz-button nzType="default" (click)="close()">Close</button>
+          <button class="change-email__submit" nz-button nzType="primary" (click)="onSubmit(form)">Submit</button>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>

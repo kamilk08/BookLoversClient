@@ -1,0 +1,12 @@
+<div class="remove-from-bookcase">
+    <div class="remove-from-bookcase__info">
+        Removing <span class="remove-from-bookcase__show">{{book?.basics?.title}}</span> from bookcase will result losing all user data
+        about readed book. That includes added
+        <span class="remove-from-bookcase__show">review</span>,<span class="remove-from-bookcase__show">rating</span> or assigment to <span
+            class="remove-from-bookcase__show">shelfs.</span>
+    </div>
+</div>
+<div *nzModalFooter class="actions">
+    <button class="actions__cancel" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+    <button class="actions__submit" nz-button nzType="primary" (click)="remove()">Remove</button>
+</div>

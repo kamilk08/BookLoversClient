@@ -1,0 +1,140 @@
+@import "../../shared/variables";
+
+$quotes-header:'.quotes-header';
+$quotes-sorting:'.quotes-sorting';
+$quotes:'.quotes';
+$quotes-pagination:'.quotes-pagination';
+
+#{$quotes-header}{
+
+  &__top{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__top-left:hover{
+    text-decoration: underline;
+    color: #363636;
+  }
+
+  &__top-right{
+    display: flex;
+  }
+
+  &__statistics-item{
+    display: flex;
+    align-items: center;
+    margin-right: 1.75rem;
+  }
+
+  &__statistics-item:last-of-type{
+    margin-right: 0rem;
+  }
+
+
+  &__statistics-item-left{
+    display: flex;
+    align-items: center;
+    color: #363636;
+  }
+
+  &__statistics-item-right{
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon{
+    font-size: 1.8rem;
+  }
+
+  &__statistics-text{
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+    margin: 0rem 0.75rem;
+  }
+
+  &__statistics-value{
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+    color: $primaryColor;
+  }
+}
+
+#{$quotes-sorting}{
+  text-align: right;
+
+  &__descending{
+    font-weight: $boldWeight;
+  }
+
+  &__add{
+    padding: 1.5rem;
+    font-size: 1.75rem;
+    border-radius: 50%;
+    -webkit-transition: 0.2s background-color ease-in, 0.2s color ease-in;
+    transition: 0.2s background-color ease-in, 0.2s color ease-in;
+  }
+
+  &__add:hover{
+    background-color: $primaryHover;
+    color: $primaryColor;
+  }
+}
+
+#{$quotes} {
+
+  &__bottom {
+    margin: 1.5rem 0rem;
+  }
+  &__item {
+    display: flex;
+    margin: 0.5rem 0rem;
+    // border-left: 6px solid #7B60EA;
+    transition: 0.2s ease-in box-shadow, 0.2s ease-in transform, 0.2s ease-in-out border;
+  }
+  &__item:hover {
+    box-shadow: $primaryBoxShadow;
+    transform: scale(1.05);
+
+  }
+  &__item:nth-child(even) {
+    background-color: $secondaryColor;
+  }
+
+  &__likes{
+    margin-top: 1rem;
+  }
+
+  &__spinner-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0rem;
+    min-height: 28rem;
+  }
+
+  &__spinner{
+    font-size: 4.5rem;
+  }
+
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
+    min-height: 18rem;
+    align-items: center;
+    width: 100%;
+  }
+  &__no-results-text{
+    font-weight: $boldWeight;
+    padding: 0.75rem 1.25rem;
+    border: 3px solid $black;
+    font-size: 1.3rem;
+  }
+
+}
+
+#{$quotes-pagination}{
+  display: flex;
+  justify-content: center;
+}

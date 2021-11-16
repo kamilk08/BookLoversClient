@@ -1,0 +1,343 @@
+<app-navbar></app-navbar>
+<ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+  <div class="container">
+    <div class="columns is-mobile is-centered pt-2 pb-2">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+        <div class="columns profile">
+          <div class="column is-7-fullhd is-7-widescreen is-12-desktop is-12-tablet is-12-mobile">
+            <div>
+              <profile-container (followUserChange)="onFollowChange($event)"
+                [isProfileOwner]="this.authService.userId===this.readerId" [reader]="reader"
+                [loggedInReader]="this.viewService?.readersFacade?.reader$(this.authService.userId) | async"
+                [followed]="this.viewService?.followersFacade?.isFollowing$(this.readerId) | async"
+                *ngIf="(this.viewService?.readersFacade?.reader$(this.readerId) | async) as reader">
+                <header class="profile__header" header headerText="Profile" countNumber="1">
+                  <div class="profile__manage-options">
+                    <i *ngIf="this.authService?.isLoggedIn() && this.readerId===this.authService?.userId" nz-tooltip
+                      nzTooltipTitle="Manage profile" class="icon ion-md-settings profile__manage-icon"
+                      (click)="manageProfile()">
+                    </i>
+                    <div *ngIf="this.authService?.isLoggedIn() && this.readerId===this.authService?.userId"
+                      class="profile__change-email" (click)="showChangeEmail()">
+                      <span class="profile__change-email-btn">Change email <dot></dot></span>
+                    </div>
+                    <div *ngIf="this.authService?.isLoggedIn() && this.readerId===this.authService?.userId"
+                      class="profile__change-password" (click)="showChangePassword()">
+                      <span class="profile__change-password-btn">Change password <dot></dot></span>
+                    </div>
+                  </div>
+                </header>
+                <profile-avatar avatar (removeAvatarChange)="onAvatarRemove()" (avatarChange)="onAvatarChange($event)"
+                  [readerId]="reader?.identification?.id">
+                </profile-avatar>
+                <profile-content content [email]="reader?.email"
+                  [profile]="this.viewService?.profileFacade?.profileByUserId$(reader?.identification?.id) | async"
+                  [reader]="reader">
+                </profile-content>
+              </profile-container>
+              <nz-divider class="profile__divider"></nz-divider>
+              <div class="profile__text profile__text--statistics"><span
+                  class="profile__header-number">(2)</span>Statistics
+              </div>
+              <div class="columns">
+                <div class="column is-12">
+                  <div class="profile__statistics">
+                    <profile-statistics-item icon="icon ion-md-book" text="Books" class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.userBooksInBookcase$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-filing" text="Shelves"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.shelvesCount$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-chatboxes" text="Reviews"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.reviewsCount$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-star" text="Ratings"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.ratingsCount$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-add" text="Added books"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.addedBooks$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-quote" text="Added quotes"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.addedQuotes$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon ion-md-person" text="Added authors"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade?.addedAuthors$(this.readerId) | async">
+                    </profile-statistics-item>
+                    <profile-statistics-item icon="icon icon ion-md-thumbs-up" text="Given likes"
+                      class="profile__statistics-in-numbers"
+                      [value]="this.viewService?.statisticsFacade.givenLikes$(this.readerId) | async">
+                    </profile-statistics-item>
+                  </div>
+                </div>
+              </div>
+              <nz-divider class="profile__divider"></nz-divider>
+              <div class="profile__text profile__text--favourites"><span
+                  class="profile__header-number">(3)</span>Favourites</div>
+              <div class="columns">
+                <div class="column is-12">
+                  <div class="profile__favourites">
+                    <div class="profile__favourites-header-box">
+                      <h1 class="profile__favourite-books-header">Books</h1>
+                      <ng-container *ngIf="this.authService?.isLoggedIn() && this.authService?.userId===this.readerId">
+                        <button class="profile__favourite-books-button" (click)="addFavouriteBook()" nz-button
+                          nzType="primary">Add book</button>
+                      </ng-container>
+                    </div>
+                    <div class="profile__favourite-books">
+                      <ng-container
+                        *ngIf="(this.viewService?.processFavouriteBooks$() | async) else processingFavouriteBooks">
+                        <ng-container
+                          *ngIf="(this.viewService?.favouritesFacade.favouriteBooks$(this.readerId) | async)?.length >0 else noFavouriteBooks">
+                          <ul class="profile__favourite-books-list">
+                            <ng-container
+                              *ngIf="this.authService.isLoggedIn()&&this.authService.userId===this.readerId">
+                              <li nz-tooltip nzTooltipTitle="Remove favourite" nzTooltipPlacement="top"
+                                *ngFor="let item of this.viewService?.favouritesFacade.favouriteBooks$(this.readerId) | async"
+                                (click)="removeFavouriteBook(item?.bookGuid)" class="profile__favourite-book">
+                                <ng-container *ngIf="this.viewService?.bookFacade?.bookByGuid$(item?.bookGuid) | async">
+                                  <favourite-book-cover
+                                    [bookId]="(this.viewService?.bookFacade?.bookByGuid$(item?.bookGuid) | async)?.identification?.id">
+                                  </favourite-book-cover>
+                                </ng-container>
+                              </li>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="!this.authService.isLoggedIn() || this.authService.userId!==this.readerId">
+                              <li nz-tooltip nzTooltipPlacement="top"
+                                *ngFor="let item of this.viewService?.favouritesFacade.favouriteBooks$(this.readerId) | async"
+                                class="profile__favourite-book">
+                                <ng-container *ngIf="this.viewService?.bookFacade?.bookByGuid$(item?.bookGuid) | async">
+                                  <favourite-book-cover
+                                    [bookId]="(this.viewService?.bookFacade?.bookByGuid$(item?.bookGuid) | async)?.identification?.id">
+                                  </favourite-book-cover>
+                                </ng-container>
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </ng-container>
+                      </ng-container>
+                      <ng-template #processingFavouriteBooks>
+                        <div class="profile__spinner-box">
+                          <ng-template #indicatorTemplate>
+                            <div><i nz-icon nzType="loading" class="profile__spinner"></i></div>
+                          </ng-template>
+                          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                        </div>
+                      </ng-template>
+                      <ng-template #noFavouriteBooks>
+                        <div class="profile__no-favourite-books">No favourite books<dot></dot>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <nz-divider class="profile__divider"></nz-divider>
+                    <div class="profile__favourites-header-box">
+                      <h1 class="profile__favourite-authors-header">Authors</h1>
+                      <ng-container *ngIf="this.authService?.isLoggedIn() && this.readerId===this.authService.userId">
+                        <button class="profile__favourite-authors-button" (click)="addFavouriteAuthor()" nz-button
+                          nzType="primary">Add author</button>
+                      </ng-container>
+                    </div>
+                    <div class="profile__favourite-authors">
+                      <ng-container
+                        *ngIf="(this.viewService?.processingFavouriteAuthors$() | async) else processingFavouriteAuthors">
+                        <ng-container
+                          *ngIf="(this.viewService?.favouritesFacade?.favouriteAuthors$(this.readerId) | async)?.length>0 else noFavouriteAuthors">
+                          <ul class="profile__favourite-authors-list">
+                            <ng-container
+                              *ngIf="this.authService.isLoggedIn() && this.authService.userId===this.readerId">
+                              <ng-container
+                                *ngFor="let author of this.viewService?.favouritesFacade?.favouriteAuthors$(this.readerId) | async">
+                                <li nzTooltipTitle="Remove favourite" nzTooltipPlacement="top" nz-tooltip
+                                  (click)="removeFavouriteAuthor(author?.authorGuid)" class="profile__favourite-author">
+                                  <ng-container
+                                    *ngIf="this.viewService?.authorsFacade.authorByGuid$(author?.authorGuid) | async">
+                                    <favourite-author-image
+                                      [authorId]="(this.viewService?.authorsFacade?.authorByGuid$(author?.authorGuid) | async)?.identification?.id">
+                                    </favourite-author-image>
+                                  </ng-container>
+                                </li>
+                              </ng-container>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="!this.authService.isLoggedIn() || this.authService.userId!==this.readerId">
+                              <ng-container
+                                *ngFor="let author of this.viewService?.favouritesFacade?.favouriteAuthors$(this.readerId) | async">
+                                <li nzTooltipPlacement="top" nz-tooltip class="profile__favourite-author">
+                                  <ng-container
+                                    *ngIf="this.viewService?.authorsFacade.authorByGuid$(author?.authorGuid) | async">
+                                    <favourite-author-image
+                                      [authorId]="(this.viewService?.authorsFacade?.authorByGuid$(author?.authorGuid) | async)?.identification?.id">
+                                    </favourite-author-image>
+                                  </ng-container>
+                                </li>
+                              </ng-container>
+                            </ng-container>
+                          </ul>
+                        </ng-container>
+                        <ng-template #noFavouriteAuthors>
+                          <div class="profile__no-favourite-authors">No favourite authors<dot></dot>
+                          </div>
+                        </ng-template>
+                      </ng-container>
+                      <ng-template #processingFavouriteAuthors>
+                        <div class="profile__favourite-authors-spinner-box">
+                          <ng-template #indicatorTemplate>
+                            <div><i nz-icon nzType="loading" class="profile__favourite-authors-spinner"></i></div>
+                          </ng-template>
+                          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-3-fullhd is-3-widescreen is-12-desktop is-12-tablet is-12-mobile">
+            <ng-container *ngIf="this.readerId">
+              <ng-template #processingBookcase>
+                <div class="profile__spinner-box">
+                  <ng-template #indicatorTemplate>
+                    <div><i nz-icon nzType="loading" class="profile__spinner"></i></div>
+                  </ng-template>
+                  <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-container
+              *ngIf="!(this.viewService?.timeLineFacade?.isProcessingActivities$ | async) else processingTimelineItems">
+              <ng-container
+                *ngIf="this.viewService?.timeLineFacade?.hasTimeLineActvities$ | async else noTimeLineActivities">
+                <div class="columns is-multiline">
+                  <div class="column is-12-fullhd is-12-widescreen is-11-desktop">
+                    <div class="timeline">
+                      <ng-container
+                        *ngIf="this.viewService?.timeLineFacade?.readerTimeLine$(this.readerId) | async as timeline">
+                        <a [routerLink]="['/timeline',timeline.indentification.id]" class="timeline__text"><span
+                            class="timeline__header-number">(3)</span>Timeline</a>
+                      </ng-container>
+                      <nz-timeline class="timeline__graph">
+                        <ng-container
+                          *ngFor="let activity of this.viewService.timeLineActivities$(this.readerId) | async">
+                          <ng-container [ngSwitch]="activity.activityType.id">
+                            <nz-timeline-item *ngSwitchCase="viewService?.activityTypesEnum?.NEW_BOOK_IN_BOOKCASE">
+                              User added
+                              <a *ngIf="this.viewService?.bookFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book"
+                                [routerLink]="['/book',book?.identification?.id]" class="timeline__item-link">
+                                {{book?.basics?.title}}
+                              </a>
+                              to bookcase
+                              at <span>{{activity.date | amDateFormat:'YYYY-MM-DD'}}</span>
+                            </nz-timeline-item>
+                            <nz-timeline-item *ngSwitchCase="viewService?.activityTypesEnum?.NEW_REVIEW">
+                              User added review of
+                              <a *ngIf="this.viewService?.bookFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book"
+                                [routerLink]="['/book',book?.identification?.id]" class="timeline__item-link">
+                                {{book?.basics?.title}}
+                              </a>at <span>{{activity.date | amDateFormat:'YYYY-MM-DD'}}</span>
+                            </nz-timeline-item>
+                            <nz-timeline-item *ngSwitchCase="viewService?.activityTypesEnum?.NEW_FOLLOWER"
+                              class="timeline__item">
+                              <ng-container
+                                *ngIf="(this.viewService?.readersFacade?.readerByGuid$(activity?.activityData?.activityObjectGuid) | async) as reader">
+                                <a [routerLink]="['/users',reader?.identification?.id,'profile']"
+                                  class="timeline__item-link">{{reader?.details?.userName}}</a>
+                              </ng-container>
+                              followed you at
+                              <span>{{activity.date | amDateFormat:'YYYY-MM-DD'}}</span>
+                            </nz-timeline-item>
+                            <nz-timeline-item *ngSwitchCase="viewService?.activityTypesEnum?.LOST_FOLLOWER"
+                              class="timeline__item">
+                              <ng-container
+                                *ngIf="(this.viewService?.readersFacade?.readerByGuid$(activity?.activityData?.activityObjectGuid) | async) as reader">
+                                <a [routerLink]="['/users',reader?.identification?.id,'profile']"
+                                  class="timeline__item-link">{{(this.viewService?.readersFacade.readerByGuid$(activity.activityData.activityObjectGuid)
+                                  | async)?.details?.userName}}
+                                </a>
+                                stopped following you at
+                                <span>{{activity.date | amDateFormat:'YYYY-MM-DD'}}</span>
+                              </ng-container>
+                            </nz-timeline-item>
+                            <nz-timeline-item *ngSwitchCase="viewService?.activityTypesEnum?.ADDED_BOOK"
+                              class="timeline__item">
+                              <ng-container
+                                *ngIf="(this.viewService?.bookFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async) as book">
+                                <a [routerLink]="['/book',book?.identification?.id]"
+                                  class="timeline__item-link">{{book?.basics?.title}}
+                                </a>
+                                was added by user at
+                                <span>{{activity.date | amDateFormat:'YYYY-MM-DD'}}</span>
+                              </ng-container>
+                            </nz-timeline-item>
+                          </ng-container>
+                        </ng-container>
+                      </nz-timeline>
+                    </div>
+                  </div>
+                </div>
+                <div class="columns is-multiline mt-2">
+                  <div class="column is-12-fullhd is-12-widescreen is-11-desktop">
+                    <ng-container
+                      *ngIf="!(this.viewService?.followersFacade?.processingFollowersPage$ | async) else processingFollowers">
+                      <ng-container
+                        *ngIf="(this.viewService?.followersFacade?.takeFirstTenFollowers$(this.readerId) | async)?.length>0 else noFollowers">
+                        <div class="followers">
+                          <a [routerLink]="['/users',this.readerId,'followers']" class="followers__text"><span
+                              class="followers__header-number">({{this.viewService?.followersFacade?.followersTotalItems$(this.readerId) | async}})</span>Followers
+                          </a>
+                          <ul class="followers__list">
+                            <a [routerLink]="['/users',follower?.followedById, 'profile']"
+                              *ngFor="let follower of this.viewService?.followersFacade?.takeFirstTenFollowers$(this.readerId) | async"
+                              class="followers__follower">
+                              <reader-follower-avatar [readerId]="follower?.followedById">
+                              </reader-follower-avatar>
+                            </a>
+                          </ul>
+                        </div>
+                      </ng-container>
+                      <ng-template #noFollowers>
+                        <div class="followers__empty-followers">
+                          <div class="followers__empty-followers-text">No followers<dot></dot>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #processingFollowers>
+                      <div class="profile__spinner-box">
+                        <ng-template #indicatorTemplate>
+                          <div><i nz-icon nzType="loading" class="profile__spinner"></i></div>
+                        </ng-template>
+                        <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #noTimeLineActivities>
+                <div class="timeline__empty-box">
+                  <div class="timeline__empty-text">No activities<dot></dot>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-template #processingTimelineItems>
+              <div class="profile__favourite-authors-spinner-box">
+                <ng-template #indicatorTemplate>
+                  <div><i nz-icon nzType="loading" class="profile__favourite-authors-spinner"></i></div>
+                </ng-template>
+                <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<app-footer></app-footer>

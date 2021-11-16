@@ -1,0 +1,288 @@
+@import "../../../shared/variables";
+
+$search: '.search';
+$categories: '.categories';
+$links:'.links';
+$isbn: '.isbn';
+$dates: '.dates';
+$authors: '.authors';
+$quick-options: '.quick-options';
+$books: '.books';
+$main-header: '.main-header';
+$pagination: '.pagination';
+
+#{$search}{
+  display: flex;
+
+  .search__form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .search__title{
+    font-size: 2rem;
+    font-weight: $boldWeight;
+    color: $black;
+    margin-right: 1.5rem;
+  }
+
+  .search__input{
+    position: relative;
+    border: 0px;
+    width: 100%;
+    height: 55%;
+    font-size: 1.65rem;
+    border-bottom: 2px solid $primaryColor;
+    }
+
+  .search__input:focus{
+    outline-color: transparent;
+    }
+}
+
+
+#{$categories}{
+  .categories__header{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .categories__list{
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .categories__item{
+    margin-right: 1.5rem;
+  }
+
+  .categories__checkbox::ng-deep>.ant-checkbox+span{
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .categories__checkbox::ng-deep>.ant-checkbox::ng-deep>.ant-checkbox-inner{
+    width: 21px !important;
+    height: 21px !important;
+  }
+
+  .categories__checkbox::ng-deep>.ant-checkbox::ng-deep>.ant-checkbox-inner::after{
+    width: 7.714286px !important;
+    height: 11.142857px !important;
+  }
+
+
+}
+
+#{$links}{
+  display: flex;
+
+  .links__item{
+    padding: 0.525rem 0.875rem;
+    background-color: #ece8ff;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+    margin: 0.25rem 2rem;
+  }
+}
+
+#{$isbn}{
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  .isbn__title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-right: 1.5rem;
+  }
+
+  .isbn__input{
+    display: inline-block;
+    position: relative;
+    border: 0px;
+    width: 100%;
+    height: 55%;
+    font-size: 1.25rem;
+    border-bottom: 2px solid #7b60ea;
+    // max-width: 28.5rem;
+    }
+
+  .isbn__input:focus  {
+    outline-color: transparent;
+    }
+
+ }
+
+#{$dates}{
+    display: flex;
+    margin-top: 2rem;
+
+    .dates__from{
+      margin-right: 1.5rem;
+    }
+
+    .dates__to-text,
+    .dates__from-text{
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-right: 1rem;
+      color: #000;
+    }
+}
+
+#{$authors}{
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  .authors__title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-right: 1.5rem;
+  }
+
+  .authors__input{
+    display: inline-block;
+    position: relative;
+    border: 0px;
+    width: 100%;
+    height: 55%;
+    font-size: 1.25rem;
+    border-bottom: 2px solid #7b60ea;
+    }
+
+  .isbn__input:focus,
+  .authors__input:focus{
+    outline-color: transparent;
+    }
+}
+
+#{$quick-options}{
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+}
+
+#{$books}{
+  display: flex;
+  flex-wrap: wrap;
+  // min-height: 600px;
+
+  &__wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__item{
+    max-width: 14.8rem;
+    min-width: 14.8rem;
+  }
+
+  &__loading{
+    width: 100%;
+    text-align: center;
+    padding: 14rem 0rem 14rem 0rem;
+  }
+
+  &__loading-spinner{
+    font-size: 5rem;
+  }
+
+  &__no-results{
+    text-align: center;
+    padding: 14rem 0rem 14rem 0rem;
+    width: 100%;
+  }
+
+  &__no-results-wrapper{
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+}
+
+#{$main-header}{
+  &__box{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .main-header__text{
+    font-size: 2rem;
+    color: #000;
+    font-weight: 700;
+  }
+
+  .main-header__value{
+    color: #7b60ea;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-left: 1rem;
+  }
+}
+
+.search-book,
+.add-book{
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+}
+
+.search-book:hover,
+.add-book:hover{
+  text-decoration: underline;
+}
+
+.search-book-link,
+.add-book-link{
+  padding: 0.75rem 0.75rem;
+  border: 2px solid #000;
+}
+
+.search-book-link{
+  margin-right: 1rem;
+}
+
+
+#{$pagination}{
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width:769px){
+  #{$books}{
+
+    &__wrapper{
+      justify-content: center;
+    }
+  }
+
+
+  #{$main-header}{
+    &__box{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .add-book-link,
+  .search-book-link{
+    padding: 0.5rem 0.5rem !important;
+  }
+
+
+
+}

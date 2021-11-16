@@ -1,0 +1,10 @@
+<div class="author-image">
+  <div class="author-image__box">
+    <img *ngIf="!(this.imageLoadError$ | async)" (error)="onError($event)" [src]="this.authorImageUrl()"
+      class="author-image__image" />
+    <div *ngIf="((this.imageLoadError$ | async) || !this.authorId)">
+      <div class="author-image__no-image">Image<dot></dot>
+      </div>
+    </div>
+  </div>
+</div>

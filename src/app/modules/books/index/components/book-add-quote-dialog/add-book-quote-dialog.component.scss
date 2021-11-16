@@ -1,0 +1,29 @@
+@import "../../../../shared/variables";
+
+$add-book-quote: ".add-book-quote";
+
+#{$add-book-quote}{
+  &__header{
+    font-size: 2rem;
+    display: flex;
+    margin: 0rem 0rem 1rem 0rem;
+    align-items: center;
+  }
+
+  &__content{
+    background-color: $inputBackground;
+  }
+
+  &__tip{
+    font-size: 0.85rem;
+    font-weight: $boldWeight;
+    margin-left: 0.75rem;
+    color: $descriptionGray;
+  }
+}
+
+.submit,
+.cancel{
+  font-size: 1rem;
+  height: 2.25rem;
+}

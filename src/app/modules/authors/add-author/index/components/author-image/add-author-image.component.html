@@ -1,0 +1,8 @@
+<div class="author-image">
+  <input class="author-image__input" type="file" (change)="onImageSelect($event)">
+  <img class="author-image__image" *ngIf="this.imageService?.encodedImage" [src]="this.imageService?.encodedImage || ''">
+  <div *ngIf="!this.imageService.encodedImage" class="author-image__text-box">
+    <div class="author-image__text">Image<dot></dot>
+    </div>
+  </div>
+</div>

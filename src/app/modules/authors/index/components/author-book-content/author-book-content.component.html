@@ -1,0 +1,19 @@
+<div class="author-book-content">
+    <div class="author-book-content__title">
+        {{book?.basics?.title}}
+    </div>
+    <div class="author-book-content__ratings">
+        <div class="author-book-content__stars">
+            <nz-rate class="author-book-content__rate" [ngModel]="overview?.average" nzAllowHalf nzDisabled></nz-rate>
+        </div>
+        <div class="author-book-content__average">
+            <div class="author-book-content__average-left">
+                <span class="author-book-content__text">Average:</span><span class="author-book-content__value">{{overview?.average| number:'1.2-2'}}</span>
+            </div>
+            <div>
+                <span class="author-book-content__text">Ratings:</span>
+                <span class="author-book-content__value">{{overview?.ratings?.length}}</span>
+            </div>
+        </div>
+    </div>
+</div>

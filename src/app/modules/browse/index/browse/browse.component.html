@@ -1,0 +1,134 @@
+<app-navbar></app-navbar>
+<div class="container mb-2 mt-2">
+  <div class="columns is-centered is-multiline is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-11-tablet is-11-mobile">
+      <div class="search">
+        <ng-container *ngIf="this.browseFacade?.titleForm$ | async as titleForm">
+          <form class="search__form" nz-form [formGroup]="titleForm">
+            <div class="search__title">Title</div><input formControlName="title" class="search__input">
+          </form>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="columns is-centered is-multiline is-mobile">
+    <div class="column is-6-fullhd is-6-widescreen is-6-desktop is-11-tablet is-11-mobile">
+      <div class="categories">
+        <span class="categories__header">Categories</span>
+        <div class="categories__list">
+          <ng-container *ngIf="this.browseFacade?.categories$ | async as categories">
+            <nz-form-control ngClass="categories__item" *ngFor="let item of categories" class="categories__item first">
+              <label (nzCheckedChange)="onCategorySelect(item.category,item.localIndex)" class="categories__checkbox"
+                [nzValue]="item?.checked" nz-checkbox>{{item?.category?.name}}</label>
+            </nz-form-control>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="column is-6-fullhd is-6-widescreen is-6-desktop is-11-tablet is-11-mobile">
+      <ng-container *ngIf="this.browseFacade?.detailsForm$ | async as detailsForm">
+        <form nz-form [formGroup]="detailsForm" class="categories">
+          <div class="columns">
+            <div class="column is-2">
+              <div class="authors">
+                <div class="authors__title">Author</div>
+              </div>
+            </div>
+            <div class="column is-10">
+              <div class="authors">
+                <input formControlName="author" class="authors__input">
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-2">
+              <div class="isbn">
+                <div class="isbn__title">ISBN</div>
+              </div>
+            </div>
+            <div class="column is-10">
+              <div class="isbn">
+                <input formControlName="isbn" class="isbn__input">
+              </div>
+            </div>
+          </div>
+
+          <div class="dates">
+            <div class="dates__from">
+              <span class="dates__from-text">From</span>
+              <nz-date-picker ngClass="dates__from-value" formControlName="from" nzPlaceHolder=""></nz-date-picker>
+            </div>
+            <div class="dates__to">
+              <span class="dates__to-text">To</span>
+              <nz-date-picker ngClass="dates__till-value" formControlName="till" nzPlaceHolder=""></nz-date-picker>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="container mt-6 mb-3 main-header">
+  <div class="columns is-multiline is-mobile is-centered">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-11-tablet is-11-mobile">
+      <div class="main-header__box">
+        <div><span class="main-header__text">Books</span>
+          <span class="main-header__value">({{this.browseFacade?.totalItems$ | async}})</span>
+        </div>
+        <div>
+          <a (click)="onSearch()" class="search-book-link"> <span class="search-book">Search</span><span>
+              <dot></dot>
+            </span>
+          </a>
+          <a class="add-book-link" [routerLink]="['../books/add']">
+            <span class="add-book">Add book</span><span>
+              <dot></dot>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-3">
+  <div class="books">
+    <div class="books__wrapper mb-2">
+      <ng-container *ngIf="!(this.browseFacade?.processing$ | async) else processing">
+        <ng-container *ngIf="this.browseFacade?.items$ | async as books">
+          <ng-container *ngIf="books?.length >0 else noResults">
+            <browse-book-cover class="books__item mb-2 mr-2" [title]="book?.title"
+              [reviewsCount]="book?.reviews?.length" [isCoverAdded]="book?.isCoverAdded"
+              [average]="this.overviewsFacade?.bookAverage$(book?.id) | async" [bookId]="book?.id"
+              *ngFor="let book of books">
+            </browse-book-cover>
+          </ng-container>
+          <ng-template #noResults>
+            <div class="books__no-results">
+              <div class="books__no-results-wrapper">
+                No results<dot></dot>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+      <ng-template #processing>
+        <div class="books__loading">
+          <ng-template #indicatorTemplate>
+            <i nz-icon nzType="loading" class="books__loading-spinner"></i>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <ng-container *ngIf="(this.browseFacade?.pageResult$ | async)?.items?.length > 0">
+    <browse-book-pagination class="pagination" (changePage)="onChangePage($event)"
+      [page]="this.browseFacade?.currentPage$ | async" [totalItems]="this.browseFacade?.totalItems$ | async">
+    </browse-book-pagination>
+  </ng-container>
+</div>
+<app-footer></app-footer>

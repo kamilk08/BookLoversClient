@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="columns is-mobile is-centered mt-1 mb-1">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="tickets">
+        <div class="tickets__left">
+          <div class="tickets__username title">
+            {{this.pageService?.readerFacade?.userName$(this.authService?.userId) | async}}
+          </div>
+        </div>
+        <div class="tickets__right">
+          <div class="tickets__solved">
+            <label class="tickets__solved-checkbox" nz-checkbox (ngModelChange)="toggleSolved($event)"
+              [ngModel]="this.pageFacade?.solvedTickets$ | async">Solved
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-mobile is-centered">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <ng-container *ngIf="this.showUserMode() else manageableMode">
+        <ng-container *ngIf="!(this.pageService?.ticketsFacade?.resolvingTicket$ | async) else processingTickets">
+          <ng-container
+            *ngIf="!(this.pageService?.ticketsFacade?.processingTicketsPage$ | async) else processingTickets">
+            <ng-container *ngIf="(this.pageService?.tickets$ | async)?.length > 0 else noTickets">
+              <ticket-item class="item" (toggle)="toggleTicket($event,ticket?.identification?.id)" [ticket]="ticket"
+                *ngFor="let ticket of this.pageService?.tickets$ | async"
+                [ngSwitch]="[ticket.data.ticketConcern.value]">
+                <div *ngSwitchCase="this.ticketConcerns.book">
+                  <ng-container *ngIf="(this.pageFacade?.ticketState$(ticket?.identification?.id) | async)?.isOpen">
+                    <book-ticket-content
+                      [content]="this.pageService?.bookTicketContent$(ticket?.identification?.id) | async"
+                      [authors]="this.pageService?.bookTicketAuthors$(ticket?.identification?.id) | async"
+                      [picture]="this.pageService?.bookTicketCover$(ticket?.identification?.id) | async">
+                    </book-ticket-content>
+                  </ng-container>
+                </div>
+                <div *ngSwitchCase="this.ticketConcerns.author">
+                  <ng-container *ngIf="(this.pageFacade?.ticketState$(ticket?.identification?.id) | async)?.isOpen">
+                    <author-ticket-content
+                      [content]="this.pageService?.authorTicketContent$(ticket?.identification?.id) | async"
+                      [image]="this.pageService?.authorImage$(ticket?.identification?.id) | async">
+                    </author-ticket-content>
+                  </ng-container>
+                </div>
+              </ticket-item>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-template #manageableMode>
+        <ng-container *ngIf="!(this.pageService?.ticketsFacade?.processingTicketsPage$ | async) else processingTickets">
+          <ng-container *ngIf="(this.pageService?.tickets$ | async)?.length > 0 else noTickets">
+            <ticket-item class="item" (toggle)="toggleTicket($event,ticket?.identification?.id)" [ticket]="ticket"
+              *ngFor="let ticket of this.pageService?.tickets$ | async" [ngSwitch]="[ticket.data.ticketConcern.value]">
+              <div *ngSwitchCase="this.ticketConcerns.book">
+                <ng-container *ngIf="(this.pageFacade?.ticketState$(ticket?.identification?.id) | async)?.isOpen">
+                  <book-ticket-content (solveTicket)="onSolveTicket($event,ticket)"
+                    [manageable]="!(this.pageService?.isTicketSolved(ticket))"
+                    [content]="this.pageService?.bookTicketContent$(ticket?.identification?.id) | async"
+                    [authors]="this.pageService?.bookTicketAuthors$(ticket?.identification?.id) | async"
+                    [picture]="this.pageService?.bookTicketCover$(ticket?.identification?.id) | async">
+                  </book-ticket-content>
+                </ng-container>
+              </div>
+              <div *ngSwitchCase="this.ticketConcerns.author">
+                <ng-container *ngIf="(this.pageFacade?.ticketState$(ticket?.identification?.id) | async)?.isOpen">
+                  <author-ticket-content (solveTicket)="onSolveTicket($event,ticket)"
+                    [manageable]="!(this.pageService?.isTicketSolved(ticket))"
+                    [content]="this.pageService?.authorTicketContent$(ticket?.identification?.id) | async"
+                    [image]="this.pageService?.authorImage$(ticket?.identification?.id) | async">
+                  </author-ticket-content>
+                </ng-container>
+              </div>
+            </ticket-item>
+          </ng-container>
+        </ng-container>
+      </ng-template>
+      <ng-template #processingTickets>
+        <div class="tickets__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="tickets__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+      <ng-template #noTickets>
+        <div class="tickets__no-tickets">
+          No tickets<dot></dot>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="columns is-mobile is-centered">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <tickets-pagination [currentPage]="this.pageService?.ticketsFacade?.currentPage$ | async"
+        [totalItems]="this.pageService?.ticketsFacade?.totalItems$ | async" [pageSize]="this.pageFacade?.ticketsPerPage$ | async"
+        (pageChange)="onPageChange($event)">
+      </tickets-pagination>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

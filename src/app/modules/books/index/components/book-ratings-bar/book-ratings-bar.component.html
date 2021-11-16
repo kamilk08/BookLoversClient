@@ -1,0 +1,7 @@
+<div class="book-ratings-bar">
+  <div class="book-ratings-bar__rating"><span>{{rating}}</span><i class="book-ratings-bar__icon" nz-icon nzType="star"
+      nzTheme="fill"></i></div>
+  <nz-progress class="book-ratings-bar__progress" [nzFormat]="format" [nzStrokeColor]="barColor"
+    [nzPercent]="this.getPercents()">
+  </nz-progress>
+</div>

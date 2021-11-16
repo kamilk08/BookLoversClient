@@ -1,0 +1,49 @@
+@import '../../../../shared/variables';
+
+$statistics: '.author-statistics';
+
+
+#{$statistics}{
+  display: flex;
+  justify-content: space-around;
+  margin:1.5rem 0rem;
+
+  &__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:$secondaryColor;
+    border-radius: 4px;
+    min-width: 5.313rem;
+    min-height: 6.875rem;
+    justify-content: center;
+    transition: 0.2s color ease-in-out,0.2s background-color ease-in-out;
+    cursor: pointer;
+  }
+  &__top:hover{
+    background-color:$primaryColor;
+    color: $white;
+  }
+
+  &__icon{
+    font-size: 1.85rem;
+  }
+
+  &__value{
+    font-size: 1.15rem;
+    margin-top: 1rem;
+  }
+
+  &__bottom{
+    margin-top: 2rem;
+    font-weight: $boldWeight;
+    font-size: 1.1rem;
+  }
+}
+

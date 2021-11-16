@@ -1,0 +1,23 @@
+<div class="bookcase-sorting">
+    <div class="bookcase-sorting__options">
+        <div class="bookcase-sorting__descending">
+            <label nz-checkbox (ngModelChange)="selectSortOrder($event)" [ngModel]="descending">Descending
+            </label>
+        </div>
+        <div class="bookcase-sorting__sort-by">Sort by:</div>
+        <a nz-dropdown [nzDropdownMenu]="menu">
+            {{sortOrderNames[sortNameText]}}
+            <i nz-icon nzType="down"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul class="bookcase-sorting__options-menu" nz-menu nzSelectable>
+                <li (click)="selectSortType(sortByDate)" nz-menu-item>Date</li>
+                <li (click)="selectSortType(sortByAverage)" nz-menu-item>Average</li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
+    <div class="bookcase-sorting__additions">
+        <i (click)="toggleSearchBar()" class="icon ion-md-search bookcase-sorting__icon"></i>
+        <i (click)="openSettings()" class="icon ion-md-settings bookcase-sorting__icon bookcase-sorting--settings-icon"></i>
+    </div>
+</div>

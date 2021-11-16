@@ -1,0 +1,1 @@
+export const STARS_CLEARED = 0;

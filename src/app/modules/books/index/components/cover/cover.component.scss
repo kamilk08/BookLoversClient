@@ -1,0 +1,28 @@
+@import "../../../../shared/variables";
+
+$cover: ".cover";
+
+#{$cover}{
+  max-width: 18.75rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 29.688rem;
+  max-height: 29.688rem;
+
+  &__no-cover{
+    padding: 0.5rem 0.75rem;
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+    border: 2px solid $black;
+  }
+
+}
+
+@media only screen and (max-width:769px){
+  #{$cover}{
+    margin: 0 auto;
+  }
+
+}

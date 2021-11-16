@@ -1,0 +1,7 @@
+<a class="other-series-book" [routerLink]="['/book',this.bookId]">
+  <div *ngIf="this.loadCoverError$ | async" class="other-series-book__no-cover">Cover<dot></dot>
+  </div>
+  <img (error)="onError($event)" *ngIf="!(this.loadCoverError$ | async)" [src]="this.bookUrl()"
+    class="other-series-book__image" />
+  <span class="other-series-book__title">{{title}}</span>
+</a>

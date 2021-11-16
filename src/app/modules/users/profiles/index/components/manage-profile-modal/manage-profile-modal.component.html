@@ -1,0 +1,105 @@
+<div class="columns is-centered manage-profile">
+  <div class="column is-11">
+    <ng-container *ngIf="this.pageFacade?.changeProfileForm$ | async as form">
+      <form nz-form [formGroup]="form">
+        <ng-container formGroupName="identity">
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Firstname</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input">
+                <input nz-input formControlName="firstName" />
+              </nz-form-control>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Secondname</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input">
+                <input nz-input formControlName="secondName" />
+              </nz-form-control>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Birthdate</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control>
+                <nz-date-picker class="manage-profile__birth-date" formControlName="birthDate">
+                </nz-date-picker>
+              </nz-form-control>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Sex</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input manage-profile--sex">
+                <nz-select formControlName="sex" nzAllowClear nzPlaceHolder="Select sex">
+                  <nz-option nzValue="1" nzLabel="Hidden"></nz-option>
+                  <nz-option nzValue="2" nzLabel="Male"></nz-option>
+                  <nz-option nzValue="3" nzLabel="Female"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container formGroupName="address">
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Country</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input manage-profile--country">
+                <input nz-input formControlName="country">
+              </nz-form-control>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">City</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input manage-profile--city">
+                <input nz-input formControlName="city">
+              </nz-form-control>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container formGroupName="about">
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">About you</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control>
+                <textarea rows="6" nz-input formControlName="content"></textarea>
+              </nz-form-control>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-3">
+              <nz-form-label class="manage-profile__label">Webiste</nz-form-label>
+            </div>
+            <div class="column is-9">
+              <nz-form-control class="manage-profile__input">
+                <input nz-input formControlName="webSite">
+              </nz-form-control>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </ng-container>
+  </div>
+</div>
+<div *nzModalFooter class="manage-profile__footer">
+  <ng-container *ngIf="this.pageFacade?.changeProfileForm$ | async as form">
+    <button class="manage-profile__close" nz-button nzType="default" (click)="close()">Close</button>
+    <button class="manage-profile__submit" nz-button nzType="primary" (click)="onSubmit(form)">Submit</button>
+  </ng-container>
+</div>

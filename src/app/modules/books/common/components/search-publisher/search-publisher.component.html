@@ -1,0 +1,28 @@
+<ng-container [formGroup]="form">
+    <nz-form-item class="search-publisher">
+        <nz-form-label class="search-publisher__label">Publisher
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="publisherErrorTemplate">
+            <nz-select [compareWith]="compare" formControlName="publisher" class="search-publisher__input" nzMode="default"
+                nzPlaceHolder="Select publisher" nzAllowClear nzShowSearch nzServerSearch
+                (nzOnSearch)="onSearch($event)">
+                <ng-container *ngFor="let publisher of publishers">
+                    <nz-option *ngIf="!isFiltered" [nzValue]="publisher" [nzLabel]="publisher?.name">
+                    </nz-option>
+                </ng-container>
+                <nz-option *ngIf="isFiltered" nzDisabled nzCustomContent>
+                    <i nz-icon nzType="loading"></i>
+                    Loading
+                    Data...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+        <ng-template #publisherErrorTemplate let-control>
+            <ng-container *ngIf="control.hasError('required')">
+                <div class="search-publisher__error">Publisher is required</div>
+            </ng-container>
+        </ng-template>
+        <ng-content>
+        </ng-content>
+    </nz-form-item>
+</ng-container>

@@ -1,0 +1,61 @@
+@import "../../../../shared/variables";
+
+$cover:'.cover';
+
+
+#{$cover}{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 15.625rem;
+  max-width: 10.938rem;
+  min-width: 7.813rem;
+  background-color: $secondaryColor;
+
+  &__box{
+    font-size: 1.55rem;
+    font-weight: $boldWeight;
+  }
+
+  &__image{
+    min-height: 15.625rem;
+    margin: 0 auto;
+    max-width: 10.313rem;
+  }
+}
+
+@media only screen and(max-width:1408px){
+  #{$cover}{
+    max-width: 10.313rem;
+  }
+}
+
+
+@media only screen and (max-width: 1216px){
+  #{$cover}{
+    &__box{
+      font-size: 1.45rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px){
+  #{$cover}{
+    max-width: 10.313rem;
+
+    &__box{
+      font-size: 1.45rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 769px){
+  #{$cover}{
+    max-width: 10.313rem;
+    margin: 0 auto;
+
+    &__box{
+      font-size: 1.45rem;
+    }
+  }
+}

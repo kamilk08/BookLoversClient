@@ -1,0 +1,194 @@
+<app-navbar></app-navbar>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-10-fullhd is-10-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="columns users-header">
+        <ng-container *ngIf="this.librariansSelected$ | async else usersHeader">
+          <header headerText="Users" [countNumber]="this.promotionWaitersService?.totalItems$() | async"></header>
+        </ng-container>
+        <ng-template #usersHeader>
+          <header headerText="Users"
+            [countNumber]="this.manageUsersService?.usersTotalItems$(this.readersFacade) | async">
+          </header>
+        </ng-template>
+        <div class="users-header__options">
+          <div class="users-header__options-left mr-2">
+            <div class="users-header__users mr-1" (click)="selectUsers()">Users</div>
+            <div class="users-header__librarians" (click)="selectLibrarians()">Librarians</div>
+          </div>
+          <div class="users-header__options-right">
+            <manage-users-search #search (phraseChange)="onUserSearch($event)"></manage-users-search>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="this.librariansSelected$ | async else currentUsers">
+        <ng-container *ngIf="!(this.readersFacade?.processingSearchReadersPage$ | async) else processing">
+          <ng-container
+            *ngIf="!(this.promotionWaitersService?.manageLibrariansFacade?.processingPromotionWaitersPage$ | async) else processing">
+            <ng-container *ngIf="(this.promotionWaitersService?.promotionWaiters$() | async)?.length > 0 else noUsers">
+              <ng-container *ngFor="let item of this.promotionWaitersService?.promotionWaiters$() | async">
+                <div class="columns is-mobile user">
+                  <div class="column is-2-fullhd is-2-widescreen is-2-desktop is-2-tablet is-12-mobile user__avatar">
+                    <nz-avatar nzIcon="user" [nzSize]="60" [nzSrc]="">
+                    </nz-avatar>
+                  </div>
+                  <div
+                    class="column is-10-fullhd is-10-widescreen is-10-desktop is-10-tablet is-12-mobile user__content">
+                    <div class="columns is-mobile is-multiline">
+                      <div class="column is-8-fullhd is-8-widescreen is-10-desktop is-10-tablet is-12-mobile">
+                        <div class="user__left">
+                          <ng-container
+                            *ngIf="(this.promotionWaitersService?.promotionWaiterAsReader$(this.readersFacade,item?.readerId) | async) as reader">
+                            <a [routerLink]="['users/',reader?.identification?.id,'profile']"
+                              class="user__username">{{reader?.details?.userName}}</a>
+                          </ng-container>
+                          <div class="user__role">
+                            <div class="user__role-text">Role:</div>
+                            <div class="user__role-value">
+                              {{(item?.isPromoted())
+                              ? 'Librarian':'Reader'}}
+                            </div>
+                          </div>
+                          <div class="user__registration-date">
+                            <div class="user__registration-date-text">Joined at:</div>
+                            <div class="user__registration-date-value">
+                              {{(this.promotionWaitersService?.joinAt$(this.profileFacade,item?.readerId) | async) |
+                              amFromUtc |
+                              amDateFormat:
+                              'YYYY-MM-DD'}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="column is-4-fullhd is-4-widescreen is-2-desktop is-2-tablet is-12-mobile">
+                        <div class="user__right">
+                          <ng-container *ngIf="(item?.waitingForPromotion())">
+                            <div class="user__promote"><button (click)="promoteToLibrarian(item?.readerGuid)" nz-button
+                                nzType="primary">Promote</button>
+                            </div>
+                          </ng-container>
+                          <ng-container *ngIf="(item?.isPromoted())">
+                            <ng-container
+                              *ngIf="this.promotionWaitersService?.promotionWaiterAsReader$(this.readersFacade,item?.readerId) | async as reader">
+                              <div class="user__degrade"><button (click)="degradeToUser(reader)" nz-button
+                                  nzType="primary">Degrade</button>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="columns is-centered is-mobile users-pagination">
+                <div class="column is-10-fullhd is-10-widescreen is-10-desktop is-10-tablet is-12-mobile">
+                  <manage-users-pagination (pageChange)="onPageChange($event)"
+                    [currentPage]="this.promotionWaitersService?.currentPage$ | async"
+                    [totalItems]="this.promotionWaitersService?.totalItems$() | async" [pageSize]="this.pageSize">
+                  </manage-users-pagination>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-template #processing>
+          <div class="user__processing">
+            <ng-template #indicatorTemplate>
+              <i nz-icon nzType="loading" class="user__loading-spinner"></i>
+            </ng-template>
+            <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+          </div>
+        </ng-template>
+        <ng-template #noUsers>
+          <div class="user__no-users">
+            No users<dot></dot>
+          </div>
+        </ng-template>
+      </ng-container>
+      <ng-template #currentUsers>
+        <ng-container *ngIf="!(this.readersFacade?.processingSearchReadersPage$ | async) else processing">
+          <ng-container
+            *ngIf="!(this.promotionWaitersService?.manageLibrariansFacade?.processingPromotionWaitersPage$ | async) else processing">
+            <ng-container
+              *ngIf="(this.manageUsersService?.currentUsers$(this.readersFacade,this.manageLibrariansFacade) | async)?.length > 0 else noUsers">
+              <ng-container
+                *ngFor="let reader of this.manageUsersService?.currentUsers$(this.readersFacade,this.manageLibrariansFacade) | async">
+                <div class="columns is-mobile user">
+                  <div class="column is-2-fullhd is-2-widescreen is-2-desktop is-2-tablet is-12-mobile user__avatar">
+                    <nz-avatar nzIcon="user" [nzSize]="60" [nzSrc]="this.avatarUrl(reader?.identification?.id)">
+                    </nz-avatar>
+                  </div>
+                  <div
+                    class="column is-10-fullhd is-10-widescreen is-10-desktop is-10-tablet is-12-mobile user__content">
+                    <div class="columns is-mobile is-multiline">
+                      <div class="column is-8-fullhd is-8-widescreen is-10-desktop is-10-tablet is-12-mobile">
+                        <div class="user__left">
+                          <ng-container *ngIf="reader">
+                            <a [routerLink]="['/users/',reader.identification.id,'profile']"
+                              class="user__username">{{reader?.details.userName}}</a>
+                          </ng-container>
+                          <div class="user__email">
+                            <div class="user__email-text">{{reader?.email}}</div>
+                          </div>
+                          <div class="user__registration-date">
+                            <div class="user__registration-date-text">Joined at:</div>
+                            <div class="user__registration-date-value">
+                              {{(this.manageUsersService?.joinAt$(this.profileFacade,reader?.identification?.id) |
+                              async)
+                              |
+                              amFromUtc | amDateFormat:
+                              'YYYY-MM-DD'}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="column is-4-fullhd is-4-widescreen is-2-desktop is-2-tablet is-12-mobile">
+                        <div class="user__right">
+                          <ng-container *ngIf="reader">
+                            <ng-container *ngIf="!isCurrentUser(reader)">
+                              <div class="user__block"><button (click)="blockAccount(reader?.identification?.guid)"
+                                  nz-button nzType="primary">Block
+                                  account
+                                </button>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+        </ng-container>
+        <ng-template #processing>
+          <div class="user__processing">
+            <ng-template #indicatorTemplate>
+              <i nz-icon nzType="loading" class="user__loading-spinner"></i>
+            </ng-template>
+            <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+          </div>
+        </ng-template>
+        <ng-template #noUsers>
+          <div class="user__no-users">
+            No users<dot></dot>
+          </div>
+        </ng-template>
+
+        <div class="columns is-centered is-mobile users-pagination">
+          <div class="column is-10-fullhd is-10-widescreen is-10-desktop is-10-tablet is-12-mobile">
+            <manage-users-pagination (pageChange)="onPageChange($event)"
+              [currentPage]="this.manageUsersService?.usersCurrentPage$(this.readersFacade) | async"
+              [totalItems]="this.manageUsersService?.usersTotalItems$(this.readersFacade) | async"
+              [pageSize]="this.pageSize">
+            </manage-users-pagination>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

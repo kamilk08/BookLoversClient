@@ -1,0 +1,12 @@
+<div *ngIf="!this.bookId" class="author-book-cover">
+  <i class="icon ion-md-book author-book-cover__icon"></i>
+  <span class="author-book-cover__text">Cover</span>
+</div>
+<div class="cover">
+  <img *ngIf="!(this.coverLoadError$ | async)" (error)="onCoverError()" [src]="this.authorBookUrl()"
+    class="cover__image" />
+  <div *ngIf="this.coverLoadError$ | async" class="cover__no-cover">
+    <div class="cover__no-cover-text">Cover<dot></dot>
+    </div>
+  </div>
+</div>

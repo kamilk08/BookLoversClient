@@ -1,0 +1,17 @@
+<div class="book-quote">
+    <div class="book-quote__icon">
+        <i class="icon ion-md-quote"></i>
+    </div>
+    <div class="book-quote__content">
+        {{quote?.content?.quoteText}}
+    </div>
+    <div class="book-quote__statistics">
+        <i *ngIf="canBeLiked" class="icon book-quote__like-icon" (click)="toggleLike()"
+            [ngClass]="{'ion-md-heart-empty no-animate':!isLikedBy,'ion-md-heart active':isLikedBy }">
+        </i>
+        <div class="book-quote__likes">
+            <div class="book-quote__text">Likes:</div>
+            <div class="book-quote__count">{{quote?.likes?.length}}</div>
+        </div>
+    </div>
+</div>

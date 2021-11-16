@@ -1,0 +1,27 @@
+<div class="quote">
+    <form nz-form [formGroup]="pageService?.quoteForm">
+        <div class="quote__header"><i class="icon ion-md-quote"></i>
+            <div class="quote__tip">Add author quote that is worth remembering</div>
+        </div>
+        <nz-form-item>
+            <nz-form-control [nzErrorTip]="quoteErrorTemplate">
+                <textarea formControlName="content" class="quote__content" rows="6" nz-input></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <ng-template #quoteErrorTemplate let-control>
+            <ng-container *ngIf="control.hasError('required')">
+                Quote content is required
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">Quote need atelast
+                {{control.errors.minlength.requiredLength}} characters
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength') && !control.hasError('minlength')">
+                Quote cannot have more then {{control.errors.maxlength.requiredLength}}
+            </ng-container>
+        </ng-template>
+    </form>
+</div>
+<div *nzModalFooter>
+    <button class="quote__cancel" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+    <button class="quote__add" nz-button nzType="primary" (click)="addQuote()">Add</button>
+</div>

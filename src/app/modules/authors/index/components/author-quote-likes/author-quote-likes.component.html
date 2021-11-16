@@ -1,0 +1,11 @@
+<div class="quote-likes">
+    <div class="quote-likes__box">
+        <span>Likes:</span>
+        <span class="quote-likes__count">{{quote?.likes?.length}}</span>
+    </div>
+    <div>
+        <i class="icon quote-likes__like-icon" (click)="toggleLike()"
+            [ngClass]="{'ion-md-heart-empty no-animate':!isLikedBy,'ion-md-heart active':isLikedBy }">
+        </i>
+    </div>
+</div>

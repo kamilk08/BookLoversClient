@@ -1,0 +1,16 @@
+@import "../../../../shared/variables";
+
+$header:'.header';
+
+#{$header}{
+  font-weight: $boldWeight;
+  font-size: 1.5rem;
+  color: $black;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  &__icon-box{
+    cursor: pointer;
+  }
+}

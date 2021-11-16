@@ -1,0 +1,26 @@
+@import "../../../../shared/variables";
+
+$add-custom-shelf: ".add-custom-shelf";
+$actions: ".actions";
+
+#{$add-custom-shelf}{
+
+  &__item{
+    margin-bottom: 0rem;
+  }
+
+  &__name{
+    font-weight: $boldWeight;
+  }
+
+  &__name > label::after {
+    content: '' !important;
+  }
+}
+
+#{$actions}{
+  &__submit{
+    font-size: 1rem;
+    height: 2rem;
+  }
+}

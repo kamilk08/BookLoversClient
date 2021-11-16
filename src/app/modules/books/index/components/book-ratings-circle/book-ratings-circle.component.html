@@ -1,0 +1,6 @@
+<div class="book-ratings-circle">
+  <nz-progress class="book-ratings-circle__circle" [nzFormat]="format" [nzStrokeColor]="barColor" [nzPercent]="percents"
+    nzType="circle">
+  </nz-progress>
+  <div class="book-ratings-circle__average">{{average===null ? '0.00' : average | number:'1.2-2'}}</div>
+</div>

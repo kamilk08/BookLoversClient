@@ -1,0 +1,26 @@
+<div class="edit-shelf">
+  <form nz-form [formGroup]="pageService?.editShelfForm">
+    <nz-form-item class="edit-shelf__item">
+      <nz-form-label class="edit-shelf__name">Name</nz-form-label>
+      <nz-form-control [nzErrorTip]="shelfErrorTemplate">
+        <input nz-input formControlName="shelfName">
+      </nz-form-control>
+      <ng-template #shelfErrorTemplate let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          <div class="edit-shelf__error">
+            Shelf name is required
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!control.hasError('required') && control.hasError('minlength')">
+          <div class="edit-shelf__error">
+            Shelf need atleast {{control?.errors?.minlength?.requiredLength}} characters
+          </div>
+        </ng-container>
+      </ng-template>
+    </nz-form-item>
+  </form>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+  <button class="actions__submit" nz-button nzType="primary" (click)="submit()">Submit</button>
+</div>

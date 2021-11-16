@@ -1,0 +1,49 @@
+@import "../../../../shared/variables";
+
+$book-cover: ".book-cover";
+
+#{$book-cover} {
+  text-align: center;
+  // max-width: 285px;
+  &__box{
+    // min-width: 250px;
+    position: relative;
+    min-height: 29.688rem;
+  }
+
+  &__text-box{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 29.688rem;
+    max-height: 29.688rem;
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__text{
+    padding: 0.5rem;
+    border: 2px solid $black;
+  }
+
+  &__input{
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    width: 100%;
+  }
+
+  &__image{
+    min-height: 29.688rem;
+    max-height: 29.688rem;
+  }
+}

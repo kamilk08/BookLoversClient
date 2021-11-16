@@ -1,0 +1,31 @@
+@import "../../../../shared/variables";
+
+$author-collection-cover: ".author-collection-cover";
+
+#{$author-collection-cover} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 10.125rem;
+  height: 14.688rem;
+  position: relative;
+  background-color: $secondaryColor;
+
+  &__cover-box{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__text{
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+  }
+}

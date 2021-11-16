@@ -1,0 +1,31 @@
+@import "../../../../shared/variables";
+
+$bookcase-book-cover:".bookcase-book-cover";
+
+#{$bookcase-book-cover}{
+  max-width: 15.625rem;
+  height: 23.438rem;
+  background-color: $coverBackground;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+  .no-image{
+    height: 23.438rem;
+    background-color: $coverBackground;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__icon{
+    font-size: 5rem;
+  }
+
+  &__text{
+    font-size: 1.75rem;
+    font-weight: $boldWeight;
+  }
+}

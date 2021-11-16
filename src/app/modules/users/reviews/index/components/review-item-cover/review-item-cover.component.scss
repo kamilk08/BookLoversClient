@@ -1,0 +1,24 @@
+@import "../../../../../shared/variables";
+
+$cover:'.cover';
+
+#{$cover}{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $black;
+  min-height: 20rem;
+  font-size: 1.5rem;
+
+
+  &__empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $secondaryBlack;
+    min-height: 20rem;
+    font-size: 1.75rem;
+    font-weight: $boldWeight;
+  }
+
+}

@@ -1,0 +1,37 @@
+<div class="timeline-item">
+  <div class="timeline-item__top">
+    <div class="timeline-item__left">
+      <div class="timeline-item__content">
+        <div class="timeline-item__user-avatar">
+          <nz-avatar *ngIf="this.reader" [nzSize]="48" (click)="navigateToReader()" nzIcon="user"
+            [nzSrc]="this.avatarUrl(this.reader?.identification?.id)">
+          </nz-avatar>
+        </div>
+        <div class="timeline-item__after-avatar">
+          <div class="timeline-item__text"><a (click)="navigateToReader()"
+              class="timeline-item__link">{{this.reader?.details?.userName}}</a> created
+            <a *ngIf="this.book" [routerLink]="['/book',this.book?.identification?.id]"
+              class="timeline-item__link">{{this.book?.basics?.title}}</a>
+          </div>
+          <div class="timeline-item__date">{{this.activity?.date | amDateFormat:'MM-DD-YYYY'}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item__right"><a nz-dropdown [nzDropdownMenu]="menu">
+        <i class="icon ion-md-arrow-dropdown timeline-item__arrow"></i>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul class="timeline-item__menu" nz-menu>
+          <li (click)="this.expandDetails()" class="timeline-item__details" nz-menu-item>
+            Details
+          </li>
+          <li (click)="toggleActivity()" *ngIf="this.activity?.show===true" class="timeline-item__hide" nz-menu-item>Hide
+          </li>
+          <li (click)="toggleActivity()" *ngIf="this.activity?.show===false" class="timeline-item__show" nz-menu-item>Show
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

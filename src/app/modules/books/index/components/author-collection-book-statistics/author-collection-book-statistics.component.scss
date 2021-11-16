@@ -1,0 +1,29 @@
+@import "../../../../shared/variables";
+
+$author-collection: ".author-collection";
+
+#{$author-collection}{
+
+  &__statistics{
+    display: flex;
+    margin: 0.75rem 0rem;
+    font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  &__ratings-count,
+  &__average{
+    display: flex;
+    margin-right: 0.5rem;
+  }
+
+  &__text{
+    margin-right: 0.25rem;
+    font-weight: $boldWeight;
+  }
+
+  &__value{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+  }
+}

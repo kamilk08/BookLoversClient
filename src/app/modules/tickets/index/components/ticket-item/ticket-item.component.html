@@ -1,0 +1,18 @@
+<div class="ticket-item">
+  <div class="ticket-item__top">
+    <div class="ticket-item__title">
+      {{ticket?.title}}
+    </div>
+    <div class="ticket-item__date">{{ticket?.date | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+  </div>
+  <div class="ticket-item__middle">
+    <div class="ticket-item__description">{{ticket?.description}}</div>
+    <div (click)="toggleShow()" class="ticket-item__show-content">{{this.toggled?'Hide':'Show'}}</div>
+    <div [ngClass]="{'ticket-item--decline':this?.isDeclined(ticket?.decision)}"
+      class="ticket-item__decision ticket-item--decline">{{ticket?.decision?.name}}</div>
+    <div class="ticket-item__state">{{ticket?.ticketState?.name}}</div>
+  </div>
+  <div class="ticket-item__bottom">
+    <ng-content></ng-content>
+  </div>
+</div>

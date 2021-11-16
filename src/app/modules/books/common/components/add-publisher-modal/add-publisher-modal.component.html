@@ -1,0 +1,41 @@
+<div class="columns">
+  <div class="column is-12">
+    <form nz-form class="add-publisher" [formGroup]="pageService?.addPublisherForm">
+      <nz-form-item class="add-publisher__name">
+        <nz-form-label class="add-publisher__label">
+          Name
+        </nz-form-label>
+        <div class="add-publisher__name-box">
+          <nz-form-control class="add-publisher__form-control" [nzErrorTip]="publisherErrorTemplate">
+            <input class="add-publisher__publisher-input" type="text" formControlName="name" nz-input />
+          </nz-form-control>
+          <nz-spin *ngIf="pageService.name.status === 'PENDING'" class="add-publisher__spinner" nzSimple>
+          </nz-spin>
+          <i *ngIf="pageService.name.status === 'VALID'" class="icon ion-md-checkmark add-publisher__is-unique"></i>
+        </div>
+        <ng-template #publisherErrorTemplate let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            <div class="add-publisher__form-error">Publisher name is required</div>
+          </ng-container>
+          <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">
+            <div class="add-publisher__form-error">Publisher
+              should have atleast {{pageService.name.errors.minlength.requiredLength}} characters</div>
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength') && !control.hasError('minlength')">
+            <div class="add-publisher__form-error">
+              Publisher cannot have more then {{pageService.name.errors.maxlength.requiredLength}}
+              characters
+            </div>
+          </ng-container>
+          <ng-container *ngIf="control.hasError('publisherNameNotUnique') && !control.hasError('maxlength')">
+            <div class="add-publisher__form-error">Publisher name is not unique</div>
+          </ng-container>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+  <button class="actions__submit" nz-button nzType="primary" (click)="submit()">Submit</button>
+</div>

@@ -1,0 +1,68 @@
+@import '../../../../shared/variables';
+
+$book-quote: ".book-quote";
+
+#{$book-quote}{
+  text-align: justify;
+  width: 100%;
+
+  &__icon{
+    display: inline-block;
+    font-size: 2rem;
+    padding: 0.5rem;
+    color:$primaryColor;
+    transform: translate(0px,-10px);
+  }
+
+  &__content{
+    display: inline;
+    font-size: 1.1rem;
+  }
+
+  &__statistics{
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 45px;
+  }
+
+  &__like-icon{
+    font-size: 1.35rem;
+    animation: $heartAnimation 0.6s cubic-bezier(.57,.65,.35,1.56);
+    transition: background-color 0.2s,color 0.2s;
+    padding: 1.25rem;
+    border-radius: 50%;
+  }
+
+  &__like-icon:hover{
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__like-icon.no-animate{
+    animation: none;
+}
+
+  &__likes{
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  &__text{
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    margin-right: 0.3rem;
+  }
+
+  &__count{
+    color: $primaryColor !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  .active{
+    color: $primaryColor;
+  }
+}

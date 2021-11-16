@@ -1,0 +1,245 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: "Fira Sans" !important;
+}
+
+input[type="text"]{
+  background-color: #f7f7f7;
+  transition: background-color 0.15s, box-shadow 0.15s, border-color 0.15s,
+    color 0.15s;
+  cursor: pointer;
+}
+input[type="text"]:hover {
+  border-color: #121212;
+}
+input[type="text"]:focus {
+  background-color: #fff;
+  border-color: #121212;
+  color: #121212;
+  outline: 0;
+  box-shadow: none;
+}
+input[type="text"]::placeholder {
+  color: #999;
+}
+
+
+
+h1{
+  font-size: 2rem;
+  color: #121212;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+h2{
+  font-size: 1.5rem;
+  color: #121212;
+  font-weight: 700 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/*PADDINGS*/
+.pt-1{
+  padding-top:1rem;
+}
+
+.pt-2{
+  padding-top: 2rem;
+}
+
+.pb-1{
+  padding-bottom: 1rem;
+}
+
+.pb-2{
+  padding-bottom: 2rem;
+}
+
+.pb-3{
+  padding-bottom: 3rem;
+}
+
+.pr-1{
+  padding-right: 1rem;
+}
+
+
+.pl-1{
+  padding-left: 1rem;
+}
+
+/*MARGINS*/
+
+
+.mt-0{
+  margin-top: 0rem;
+}
+
+.mt-1{
+  margin-top: 1rem;
+}
+
+.mt-2{
+  margin-top: 2rem;
+}
+
+.mt-3{
+  margin-top: 3rem;
+}
+
+.mt-6{
+  margin-top: 6rem;
+}
+
+.mb-0{
+  margin-bottom: 0rem !important;
+}
+
+.mb-1{
+  margin-bottom: 1rem;
+}
+
+.mb-2{
+  margin-bottom: 2rem;
+}
+
+.mb-3{
+  margin-bottom: 3rem;
+}
+
+.mb-4{
+  margin-bottom: 4rem;
+}
+
+
+.ml-1{
+  margin-left: 1rem;
+}
+
+.ml-2{
+  margin-left: 2rem;
+}
+
+.ml-3{
+  margin-left: 3rem;
+}
+
+.ml-6{
+  margin-left: 6rem;
+}
+
+.mr-1{
+  margin-right: 1rem;
+}
+
+.mr-2{
+  margin-right: 2rem;
+}
+
+.mr-3{
+  margin-right: 3rem;
+}
+
+.mr-6{
+  margin-right: 6rem;
+}
+
+/* .flex{
+  display: flex;
+}
+
+.justify-center{
+  justify-content: center;
+} */
+
+
+/*AND_DESIGN_OVERRIDES*/
+.ant-tag{
+  margin-right: 0rem !important;
+}
+
+/*MODAL_HEADER*/
+.ant-modal-header{
+    /* background-color: #7B60EA !important;
+    padding: 1.25rem 1.5rem !important; */
+}
+
+.ant-modal-title{
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+    /* color: #fff !important;
+    font-size: 1.35rem !important; */
+}
+
+/* .anticon.ant-modal-close-icon.anticon-close{
+    color: #fff !important;
+    font-size: 1.15rem !important;
+} */
+
+.ant-collapse-content-box{
+  padding: 0rem 1.5rem !important;
+}
+
+/*INPUT*/
+.ant-input:focus {
+  background-color: #fff !important;
+  border-color: #121212 !important;
+  color: #121212 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.ant-input:hover {
+  background-color: #fff !important;
+  border-color: #121212 !important;
+  color: #121212 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/*SELECT*/
+
+.ant-select-focused .ant-select-selection, .ant-select-selection:focus, .ant-select-selection:active {
+  background-color: #fff !important;
+  border-color: #121212 !important;
+  color: #121212 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.ant-select-selection:hover {
+  border-color: #121212 !important;
+  border-right-width: 1px !important;
+}
+
+.ant-select-open .ant-select-selection {
+  background-color: #fff !important;
+  border-color: #121212 !important;
+  color: #121212 !important;
+  outline: 0 !important;
+}
+.ant-select-open .ant-select-selection {
+  background-color: #fff !important;
+  border-color: #121212 !important;
+  color: #121212 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+
+.ant-dropdown-menu-item{
+  background-color: rgba(18,18,18,.95) !important;
+  color: #fff !important;
+}
+
+.ant-dropdown-menu-item:hover, .ant-dropdown-menu-submenu-title:hover{
+  background-color: hsla(0,0%,100%,.15) !important;
+}
+
+html {
+  --antd-wave-shadow-color: none !important;
+}

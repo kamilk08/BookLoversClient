@@ -1,0 +1,20 @@
+@import "../../../../../shared/variables";
+
+$favourite-author-image:'.favourite-author-image';
+
+#{$favourite-author-image}{
+  &__default{
+    padding: 4rem 1.75rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    background-color: $secondaryColor;
+    font-weight: $boldWeight;
+  }
+
+  &__img{
+    max-width: 6.75rem;
+  }
+
+}

@@ -1,0 +1,27 @@
+@import "../../../../shared/variables";
+
+$search-publisher: ".search-publisher";
+
+#{$search-publisher} {
+  margin-bottom: 0rem;
+
+  &__label ::ng-deep label {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    color: $secondaryBlack;
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+
+  &__input{
+    font-weight: $mediumWeight;
+  }
+
+  &__error{
+    font-weight: $mediumWeight;
+  }
+}

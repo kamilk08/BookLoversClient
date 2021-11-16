@@ -1,0 +1,55 @@
+@import "../../../../shared/variables";
+
+$sorting:".bookcase-sorting";
+
+#{$sorting}{
+  display: flex;
+
+  &__options{
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-right: 1.5rem;
+  }
+
+  &__options-menu{
+    background-color:$menuBackground !important;
+  }
+
+  &__descending{
+    margin-right: 2rem;
+  }
+
+  &__sort-by{
+    margin-right: 0.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__additions{
+    display: flex;
+  }
+
+  &__icon{
+    font-size: 1.75rem;
+    padding: 1.35rem;
+    transition: 0.2s color ease-in,0.2s background-color ease;
+    border-radius: 50%;
+  }
+
+  &__icon:hover{
+    color: $primaryColor;
+    background-color: $primaryBackground;
+  }
+
+  &--settings-icon{
+    font-size: 1.5rem;
+    padding: 1.35rem;
+    transition: 0.2s color ease-in,0.2s background-color ease;
+    border-radius: 50%;
+  }
+
+  &--settings-icon:hover{
+    color: $primaryColor;
+    background-color: $primaryBackground;
+  }
+}

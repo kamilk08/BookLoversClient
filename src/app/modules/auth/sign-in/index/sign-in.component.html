@@ -1,0 +1,58 @@
+<div class="columns is-centered">
+  <div class="column is-half login-header">
+    <a class="login-header__book-lovers">
+      <span class="login-header__logo">BL<dot></dot></span>
+      <span class="login-header__text">Booklovers</span>
+    </a>
+  </div>
+</div>
+<div class="container">
+  <div class="columns is-centered">
+    <div class="column is-4-fullhd is-4-widescreen is-4-desktop sign-in">
+      <h1>Sign in</h1>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-4-fullhd is-4-widescreen is-5-desktop is-5-tablet is-10-mobile">
+      <ng-container *ngIf="this.facade?.signInForm$ | async as form">
+        <form class="sign-in-form" nz-form [formGroup]="form">
+          <ng-container *ngIf="this.facade?.password$ | async as password">
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="emailTemplate">
+                <input class="sign-in-form__input" nz-input type="text" formControlName="email"
+                  placeholder="Email adress" />
+              </nz-form-control>
+              <ng-template #emailTemplate>
+                <ng-container>
+                  <div class="sign-in-form__error">Email adress is missing!</div>
+                </ng-container>
+              </ng-template>
+              <nz-form-control [nzErrorTip]="passwordTemplate">
+                <input class="sign-in-form__input" nz-input formControlName="password" type="password"
+                  placeholder="Password" />
+              </nz-form-control>
+              <ng-template #passwordTemplate>
+                <ng-container *ngIf="password.hasError('required')">
+                  <div class="sign-in-form__error">Password is missing !</div>
+                </ng-container>
+                <ng-container *ngIf="password.hasError('invalidCredentials')">
+                  <div class="sign-in-form__error">Invalid credentials</div>
+                </ng-container>
+              </ng-template>
+              <button [nzLoading]="this.facade?.tryingToSignIn$ | async" (click)="signIn(form)"
+                class="sign-in-form__btn" nz-button nzType="primary">Sign in</button>
+            </nz-form-item>
+          </ng-container>
+        </form>
+      </ng-container>
+      <div class="navigation">
+        <div class="navigation__item"><span class="navigation__text">No account?</span>
+          <a class="navigation__link" [routerLink]="['/sign_up']">Register here!</a>
+        </div>
+        <div class="navigation__item"><span class="navigation__text">Forgot password?</span>
+          <a [routerLink]="['/password_token']" class="navigation__link">Reset password here!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

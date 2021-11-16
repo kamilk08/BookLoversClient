@@ -1,0 +1,24 @@
+@import "../../../../shared/variables";
+
+$sorting-options: ".sorting-options";
+
+#{$sorting-options}{
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+
+  &__descending{
+    margin-left: 2rem;
+    font-weight: $boldWeight;
+  }
+
+  &__sort-by{
+    margin-right: 0.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__menu{
+    background-color: $menuBackground !important;
+  }
+
+}

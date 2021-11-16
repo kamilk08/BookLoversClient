@@ -1,0 +1,386 @@
+@import "../../shared/variables";
+
+$author: ".author";
+$author-books: ".author-books";
+$books: ".books";
+$author-series: ".author-series";
+$series: ".series";
+$author-quotes: ".author-quotes";
+$processing:".processing";
+
+@mixin processing {
+   &__processing{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    min-height: 14rem;
+    align-items: center;
+   }
+
+   &__processing-spinner{
+    font-size: 2.75rem;
+   }
+}
+
+#{$author} {
+  @include processing();
+
+  &__box{
+    width: 100%;
+  }
+
+  &__left{
+    margin-right:2rem;
+  }
+
+  &__fullname {
+    margin-bottom: 2rem !important;
+  }
+  &__fullname.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__fullname-left {
+    display: flex;
+    align-items: center;
+
+  }
+  &__remove-icon,
+  &__edit-icon {
+    padding: 1.5rem;
+    font-size: 1.75rem;
+    margin-left: 1.5rem;
+    border-radius: 50%;
+    transition: 0.2s background-color ease-in, 0.2s color ease-in;
+  }
+  &__remove-icon:hover,
+  &__edit-icon:hover {
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__basics {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__basics-box {
+    width: 30%;
+  }
+
+  &__basics-box-item {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+
+  &__basics-box-item-left {
+    width: 45%;
+    font-weight: $boldWeight;
+  }
+
+
+}
+
+#{$author-books} {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+
+  &__count {
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+}
+
+#{$books} {
+  @include processing();
+
+  &__content {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 1rem 0rem;
+  }
+  &__content-item {
+    margin-right: 1rem;
+    transition: 0.2s ease-in transform;
+    cursor: pointer;
+    flex: 1 1 21%;
+    margin-bottom: 0.5rem;
+    max-width: 12.5rem;
+  }
+  &__content-item:hover {
+    transform: scale(1.05);
+  }
+  &__content-item:nth-child(even)::ng-deep > a {
+    background-color: $secondaryColor;
+  }
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
+    min-height: 18rem;
+    align-items: center;
+    width: 100%;
+  }
+  &__no-results-text{
+    font-weight: $boldWeight;
+    padding: 0.75rem 1.25rem;
+    border: 3px solid $black;
+    font-size: 1.3rem;
+  }
+}
+
+#{$author-series} {
+  width: 100%;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+  &__count {
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+}
+
+#{$series} {
+  margin: 1rem 0rem;
+
+  @include processing();
+
+  &__item {
+    padding: 1rem;
+    margin: 1rem 0rem;
+    display: flex;
+    transition: 0.2s ease-in box-shadow, 0.2s ease-in transform;
+    cursor: pointer;
+  }
+  &__item:hover {
+    box-shadow: $primaryBoxShadow;
+    transform: scale(1.05);
+  }
+  &__item::nth-child(even) {
+    background-color: $secondaryColor;
+  }
+
+  &__covers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__cover{
+    margin-right: 1rem;
+  }
+
+  &__cover:last-of-type{
+    margin-right: 0rem;
+  }
+  &__cover:nth-child(odd){
+    background-color: $secondaryColor;
+  }
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
+    min-height: 18rem;
+    align-items: center;
+    width: 100%;
+  }
+  &__no-results-text{
+    font-weight: $boldWeight;
+    padding: 0.75rem 1.25rem;
+    border: 3px solid $black;
+    font-size: 1.3rem;
+  }
+}
+
+#{$author-quotes} {
+  width: 100%;
+  margin: 2.5rem 0rem 0rem;
+
+  @include processing();
+
+  &__header{
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: $boldWeight;
+    justify-content: space-between;
+  }
+  &__count{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+
+  &__bottom {
+    margin: 1.5rem 0rem;
+  }
+  &__item {
+    display: flex;
+    margin: 0.5rem 0rem;
+    transition: 0.2s ease-in box-shadow, 0.2s ease-in transform, 0.2s ease-in-out border;
+  }
+  &__item:hover {
+    box-shadow: $primaryBoxShadow;
+    transform: scale(1.05);
+
+  }
+  &__item:nth-child(even) {
+    background-color: $secondaryColor;
+  }
+
+  &__likes{
+    margin-top: 1rem;
+  }
+
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
+    min-height: 18rem;
+    align-items: center;
+    width: 100%;
+  }
+  &__no-results-text{
+    font-weight: $boldWeight;
+    padding: 0.75rem 1.25rem;
+    border: 3px solid $black;
+    font-size: 1.3rem;
+  }
+
+  &__add{
+    padding: 1.5rem;
+    font-size: 1.75rem;
+    border-radius: 50%;
+    -webkit-transition: 0.2s background-color ease-in, 0.2s color ease-in;
+    transition: 0.2s background-color ease-in, 0.2s color ease-in;
+  }
+
+  &__add:hover{
+    background-color: $primaryHover;
+    color: $primaryColor;
+  }
+
+}
+
+#{$processing}{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 80vh;
+  align-items: center;
+
+   &__spinner{
+    font-size: 4.75rem;
+   }
+}
+
+@media only screen and (max-width:1216px){
+  #{$author}{
+    &__fullname-left>div{
+      font-size: 1.6rem !important;
+    }
+
+    &__basics-box{
+      width: 45%;
+    }
+  }
+
+  #{$author-books}{
+    &__header{
+      font-size: 1.6rem;
+    }
+
+  }
+
+
+  #{$author-series}{
+    &__header{
+      font-size: 1.6rem;
+    }
+  }
+
+  #{$author-quotes}{
+    &__header{
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px){
+
+  #{$author}{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__left{
+      margin-right: 0rem;
+    }
+
+    &__fullname-left>div{
+      font-size: 1.6rem !important;
+    }
+  }
+
+  #{$author-books}{
+    &__header{
+      font-size: 1.6rem !important;
+    }
+  }
+
+
+  #{$author-series}{
+    &__header{
+      font-size: 1.6rem;
+    }
+  }
+
+  #{$series}{
+    &__no-results-text{
+      font-size: 1.1rem;
+    }
+  }
+
+  #{$author-quotes}{
+    &__header{
+      font-size: 1.6rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 769px){
+  .container{
+    margin: 0rem 2rem;
+  }
+
+  #{$books}{
+    &__content{
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__content-item{
+      margin-right: 0rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

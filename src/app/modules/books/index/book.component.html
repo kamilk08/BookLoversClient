@@ -1,0 +1,516 @@
+<app-navbar></app-navbar>
+<div *ngIf="{
+    book: this.bookViewService?.bookFacade?.bookById$(this.bookId) | async
+  } as data" class="container">
+  <div class="columns book-columns">
+    <div class="column is-8-fullhd is-8-widescreen is-11-desktop is-11-tablet">
+      <div class="columns">
+        <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-11-tablet">
+          <div class="columns">
+            <div class="column">
+              <cover [bookId]="this.bookId"></cover>
+              <book-stats [average]="(this.overviewsFacade?.singleOverview$(this.bookId) | async)?.average"
+                [ratingsCount]="(this.overviewsFacade?.singleOverview$(this.bookId) | async)?.ratings?.length">
+              </book-stats>
+              <div class="tags" *ngIf="data?.book?.hashTags">
+                <book-tag [tagText]="tag?.hashTagValue" *ngFor="let tag of data?.book?.hashTags">
+                </book-tag>
+              </div>
+            </div>
+            <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-8-tablet is-12-mobile">
+              <div class="book">
+                <div class="book__title-box title">
+                  <div class="book__title">{{data?.book?.basics?.title}}</div>
+                  <div nz-tooltip nzTooltipTitle="Edit book" class="book__edit" (click)="editBook()">
+                    <i class="icon ion-md-create book__icon"></i>
+                  </div>
+                  <ng-container *ngIf="this.authService?.isLibrarian || this.authService.isSuperAdmin">
+                    <div nz-tooltip nzTooltipTitle="Remove book" class="book__remove" (click)="removeBook(data?.book)">
+                      <i class="icon ion-md-close book__icon"></i>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="book__authors">
+                  <ng-container *ngFor="let bookAuthor of data?.book?.authors">
+                    <book-author
+                      *ngIf="this.bookViewService?.authorFacade?.authorById$(bookAuthor?.authorId)| async as author"
+                      [authorId]="bookAuthor?.authorId" [authorName]="author?.basics?.fullName?.value">
+                    </book-author>
+                  </ng-container>
+                </div>
+                <div class="book__publisher-and-series">
+                  <book-publisher [publisherId]="data?.book?.publisher?.publisherId"
+                    [publisherName]="this.bookViewService?.publisherFacade?.bookPublisherName$(bookId) | async">
+                  </book-publisher>
+                  <book-series
+                    *ngIf="this.bookViewService?.seriesFacade?.seriesByBookId$(this.bookId) | async as series"
+                    [seriesName]="series?.seriesName" [seriesId]="data?.book?.series?.seriesId"
+                    [position]="data?.book?.series?.positionInSeries">
+                  </book-series>
+                </div>
+                <div class="book__basics">
+                  <div class="book__basics-box">
+                    <book-basics-item text="ISBN" [value]="data?.book?.basics?.isbn">
+                    </book-basics-item>
+                    <book-basics-item text="Published"
+                      [value]="data?.book?.publisher?.published | amFromUtc | amDateFormat: 'YYYY-MM-DD'">
+                    </book-basics-item>
+                    <book-basics-item text="Cover type" [value]="data?.book?.cover?.coverType?.type">
+                    </book-basics-item>
+                  </div>
+                  <div class="book__basics-box">
+                    <book-basics-item text="Category" [value]="data?.book?.basics?.bookCategory?.name">
+                    </book-basics-item>
+                    <book-basics-item text="Pages" [value]="data?.book?.details?.pages">
+                    </book-basics-item>
+                    <book-basics-item text="Language" [value]="data?.book?.details?.language?.name">
+                    </book-basics-item>
+                  </div>
+                </div>
+                <ng-container *ngIf="this.ratingsFacade?.groupedRatings$(this.bookId)| async as groupedRatings">
+                  <div class="book__ratings">
+                    <book-ratings-circle class="book__ratings-circle"
+                      [average]="(this.overviewsFacade?.singleOverview$(this.bookId) | async)?.average">
+                    </book-ratings-circle>
+                    <div class="book__ratings-graph">
+                      <book-ratings-bar [rating]="5"
+                        [starRatingsCount]="this.ratingsFacade?.ratingsStarsCount$(this.bookId, this.bookViewService.getStars('FIVE')) | async"
+                        [allRatingsCount]="this.overviewsFacade?.allRatings$(this.bookId) | async">
+                      </book-ratings-bar>
+                      <book-ratings-bar [rating]="4"
+                        [starRatingsCount]="this.ratingsFacade?.ratingsStarsCount$(this.bookId, this.bookViewService.getStars('FOUR')) | async"
+                        [allRatingsCount]="this.overviewsFacade?.allRatings$(this.bookId) | async">
+                      </book-ratings-bar>
+                      <book-ratings-bar [rating]="3"
+                        [starRatingsCount]="this.ratingsFacade?.ratingsStarsCount$(this.bookId, this.bookViewService.getStars('THREE')) | async"
+                        [allRatingsCount]="this.overviewsFacade?.allRatings$(this.bookId) | async">
+                      </book-ratings-bar>
+                      <book-ratings-bar [rating]="2"
+                        [starRatingsCount]="this.ratingsFacade?.ratingsStarsCount$(this.bookId, this.bookViewService.getStars('TWO')) | async"
+                        [allRatingsCount]="this.overviewsFacade?.allRatings$(this.bookId) | async">
+                      </book-ratings-bar>
+                      <book-ratings-bar [rating]="1"
+                        [starRatingsCount]="this.ratingsFacade?.ratingsStarsCount$(this.bookId, this.bookViewService.getStars('ONE')) | async"
+                        [allRatingsCount]="this.overviewsFacade?.allRatings$(this.bookId) | async">
+                      </book-ratings-bar>
+                    </div>
+                  </div>
+                </ng-container>
+                <book-description [description]="data?.book?.description?.content"></book-description>
+              </div>
+            </div>
+          </div>
+          <ng-container
+            *ngIf="(this.userViewService?.reviewsPaginationFacade?.bookReviewsPageResult$ | async)?.items as reviews">
+            <div class="columns comments">
+              <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+                <comments-sorting
+                  *ngIf="userViewService?.reviewsPaginationFacade?.bookReviewsPageResult$ | async as pageResult">
+                  <comments-sorting-header [commentsCount]="pageResult?.totalItems" header>
+                  </comments-sorting-header>
+                  <comments-sorting-options [descending]="this.pageFacade?.descending$ | async"
+                    [sortNameText]="(this.pageFacade?.sortType$ | async)?.name" (sortTypeChange)="
+                      changeSortType($event)" (sortOrderChange)="changeSortOrder($event)" options>
+                  </comments-sorting-options>
+                </comments-sorting>
+                <div class="comments__content">
+                  <ng-container
+                    *ngIf="userViewService?.reviewsFacade?.userBookReview$(authService?.userId, this.bookId) | async as userReview">
+                    <book-comment class="comments__item comments--user-comment even" *ngIf="authService?.isLoggedIn()">
+                      <book-comment-avatar [userId]="userReview?.reviewedBy?.userId" user>
+                        <book-comment-user-stats
+                          [books]="this.readersStatisticsFacade?.userBooksInBookcase$(userReview?.reviewedBy?.userId) | async"
+                          [comments]="(userViewService?.readersStatisticsFacade?.readerStatistics$(this.authService?.userId) | async)?.reviewsCount">
+                        </book-comment-user-stats>
+                      </book-comment-avatar>
+                      <book-comment-content
+                        [reader]="userViewService?.readersFacade?.reader$(userReview?.reviewedBy?.userId)| async"
+                        [likedByUser]="false" [markedAsSpoilerByReader]="false" [markedAsSpoilerByOthers]="false"
+                        [isSpoilerFor]="false" [reportedByUser]="false" [showActionsBar]="false"
+                        [rating]="this.overviewsFacade?.currentRating$(bookId,userReview?.reviewedBy?.userId) | async"
+                        [review]="userReview" (reportReview)="reportReview($event, authService?.userId)"
+                        (markAsSpoiler)="toggleSpoilerMark($event,authService?.userId)"
+                        (likeReview)="toggleLikeReview($event,authService?.userId)" comment>
+                      </book-comment-content>
+                    </book-comment>
+                  </ng-container>
+                  <nz-divider class="comments__divider"></nz-divider>
+                  <ng-container
+                    *ngIf="{userReview:userViewService?.reviewsFacade?.userBookReview$(authService?.userId, bookId)| async,ratingsOverview:this.overviewsFacade?.singleOverview$(bookId) | async,bookcase:this.bookcaseFacade?.bookcaseByUser$(this.authService?.userId)| async} as addReviewData">
+                    <book-add-comment
+                      *ngIf="authService?.isLoggedIn() && !addReviewData?.userReview &&!(userViewService?.reviewsPaginationFacade?.processingBookReviewsPage$ | async)"
+                      class="comments__add-comment" (reviewPostChange)="onReviewPost($event,data?.book)">
+                      <ng-container shelfs>
+                        <book-tag tagText="Readed"></book-tag>
+                      </ng-container>
+                    </book-add-comment>
+                  </ng-container>
+                  <ng-container *ngIf="!this.authService.isLoggedIn()">
+                    <ng-container
+                      *ngIf="!(userViewService?.reviewsPaginationFacade?.processingBookReviewsPage$ | async);else loadingReviews">
+                      <ng-container *ngFor="let review of reviews;let i = index">
+                        <div class="comments__other">
+                          <book-comment
+                            [ngClass]="{'': this.bookViewService?.isEven(i),even: !bookViewService?.isEven(i)}"
+                            class="comments__item">
+                            <book-comment-avatar [userId]="review?.reviewedBy?.userId" user>
+                              <book-comment-user-stats
+                                [books]="this.readersStatisticsFacade?.userBooksInBookcase$(review?.reviewedBy?.userId) | async"
+                                [comments]="(userViewService?.readersStatisticsFacade?.readerStatistics$(review?.reviewedBy?.userId) | async)?.reviewsCount">
+                              </book-comment-user-stats>
+                            </book-comment-avatar>
+                            <book-comment-content
+                              [reader]="userViewService?.readersFacade?.reader$(review?.reviewedBy?.userId)| async"
+                              [likedByUser]="this.userViewService?.isReviewLikedBy$(authService?.userId,review?.identification?.id) | async"
+                              [markedAsSpoilerByReader]="review?.reviewContent?.markedAsSpoiler"
+                              [markedAsSpoilerByOthers]="review?.reviewContent?.markedAsSpoilerByOthers"
+                              [isSpoilerFor]="false"
+                              [reportedByUser]="this.userViewService?.isReviewReported$(authService?.userId,review?.identification?.id) | async"
+                              [showActionsBar]="this.authService.isLoggedIn()&& review?.reviewedBy?.userId!==this.authService?.userId"
+                              [rating]="this.overviewsFacade?.currentRating$(this.bookId,review?.reviewedBy?.userId) | async"
+                              [review]="review" comment>
+                            </book-comment-content>
+                          </book-comment>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="this.authService.isLoggedIn()">
+                    <ng-container
+                      *ngIf="!(userViewService?.reviewsPaginationFacade?.processingBookReviewsPage$ | async);else loadingReviews">
+                      <ng-container
+                        *ngFor="let review of userViewService?.reviewsWithoutReader(reviews,this.authService?.userId,bookId);let i = index">
+                        <div class="comments__other">
+                          <book-comment
+                            [ngClass]="{'': this.bookViewService?.isEven(i),even: !this.bookViewService?.isEven(i)}"
+                            class="comments__item">
+                            <book-comment-avatar [userId]="review?.reviewedBy?.userId" user>
+                              <book-comment-user-stats
+                                [books]="this.readersStatisticsFacade?.userBooksInBookcase$(review?.reviewedBy?.userId) | async"
+                                [comments]="(userViewService?.readersStatisticsFacade?.readerStatistics$(review?.reviewedBy?.userId) | async)?.reviewsCount">
+                              </book-comment-user-stats>
+                            </book-comment-avatar>
+                            <book-comment-content
+                              [reader]="userViewService?.readersFacade?.reader$(review?.reviewedBy?.userId)| async"
+                              [likedByUser]="this.userViewService?.isReviewLikedBy$(authService?.userId,review?.identification?.id) | async"
+                              [isSpoilerFor]="this.userViewService?.isReviewSpoiler$(authService?.userId,review?.identification?.id) | async"
+                              [markedAsSpoilerByReader]="review?.reviewContent?.markedAsSpoiler"
+                              [markedAsSpoilerByOthers]="review?.reviewContent?.markedAsSpoilerByOthers"
+                              [reportedByUser]="this.userViewService?.isReviewReported$(authService?.userId,review?.identification?.id) | async"
+                              [showActionsBar]="review?.reviewedBy?.userId!==this.authService?.userId"
+                              [rating]="this.overviewsFacade?.currentRating$(this.bookId,review?.reviewedBy?.userId) | async"
+                              [review]="review" (reportReview)="reportReview($event,this.authService?.userId)"
+                              (toggleSpoiler)="toggleSpoilerMark($event,this.authService?.userId)"
+                              (toggleLike)="toggleLikeReview($event,this.authService?.userId)" comment>
+                            </book-comment-content>
+                          </book-comment>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #loadingReviews>
+                    <nz-spin class="comments__loading" nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                    <ng-template #indicatorTemplate>
+                      <div><i nz-icon nzType="loading" class="comments__spinner"></i></div>
+                    </ng-template>
+                  </ng-template>
+                </div>
+                <ng-container
+                  *ngIf="userViewService?.reviewsPaginationFacade?.bookReviewsPageResult$ | async as reviewsPageResult">
+                  <ng-container *ngIf="userViewService?.hasReviews(reviews)">
+                    <comments-pagination [page]="reviewsPageResult?.page+1" [totalItems]="reviewsPageResult?.totalItems"
+                      (changePage)="onReviewsNextPage($event)">
+                    </comments-pagination>
+                  </ng-container>
+                </ng-container>
+                <ng-container
+                  *ngIf="!userViewService?.hasReviews(reviews) &&!(userViewService?.reviewsPaginationFacade?.processingBookReviewsPage$ | async)">
+                  <div class="comments__no-results">
+                    <div class="comments__no-results-box">No comments<dot></dot>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="this.pageFacade?.authorBooksCount$ | async as authorBooksCount">
+            <ng-container
+              *ngIf="this.bookViewService?.authorOtherBooksCount$(this.bookId) | async as authorOtherBooksCount">
+              <ng-container *ngIf="authorOtherBooksCount > 0 else noAuthorsBooks">
+                <ng-container
+                  *ngIf="this.bookViewService?.authorOtherBooks$(this.bookId,authorBooksCount) | async as otherBooks">
+                  <div class="columns authors-collection">
+                    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+                      <div class="authors-collection__header">
+                        <ng-container *ngIf="data?.book?.authors[0]?.authorId as authorId">
+                          <a [routerLink]="['/author',authorId]">
+                            <div class="authors-collection__header-top">
+                              <span class="authors-collection__count">({{
+                                this.bookViewService?.authorOtherBooksCount$(bookId) |async }})</span>
+                              Authors collection
+                            </div>
+                            <div class="authors-collection__tip">
+                              Other author books
+                            </div>
+                          </a>
+                        </ng-container>
+                      </div>
+                      <div class="authors-collection__content">
+                        <author-collection-item [bookId]="book?.identification?.id" class="authors-collection__item"
+                          *ngFor="let book of otherBooks">
+                          <author-collection-cover [bookId]="book?.identification?.id" cover>
+                          </author-collection-cover>
+                          <ng-container content>
+                            <div class="authors-collection__book-title">
+                              <div class="authors-collection__text">
+                                {{ book?.basics?.title }}
+                              </div>
+                            </div>
+                            <ng-container *ngFor="let author of this.bookViewService?.bookAuthors$(this.bookId)| async">
+                              <div class="authors-collection__author-fullname">
+                                <div class="authors-collection__text">
+                                  {{ author?.basics?.fullName?.value }}
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                          <author-collection-book-stars
+                            [rating]="(this.overviewsFacade?.singleOverview$(book?.identification?.id) | async)?.average"
+                            stars>
+                          </author-collection-book-stars>
+                          <author-collection-book-statistics
+                            [average]="(this.overviewsFacade?.singleOverview$(book?.identification?.id) | async)?.average"
+                            [ratingsCount]="(this.overviewsFacade?.singleOverview$(book?.identification?.id) | async)?.ratings?.length"
+                            statistics>
+                          </author-collection-book-statistics>
+                        </author-collection-item>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <ng-template #noAuthorsBooks>
+              <div class="columns">
+                <div class="column is-12">
+                  <div class="authors-collection__header">
+                    <div>
+                      <span class="authors-collection__count">(0)</span>
+                      Authors collection
+                    </div>
+                  </div>
+                  <div class="authors-collection__no-books">
+                    <div class="authors-collection__no-books-box">Empty collection<dot></dot>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #processingAuthorBooks>
+              <div class="columns">
+                <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+                  <div class="authors-collection__header">
+                    <div>
+                      <span class="authors-collection__count">(0)</span>
+                      Authors collection
+                    </div>
+                  </div>
+                  <div class="authors-collection__processing">
+                    <ng-template #indicatorTemplate>
+                      <div><i nz-icon nzType="loading" class="authors-collection__processing-spinner"></i></div>
+                    </ng-template>
+                    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="column is-4-fullhd is-4-widescreen is-11-desktop is-11-tablet book-extras">
+      <ng-container *ngIf="!(this.bookcaseFacade?.isProcessing$ | async) else processingBookcase">
+        <div class="mb-1">
+          <preview-bookcase [book]=" data?.book"
+            [ratingsOverview]="this.overviewsFacade?.singleOverview$(this.bookId) | async">
+          </preview-bookcase>
+        </div>
+      </ng-container>
+      <ng-template #processingBookcase>
+        <div class="book-extras__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="book-extras__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+      <ng-container *ngIf="!(this.bookViewService?.seriesFacade?.isProcessingSeries$ | async) else processingSeries">
+        <ng-container
+          *ngIf="this.bookViewService?.seriesFacade?.seriesById$(data?.book?.series?.seriesId)| async as bookSeries">
+          <div class="book-extras__item">
+            <div class="book-extras__header">
+              <div>
+                <span class="book-extras__count">({{this.bookViewService?.skipSeriesBook(bookSeries,bookId)?.length
+                  }})</span>Series
+                books
+                <div class="book-extras__tip" *ngIf="this.bookViewService?.hasSeriesMoreBooks(bookSeries,bookId)">
+                  Other elements in book series
+                </div>
+              </div>
+            </div>
+            <div class="columns" *ngIf="this.bookViewService?.hasSeriesMoreBooks(bookSeries,bookId);else noSeriesBooks">
+              <div
+                [ngClass]="{'book-extras__series-content': this.bookViewService?.hasSeriesMoreBooks(bookSeries,bookId),'': !this.bookViewService?.hasSeriesMoreBooks(bookSeries,bookId)}"
+                class="column is-12 book-extras__series-content">
+                <div class="book-extras__series-books">
+                  <ng-container *ngIf="this.pageFacade?.seriesCount$ | async as seriesCount">
+                    <other-series-book [bookId]="book"
+                      [title]="(this.bookViewService?.bookFacade.bookById$(book) | async)?.basics?.title"
+                      [bookId]="book"
+                      *ngFor="let book of this.bookViewService?.skipSeriesBook(bookSeries,bookId).take(seriesCount)">
+                    </other-series-book>
+                  </ng-container>
+                </div>
+                <div class="book-extras__show-more">
+                  <a [routerLink]="['/series',bookSeries?.identification?.id]"
+                    class="book-extras__link book-extras--series-link">Show more</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noSeriesBooks>
+            <div class="book-extras__no-other-books">
+              <div class="book-extras__empty-series">
+                Empty collection<dot></dot>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+      <ng-template #processingSeries>
+        <div class="book-extras__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="book-extras__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+      <div class="book-extras__processing" *ngIf="this.bookcaseStatisticsFacade?.isProcessingBookOnShelves$ | async">
+        <ng-template #indicatorTemplate>
+          <div><i nz-icon nzType="loading" class="book-extras__processing-spinner"></i></div>
+        </ng-template>
+        <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+      </div>
+      <ng-container *ngIf="!(this.bookcaseStatisticsFacade?.isProcessingBookOnShelves$ | async)">
+        <div class="book-extras__item">
+          <div class="book-extras__header">
+            <div>
+              <span class="book-extras__count">({{(this.bookcaseStatisticsFacade?.bookOnShelves$ |
+                async)?.length }})</span>On
+              shelves
+              <div class="book-extras__tip">
+                Book added by users to their shelves
+              </div>
+            </div>
+          </div>
+          <div class="book-extras__item-content"
+            *ngIf="(this.bookcaseStatisticsFacade?.bookOnShelves$ | async)?.length > 0;else noBookOnShelfs">
+            <div class="book-extras__shelves-with-book">
+              <book-on-shelf *ngFor="let pair of this.bookcaseStatisticsFacade?.bookOnShelves$ | async"
+                [shelfName]="pair?.key" [count]="pair?.value">
+              </book-on-shelf>
+            </div>
+          </div>
+        </div>
+        <ng-template #noBookOnShelfs>
+          <div class="book-extras__no-shelves-with-book">
+            <div class="book-extras__no-shelves">
+              No shelves<dot></dot>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      <div class="book-extras__item">
+        <ng-container *ngIf="this.bookViewService?.quotesFacade?.bookQuotesPageResult$ | async as quotes">
+          <ng-container *ngIf="quotes?.totalItems > 0">
+            <div class="book-extras__header book-extras--quotes-header">
+              <div>
+                <a class="book-extras__quotes-link" [routerLink]="['/quotes/book',this.bookId]">
+                  <span class="book-extras__count">({{(this.bookViewService?.quotesFacade?.bookQuotesPageResult$ |
+                    async)?.totalItems}})</span>Quotes
+                </a>
+                <div class="book-extras__tip">Quotes from book</div>
+              </div>
+              <ng-container *ngIf="this.pageFacade?.quotesCount$ | async as quotesCount">
+                <ng-container *ngIf="this.authService?.isLoggedIn()">
+                  <div class="book-extras__add-quote" (click)="addQuote(data?.book?.identification?.guid,quotesCount)">
+                    <i nz-tooltip nzTooltipTitle="Add quote" class="icon ion-md-create book-extras__add-quote-icon">
+                    </i>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container
+          *ngIf="!(this.bookViewService?.quotesFacade?.isProcessingBookQuotes$ | async) else processingQuotes">
+          <ng-container *ngIf="this.bookViewService?.quotesFacade?.bookQuotesPageResult$ | async as quotes">
+            <ng-container *ngIf="quotes?.totalItems > 0; else noQuotes">
+              <div class="columns">
+                <div class="column is-12 right-column">
+                  <div class="book-extras__quotes">
+                    <ng-container *ngIf="this.pageFacade?.quotesCount$ | async as quotesCount">
+                      <book-quote [ngClass]="{ even: i % 2 == 0, '': i % 2 != 0 }"
+                        *ngFor="let quote of this.bookViewService?.quotesFacade?.takeBookQuotes$(quotesCount) | async; let i = index"
+                        class="book-extras__quote" [quote]="quote"
+                        [canBeLiked]="quote?.addedBy?.id !== this.authService?.userId"
+                        [isLikedBy]="this.bookViewService?.quotesFacade?.isBookQuoteLikedBy$(quote?.identification?.id,this.authService?.userId) | async"
+                        (likeQuote)="onQuoteLike($event, this.authService?.userId)">
+                      </book-quote>
+                    </ng-container>
+                  </div>
+                  <ng-container *ngIf="this.pageFacade?.quotesCount$ | async as quotesCount">
+                    <div class="book-extras__show-more"
+                      *ngIf="(this.bookViewService?.quotesFacade?.bookQuotesPageResult$ | async)?.totalItems > 3">
+                      <a [routerLink]="['/quotes/book',this.bookId]"
+                        class="book-extras__link book-extras--quotes-link">Show
+                        more</a>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+      <ng-template #noQuotes>
+        <div class="book-extras__item">
+          <div class="book-extras__header book-extras--no-quote-header">
+            <div>
+              <div>
+                <span class="book-extras__count">(0)</span>Quotes
+              </div>
+              <div class="book-extras__tip">Quotes from book</div>
+            </div>
+          </div>
+          <div class="book-extras__no-quotes-box">
+            <ng-container *ngIf="this.pageFacade?.quotesCount$ | async as quotesCount">
+              <div (click)="addQuote(data?.book?.identification?.guid,quotesCount)" class="book-extras__no-quotes">
+                Add quote<dot></dot>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #processingQuotes>
+        <div class="book-extras__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="book-extras__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

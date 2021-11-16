@@ -1,0 +1,36 @@
+@import '../../../../../shared/_variables.scss';
+
+$followers-pagination:'.followers-pagination';
+
+#{$followers-pagination}{
+  text-align: center;
+  padding-top: 2.5rem;
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-prev::ng-deep.ant-pagination-item-link {
+    border: none;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-next::ng-deep.ant-pagination-item-link {
+    border: none;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item {
+    border: none;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    border-radius: 50%;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item.ant-pagination-item-active {
+    color: $primaryColor;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item:hover {
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+}

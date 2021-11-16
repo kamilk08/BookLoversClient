@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+<div class="container" *ngIf="this.pageFacade?.currentBookcase$| async as bookcase">
+  <div class="columns is-mobile recent-books">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+        <ng-container *ngIf="this.recentlyAddedBooks$(readerId) | async as recentlyAddedBooks">
+          <div class="recent-books__box" *ngIf="recentlyAddedBooks?.length>0">
+            <header headerText="Recently added" [countNumber]="recentlyAddedBooks?.length"></header>
+            <div class="recent-books__covers">
+              <recently-added-book [active]="true" [bookId]="bookId" *ngFor="let bookId of recentlyAddedBooks">
+                <recently-added-book-cover [bookId]="bookId" cover>
+                </recently-added-book-cover>
+                <recently-added-book-info info [title]="this.bookFacade?.bookTitle$(bookId) | async"
+                  [author]="this.bookAuthorFullName$(bookId) | async">
+                </recently-added-book-info>
+              </recently-added-book>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <div class="columns is-multiline  shelfs is-mobile">
+    <div class="column is-3-fullhd is-3-widescreen is-3-desktop is-12-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+        <header headerText="Shelves" [countNumber]="this.bookcaseFacade?.bookcaseShelvesCount$(this.readerId) | async">
+        </header>
+        <bookcase-shelves>
+          <shelf (selectShelf)="onShelfSelect($event)" [shelf]="shelf"
+            *ngFor="let shelf of (this.bookcaseFacade?.bookcaseByUser$(readerId) | async)?.shelfs">
+          </shelf>
+        </bookcase-shelves>
+      </ng-container>
+    </div>
+    <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-12-tablet is-12-mobile">
+      <header class="bookcase-header" headerText="Bookcase" [countNumber]="this.totalCount$ | async">
+        <bookcase-sorting [sortNameText]="(this.pageFacade?.sortType$ | async)?.name"
+          (openBookcaseSettings)="this.onOpenSettings(bookcase)" (sortTypeChange)="this.setSortType($event)"
+          (sortOrderChange)="this.setSortOrder($event)" (toggleSearch)="this.toggleSearchBar($event)">
+        </bookcase-sorting>
+      </header>
+      <bookcase-search-bar #searchBar (phraseChange)="onPhraseChange($event)"
+        [show]="this.pageFacade?.showSearchBar$ | async">
+      </bookcase-search-bar>
+      <ng-container *ngIf="!(this.paginationFacade?.processing$ | async)">
+        <ng-container *ngIf="(this.paginationFacade?.bookcaseBookIds$ | async)?.length > 0">
+          <div class="bookcase">
+            <ng-container *ngFor="let bookId of pageFacade?.currentBookIds$| async">
+              <bookcase-book>
+                <bookcase-book-cover class="bookcase__cover" [bookId]="bookId" cover>
+                </bookcase-book-cover>
+                <bookcase-book-content [series]="this.seriesFacade?.seriesByBookId$(bookId) | async"
+                  [ratingsOverview]="this.ratingsOverviewFacade.singleOverview$(bookId) | async"
+                  [book]="this.bookFacade?.bookById$(bookId) | async"
+                  [authors]="this.bookAuthors$(this.bookFacade.bookById$(bookId) | async) | async"
+                  [bookcasesCount]="this.statisticsFacade?.bookInBookcases$(bookId) | async" content>
+                  <span>Shelves:</span>
+                  <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+                    <ng-container
+                      *ngFor="let shelf of this.bookcaseFacade?.bookOnShelves$(bookId,readerId ? readerId : this.authService.userId) | async"
+                      shelfTags>
+                      <book-in-bookcase-shelf-tag [shelf]="shelf">
+                      </book-in-bookcase-shelf-tag>
+                    </ng-container>
+                  </ng-container>
+                  <book-in-bookcase-user-rating
+                    [rating]="this.ratingsOverviewFacade?.currentRating$(bookId, bookcase?.userId) | async" userRating>
+                  </book-in-bookcase-user-rating>
+                  <ng-container userActions *ngIf="this.bookFacade.bookById$(bookId) | async as book">
+                    <ng-container *ngIf="this.showBookcaseActions(bookcase)">
+                      <user-action (click)="openReadedShelfModal(book)" toolTipText="Edit"
+                        [icon]="this.actionIcons[0].value">
+                      </user-action>
+                    </ng-container>
+                    <ng-container *ngIf="this.showBookcaseActions(bookcase)">
+                      <user-action (click)="onRemoveOpenModal(book)" toolTipText="Remove from bookcase"
+                        [icon]="this.actionIcons[1].value"></user-action>
+                    </ng-container>
+                    <user-action (click)="onSeeReviews(book)" toolTipText="See reviews"
+                      [icon]="this.actionIcons[2].value">
+                    </user-action>
+                  </ng-container>
+                  <ng-container shelfRecord>
+                    <shelf-record [shelfRecord]="this.shelfRecord$(bookId,bookcase?.userId) | async">
+                    </shelf-record>
+                  </ng-container>
+                </bookcase-book-content>
+              </bookcase-book>
+              <nz-divider class="bookcase__divider"></nz-divider>
+            </ng-container>
+            <div class="bookcase__pagination" *ngIf="(this.pageFacade?.currentBookIds$ | async)?.length> 0">
+              <bookcase-pagination (changePage)="onChangePage($event)" [page]="paginationFacade?.currentPage$ | async"
+                [totalItems]="paginationFacade?.totalItems$ | async">
+              </bookcase-pagination>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="(this.paginationFacade?.processing$| async)">
+        <div class="loading">
+          <ng-template #indicatorTemplate>
+            <i nz-icon nzType="loading" class="loading__spinner"></i>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="(!(this.paginationFacade.processing$ | async)&&(this.pageFacade?.currentBookIds$ | async)?.length==0)">
+        <div class="no-results">
+          <div class="no-results__box">
+            No results <dot></dot>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

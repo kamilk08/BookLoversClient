@@ -1,0 +1,29 @@
+
+
+.book-author{
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    padding-bottom: 0.25rem;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.book-author::before{
+    background: currentColor;
+    content: '';
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: #7B60EA;
+    width: 100%;
+    transform: scale3d(0,1,1);
+    transform-origin: 0% 100%;
+    transition: transform 0.5s;
+}
+
+.book-author:hover::before{
+    transform: scale3d(1,1,1);
+}

@@ -1,0 +1,21 @@
+@import '../../../../shared/variables';
+
+$cover: ".cover";
+$no-cover: '.no-cover';
+
+.cover{
+  min-width: 4.688rem;
+  max-width: 4.688rem;
+  height: 7.813rem;
+}
+
+.no-cover{
+  min-width: 4.688rem;
+  max-width: 4.688rem;
+  height: 7.813rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: $boldWeight;
+}

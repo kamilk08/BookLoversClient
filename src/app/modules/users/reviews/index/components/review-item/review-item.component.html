@@ -1,0 +1,47 @@
+<div class="columns is-mobile review-item">
+  <div class="column is-3-fullhd is-3-widescreen is-3-desktop is-3-tablet is-12-mobile">
+    <ng-content></ng-content>
+    <div class="review-item__book-title-box mb-1 mt-1">
+      <ng-container *ngIf="this.book">
+        <a [routerLink]="['/book',book?.identification?.id]"
+          class="review-item__book-title">{{this.book?.basics?.title}}</a>
+      </ng-container>
+    </div>
+    <div class="review-item__book-authors">
+      <ng-container *ngIf="this.author">
+        <a [routerLink]="['/author',this.author?.identification?.id]"
+          class="review-item__author">{{this.author?.basics?.fullName?.value}}</a>
+      </ng-container>
+    </div>
+  </div>
+  <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-12-mobile">
+    <div class="review-item__top mb-1">
+      <div class="review-item__top-left">
+        <ng-container *ngIf="this.reader">
+          <a [routerLink]="['/users/',this.reader?.identification?.id,'profile']"
+            class="review-item__nickname mr-1">{{this.reader?.details.userName}}</a>
+        </ng-container>
+        <div class="review-item__date">
+          {{this.review?.reviewContent?.reviewDate | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+      </div>
+      <div class="review-item__top-right">
+        <nz-rate class="review-item__stars" [ngModel]="this.rating?.stars" nzDisabled></nz-rate>
+      </div>
+    </div>
+    <div class="review-item__shelves mb-2">
+      <div>
+        <tag *ngFor="let shelf of this.shelves" [tagText]="shelf?.name"></tag>
+      </div>
+    </div>
+    <div class="review-item__content mb-2">
+      {{this.review?.reviewContent?.reviewText}}
+    </div>
+    <div class="review-item__bottom">
+      <div class="review-item__likes mr-1">
+        <div class="review-item__likes-text mr-1">Likes:<span
+            class="review-item__likes-value">{{this.review?.likes?.length}}</span></div>
+        <i class="icon ion-md-heart review-item__likes-icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

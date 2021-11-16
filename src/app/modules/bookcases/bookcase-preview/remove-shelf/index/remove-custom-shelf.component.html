@@ -1,0 +1,9 @@
+<div class="remove-custom-shelf">
+  <div class="remove-custom-shelf__box">
+      Removing <span class="remove-custom-shelf__shelf-name">{{this.shelf?.name}}</span> shelf will remove all books stored on that shelf. Do you want to proccede <span class="change-shelf__exclamation">❗</span>
+  </div>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__clear" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+  <button class="actions__submit" nz-button nzType="primary" (click)="ok()">Ok</button>
+</div>

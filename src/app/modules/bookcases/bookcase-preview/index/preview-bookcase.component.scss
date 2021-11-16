@@ -1,0 +1,63 @@
+@import "../../../shared/variables";
+
+$preview-bookcase: ".preview-bookcase";
+
+#{$preview-bookcase}{
+
+  &__header{
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: $boldWeight;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  &__icon{
+    font-size: 1.5rem;
+    padding: 1.35rem;
+    transition: 0.2s color ease-in,0.2s background-color ease;
+    border-radius: 50%;
+  }
+
+  &__icon:hover{
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__bookcase{
+    padding: 1.25rem 1.25rem 0rem 2rem;
+  }
+
+  &__see-bookcase{
+    margin-top: 1rem;
+    text-align: right;
+    font-weight: $boldWeight;
+  }
+
+  &__text{
+    display: inline-block;
+    position: relative;
+    padding-bottom: 0.25rem;
+    color: $black;
+    cursor: pointer;
+  }
+
+  &__text:hover::before{
+    transform: scale3d(1,1,1);
+  }
+
+  &__text::before{
+    background: currentColor;
+    content: '';
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;
+    width: 100%;
+    transform: scale3d(0,1,1);
+    transform-origin: 0% 100%;
+    transition: transform 0.5s;
+  }
+}

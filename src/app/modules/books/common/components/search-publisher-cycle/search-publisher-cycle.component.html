@@ -1,0 +1,21 @@
+<ng-container [formGroup]="form">
+    <nz-form-item class="search-publisher-cycle">
+        <nz-form-label class="search-publisher-cycle__label">
+            Publisher cycle
+            <i class="icon ion-md-help-circle search-publisher-cycle__icon" nz-tooltip
+                nzTitle="What do you want other to call you"></i>
+        </nz-form-label>
+        <nz-select [compareWith]="compare" class="search-publisher-cycle__input" formControlName="publisherCycles" nzMode="multiple" nzPlaceHolder="Select publisher" nzAllowClear
+            nzShowSearch nzServerSearch (nzOnSearch)="onSearch($event)">
+            <ng-container *ngFor="let publisherCycle of publisherCycles">
+                <nz-option *ngIf="!isFiltered" [nzValue]="publisherCycle" [nzLabel]="publisherCycle?.name">
+                </nz-option>
+            </ng-container>
+            <nz-option *ngIf="isFiltered" nzDisabled nzCustomContent>
+                <i nz-icon nzType="loading"></i>
+                Loading
+                Data...
+            </nz-option>
+        </nz-select>
+    </nz-form-item>
+</ng-container>

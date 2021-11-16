@@ -1,0 +1,180 @@
+@import "../../shared/variables";
+
+$home-header:".home-header";
+$home-content:".home-content";
+$options:".options";
+$opinions: ".opinions";
+$quotes:".quotes";
+$fees:".fees";
+$register-account:".register-account";
+
+#{$home-header}{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4.5rem 2rem 4.5rem 2rem;
+  text-align: center;
+
+  &__book-lovers {
+    display: inline-flex;
+  }
+
+  &__logo {
+    margin-right: 1rem;
+    color: $secondaryText;
+    font-size: 1.75rem;
+    font-weight: $boldWeight;
+  }
+
+  &__text {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    font-weight: $boldWeight;
+    color: $secondaryText;
+  }
+  &__text:hover {
+    text-decoration: underline;
+  }
+
+  &__navigation{
+    margin-left: 2.5rem;
+  }
+
+  &__sign-up,
+  &__login,
+  &__browse{
+    margin: 0rem 1rem;
+    font-size: 1rem;
+    font-weight: $boldWeight;
+    color: $black;
+  }
+  &__sign-up:hover,
+  &__login:hover,
+  &__browse:hover{
+    text-decoration: underline;
+  }
+
+  &__sign-up{
+    color: $primaryColor;
+  }
+}
+
+#{$home-content}{
+  &__top{
+    font-size: 2.5rem;
+    font-weight: $boldWeight;
+    color: $black;
+    text-align: center;
+  }
+
+  &__bottom{
+    margin: 2rem 0rem;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 1.75;
+    margin: 1.5rem 0rem;
+    color: $secondaryBlack;
+  }
+}
+
+#{$options}{
+  margin: 5rem 0rem;
+  text-align: center;
+
+  &__top{
+    font-size: 2.5rem;
+    font-weight: $secondaryText;
+    color: $black;
+    text-align: center;
+  }
+
+  &__activities{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2.5rem;
+  }
+  &__activity:not(.last){
+    padding-bottom: 2.5rem;
+  }
+
+  &__emoji{
+    font-size: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  &__text-box{
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__text{
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid $primaryColor;
+  }
+}
+
+#{$opinions}{
+  font-size: 2.5rem;
+  font-weight: $boldWeight;
+  color: $black;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+
+#{$quotes}{
+  margin-bottom: 2rem;
+
+  &__item{
+    padding: 1.5rem;
+    font-size: 1rem;
+    background-color: $secondaryColor;
+    border-radius: 0.75rem;
+  }
+
+  &__item:not(.first){
+    margin-top: 1.5rem;
+  }
+
+  &__content{
+    line-height: 1.75;
+  }
+
+  &__footer{
+    font-weight: $boldWeight;
+    margin-top: 1rem;
+  }
+}
+
+#{$fees}{
+  &__top{
+    font-size: 2.5rem;
+    font-weight: $boldWeight;
+    color: $black;
+    text-align: center;
+  }
+
+  &__bottom{
+  margin: 2rem 0rem;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 1.75;
+    margin: 1.5rem 0rem;
+    color: $secondaryText;
+  }
+}
+
+#{$register-account}{
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 4rem;
+
+  &__link{
+    padding: 0.825rem 3.875rem;
+    background-color: $primaryHover;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: $boldWeight;
+  }
+}

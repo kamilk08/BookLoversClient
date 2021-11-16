@@ -1,0 +1,225 @@
+<app-navbar></app-navbar>
+<ng-container *ngIf="this.pageFacade?.authorId$ | async as authorId">
+  <ng-container *ngIf="this.authorsFacade?.authorById$(authorId) | async as author">
+    <div class="container pt-2 pb-2">
+      <div class="columns is-mobile author">
+        <div class="column author__left is-3-fullhd is-3-widescreen is-4-desktop is-5-tablet is-9-mobile mr-2">
+          <div class="columns">
+            <div class="column is-12">
+              <author-image [authorId]="authorId">
+              </author-image>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-12">
+              <author-statistics [booksCount]="author?.books?.length" [followersCount]="author?.followers?.length"
+                [booksAverage]="this.statisticsFacade?.authorAverage$(authorId) | async">
+              </author-statistics>
+            </div>
+          </div>
+          <div class="columns is-mobile is-centered">
+            <div class="column is-7 is-5-mobile">
+              <ng-container *ngIf="this.authService?.isLoggedIn()">
+                <follow-author class="author__add-or-remove-follower"
+                  [followed]="this.authorsFacade?.hasFollower$(authorId,this.authService?.userId) | async"
+                  (followChange)="this.addOrRemoveFollower(author)">
+                </follow-author>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="column author is-8-fullhd is-8-widescreen is-7-desktop is-10-tablet">
+          <div class="author__box">
+            <div class="author__fullname title">
+              <div class="author__fullname-left">
+                <div>{{author?.basics?.fullName?.value}}</div>
+                <author-genres [genres]="this.authorsFacade?.authorGenres$(authorId) | async">
+                </author-genres>
+              </div>
+              <div>
+                <i (click)="editAuthor(author)" class="icon ion-md-create author__edit-icon"></i>
+                <i (click)="removeAuthor(author)" class="icon ion-md-close author__remove-icon"></i>
+              </div>
+            </div>
+            <div class="author__basics">
+              <div class="author__basics-box">
+                <div *ngIf="this.authorsFacade?.hasBirthPlace$(authorId) | async" class="author__basics-box-item">
+                  <div class="author__basics-box-item-left">Birthplace:</div>
+                  <div class="author__basics-box-item-right">{{author?.details?.birthPlace}}</div>
+                </div>
+                <div class="author__basics-box-item">
+                  <div class="author__basics-box-item-left">Sex:</div>
+                  <div class="author__basics-box-item-right">{{author?.basics?.sex?.name}}</div>
+                </div>
+              </div>
+              <div class="author__basics-box">
+                <div *ngIf="this.authorsFacade?.hasBirthDate$(authorId) | async" class="author__basics-box-item">
+                  <div class="author__basics-box-item-left">Birth date:</div>
+                  <div class="author__basics-box-item-right">
+                    {{author?.details?.birthDate | amFromUtc | amDateFormat:'YYYY-MM-DD'}}</div>
+                </div>
+                <div class="author__basics-box-item" *ngIf="author?.details?.deathDate">
+                  <div class="author__basics-box-item-left">Death date:</div>
+                  <div class="author__basics-box-item-right">
+                    {{author?.details?.deathDate | amFromUtc | amDateFormat:'YYYY-MM-DD'}}</div>
+                </div>
+              </div>
+              <div class="author__basics-box" *ngIf="this.authorsFacade?.hasWebSite$(this.authorId) | async ">
+                <div class="author__basics-box-item">
+                  <a externalLink [link]="author?.description?.website" class="author__basics-box-item-left">Website</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <author-description [description]="author?.description?.about"
+            [descriptionSource]="author?.description?.source">
+          </author-description>
+          <div class="author-books">
+            <div class="author-books__header">
+              <span class="author-books__count">({{(this.authorsFacade?.authorBooksPageResult$ |
+                async)?.totalItems}})</span>
+              Books
+            </div>
+            <author-books-search (phraseChange)="this.searchAuthorBooks($event.phrase)">
+            </author-books-search>
+          </div>
+          <div class="books">
+            <div class="books__content">
+              <ng-container *ngIf="!(this.authorsFacade?.processingAuthorBooks$ | async) else processingBookResults">
+                <author-book-item [bookId]="book?.identification?.id" class="books__content-item"
+                  *ngFor="let book of this.authorBooks$ | async">
+                  <author-book-cover [bookId]="book?.identification?.id" book-cover>
+                  </author-book-cover>
+                  <author-book-content [book]="book"
+                    [overview]="this.ratingsOverviewFacade?.singleOverview$(book?.identification?.id) | async"
+                    book-content>
+                  </author-book-content>
+                </author-book-item>
+                <div class="books__no-results"
+                  *ngIf="(this.authorsFacade.authorBooksPageResult$ | async)?.totalItems===0">
+                  <div class="books__no-results-text">No books<dot></dot>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #processingBookResults>
+                <div class="books__processing">
+                  <ng-template #indicatorTemplate>
+                    <div><i nz-icon nzType="loading" class="books__processing-spinner"></i></div>
+                  </ng-template>
+                  <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                </div>
+              </ng-template>
+            </div>
+            <ng-container *ngIf="(this.authorsFacade?.authorBooksPageResult$ | async) as pageResult">
+              <ng-container *ngIf="pageResult?.totalItems > 0">
+                <author-books-pagination (pageChange)="onBooksNextPage($event)"
+                  [pageSize]="this.pageFacade?.maxBooksCount$ | async" [currentPage]="pageResult.page+1"
+                  [totalItems]="pageResult?.totalItems">
+                </author-books-pagination>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="author-series mt-2 mb-2">
+            <div>
+              <div class="author-series__header">
+                <span class="author-series__count">({{this.seriesPagination?.totalItems$ | async }})</span>
+                Series
+              </div>
+            </div>
+            <div>
+              <div class="series">
+                <ng-container *ngIf="!(this.seriesPagination?.isProcessingPage$ | async) else processingSeries">
+                  <author-series-item [seriesId]="series?.identification?.id" class="series__item"
+                    *ngFor="let series of this.seriesPagination?.paginatedSeries$ | async">
+                    <author-series-content class="mt-2 mb-2"
+                      [seriesStatistics]="this.statisticsFacade?.seriesStatistics$(series?.identification?.id) | async"
+                      [bookSeries]="series" series-content>
+                    </author-series-content>
+                    <div class="series__covers" series-covers>
+                      <ng-container *ngIf="this.pageFacade?.maxSeriesBooksCount$ | async as seriesBooksCount">
+                        <author-series-cover class="series__cover" [bookId]="bookId"
+                          *ngFor="let bookId of series?.books?.take(seriesBooksCount)">
+                        </author-series-cover>
+                      </ng-container>
+                    </div>
+                  </author-series-item>
+                  <div class="series__no-results" *ngIf="(this.seriesPagination?.totalItems$ | async)==0">
+                    <div class="series__no-results-text">No series<dot></dot>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-template #processingSeries>
+                  <div class="series__processing">
+                    <ng-template #indicatorTemplate>
+                      <div><i nz-icon nzType="loading" class="series__processing-spinner"></i></div>
+                    </ng-template>
+                    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="!(this.seriesPagination?.isProcessingPage$ | async)">
+            <ng-container *ngIf="this.seriesPagination?.totalItems$ | async as seriesCount">
+              <ng-container *ngIf="seriesCount > 0">
+                <author-series-pagination [pageSize]="this.pageFacade?.maxSeriesCount$ | async"
+                  [currentPage]="this.seriesPagination?.currentPage$ | async"
+                  [totalItems]="seriesPagination?.totalItems$ | async" (pageChange)="this.onSeriesNextPage($event)">
+                </author-series-pagination>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <div class="author-quotes">
+            <div class="author-quotes__top">
+              <div class="author-quotes__header">
+                <div>
+                  <span class="author-quotes__count">({{this.quotesFacade?.totalAuthorQuotes$|
+                    async}})</span>
+                  Quotes
+                </div>
+                <i (click)="addAuthorQuote(author)" class="icon ion-md-create author-quotes__add"></i>
+              </div>
+            </div>
+            <div class="author-quotes__bottom">
+              <ng-container *ngIf="!(this.quotesFacade?.isProcessingAuthorQuotes$ | async) else processingQuotes">
+                <author-quote-item class="author-quotes__item" [author]="author" [quote]="quote"
+                  *ngFor="let quote of this.quotesFacade?.authorPaginatedQuotes$ | async">
+                  <author-quote-likes class="author-quotes__likes"
+                    [isLikedBy]="this.quotesFacade.isAuthorQuoteLikedBy$(quote?.identification?.id,this.authService?.userId) | async"
+                    [quote]="quote" (quoteLike)="this.addOrRemoveQuoteLike($event.quote)">
+                  </author-quote-likes>
+                </author-quote-item>
+                <author-quotes-pagination (pageChange)="onQuotesNextPage($event)"
+                  [pageSize]="this.pageFacade?.maxQuotesCount$ | async"
+                  [totalItems]="this.quotesFacade?.totalAuthorQuotes$ | async"
+                  [currentPage]="(this.quotesFacade?.currentAuthorQuotesPage$ | async)">
+                </author-quotes-pagination>
+                <div class="author-quotes__no-results" *ngIf="(this.quotesFacade?.totalAuthorQuotes$ | async)==0">
+                  <div class="author-quotes__no-results-text">No quotes<dot></dot>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #processingQuotes>
+                <div class="author-quotes__processing">
+                  <ng-template #indicatorTemplate>
+                    <div><i nz-icon nzType="loading" class="author-quotes__processing-spinner"></i></div>
+                  </ng-template>
+                  <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="(this.authorsFacade.authorById$(authorId) | async)===undefined">
+    <div class="processing">
+      <ng-template #indicatorTemplate>
+        <div><i nz-icon nzType="loading" class="processing__spinner"></i></div>
+      </ng-template>
+      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+    </div>
+  </ng-container>
+</ng-container>
+<app-footer></app-footer>

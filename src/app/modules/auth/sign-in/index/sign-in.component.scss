@@ -1,0 +1,106 @@
+@import "../../../shared/variables";
+
+$login-header: ".login-header";
+$sign-in: ".sign-in";
+$social-links: ".social-links";
+$sign-in-info: ".info";
+$sign-in-form: ".sign-in-form";
+$navigation: ".navigation";
+
+#{$login-header} {
+  margin: 2.5rem 2rem 2rem 2rem;
+  text-align: center;
+  padding-bottom: 0rem;
+
+  .login-header__book-lovers {
+    display: inline-flex;
+  }
+
+  .login-header__logo {
+    margin-right: 1rem;
+    color:$secondaryText;
+    font-size: 1.75rem;
+    font-weight: $boldWeight;
+  }
+
+  .login-header__text {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    font-weight: $boldWeight;
+    color: $secondaryText;
+  }
+  .login-header__text:hover {
+    text-decoration: underline;
+  }
+}
+
+#{$sign-in} {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+#{$sign-in-info} {
+  text-align: center;
+  margin: 1.5rem 0rem;
+  font-weight: $boldWeight;
+  font-size: 1rem;
+}
+
+#{$sign-in-form} {
+  // margin: 0rem 2rem;
+
+  .sign-in-form__input {
+    background-color: $secondaryColor;
+    transition: background-color 0.15s, box-shadow 0.15s, border-color 0.15s,
+      color 0.15s;
+    cursor: pointer;
+  }
+  .sign-in-form__input:hover {
+    border-color: $borderColor;
+  }
+  .sign-in-form__input:focus {
+    background-color: $white;
+    border-color: $borderColor;
+    color: $secondaryText;
+    outline: 0;
+    box-shadow: none;
+  }
+  .sign-in-form__input::placeholder {
+    color: $placeholderColor;
+  }
+
+  .sign-in-form__btn{
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    height: 2.35rem;
+  }
+}
+
+#{$navigation} {
+  margin: 0rem 2rem;
+  text-align: center;
+
+  .navigation__item {
+    margin: 0.5rem 0rem;
+
+    .navigation__text {
+      font-size: 1rem;
+    }
+
+    .navigation__link {
+      font-size: 1rem;
+      margin-left: 0.5rem;
+    }
+    .navigation__link:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px){
+  #{$sign-in-info}{
+    text-align: center;
+  }
+}

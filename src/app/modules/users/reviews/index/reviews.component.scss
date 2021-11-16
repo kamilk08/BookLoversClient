@@ -1,0 +1,55 @@
+@import "../../../shared/variables";
+
+$item:'.item';
+$no-reviews:'.no-reviews';
+$reviews: '.reviews';
+
+#{$reviews}{
+  &__spinner-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0rem;
+    min-height: 28rem;
+  }
+
+  &__spinner{
+    font-size: 4.5rem;
+  }
+}
+
+#{$item}{
+  display: flex;
+
+}
+
+#{$item}:nth-child(even){
+  background-color: $secondaryColor !important;
+}
+
+#{$no-reviews}{
+  padding: 12rem 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  font-weight: $boldWeight;
+  color: $black;
+}
+
+@media only screen and (max-width: 769px){
+  .container{
+    margin: 2rem 2rem 2rem;
+  }
+
+  #{$item}{
+
+    &__cover{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+
+

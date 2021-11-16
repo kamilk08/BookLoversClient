@@ -1,0 +1,82 @@
+<app-navbar></app-navbar>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-8-fullhd">
+      <div class="quotes-header">
+        <div class="quotes-header__top">
+          <ng-container *ngIf="this.pageFacade?.bookQuotesId$ | async as bookId">
+            <a [routerLink]="['/book',bookId]" class="quotes-header__top-left title">{{this.bookTitle$ | async}}</a>
+          </ng-container>
+          <div class="quotes-header__top-right">
+            <div class="quotes-header__statistics-item">
+              <div class="quotes-header__statistics-item-left">
+                <i class="icon ion-md-quote quotes-header__icon"></i>
+              </div>
+              <div class="quotes-header__statistics-item-right">
+                <div class="quotes-header__statistics-text">Quotes</div>
+                <div class="quotes-header__statistics-value">({{this.quotesFacade?.totalBookQuotes$ | async}})</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-8-fullhd">
+      <div class="quotes-sorting">
+        <div class="quotes-sorting__descending">
+          <label class="quotes-sorting__descending-checkbox" nz-checkbox (ngModelChange)="onChangeSortOrder($event)"
+            [ngModel]="this.pageFacade?.descending$ | async">Descending
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-8-fullhd">
+      <ng-container *ngIf="!(this.quotesFacade?.isProcessingBookQuotes$ | async) else processing">
+        <ng-container *ngIf="this.quotesFacade?.bookQuotesPageResult$ | async as pageResult">
+          <ng-container *ngIf="pageResult?.totalItems!==0 else noResults">
+            <div class="quotes">
+              <ng-container *ngFor="let quote of pageResult?.items">
+                <quote-item class="quotes__item" [quote]="quote" [author]="this.authorQuote$ | async">
+                  <quote-item-likes (quoteLike)="onQuoteLike($event)" [quote]="this.quote"
+                    [canBeLiked]="quote?.addedBy?.id !== this.authService?.userId"
+                    [isLikedBy]="this.quotesFacade?.isBookQuoteLikedBy$(quote?.identification?.id,this.authService?.userId) | async">
+                  </quote-item-likes>
+                </quote-item>
+              </ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-template #processing>
+        <div class="quotes__spinner-box">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="quotes__spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+      <ng-template #noResults>
+        <div class="quotes__no-results">
+          <div class="quotes__no-results-text">No quotes<dot></dot>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-8-fullhd">
+      <ng-container *ngIf="this.quotesFacade?.bookQuotesPageResult$ | async as pageResult">
+        <div class="quotes-pagination">
+          <quotes-pagination (pageChange)="onQuotesPageChange($event)" [totalItems]="pageResult?.totalItems"
+            [pageSize]="this.pageFacade?.qoutesCount$ | async" [currentPage]="pageResult?.page+1">
+          </quotes-pagination>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

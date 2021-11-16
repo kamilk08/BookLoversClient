@@ -1,0 +1,11 @@
+<div class="change-shelf">
+  <div class="change-shelf__box">
+    Moving book from <span class="change-shelf__shelf-name">Readed</span> shelf to <span
+      class="change-shelf__shelf-name">{{newShelf?.name}}</span> will
+    remove your review and rating. <span class="change-shelf__exclamation">❗</span>
+  </div>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__clear" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+  <button class="actions__submit" nz-button nzType="primary" (click)="submit()">Change shelf</button>
+</div>

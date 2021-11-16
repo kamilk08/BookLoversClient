@@ -1,0 +1,36 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
+
+import { BookcaseBookComponent } from './bookcase-book.component';
+
+describe('BookcaseBookComponent', () => {
+  let component: BookcaseBookComponent;
+  let fixture: ComponentFixture<BookcaseBookComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
+        RouterModule.forRoot([]), FormsModule, ReactiveFormsModule],
+      declarations: [BookcaseBookComponent]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BookcaseBookComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

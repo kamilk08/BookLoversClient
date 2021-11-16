@@ -1,0 +1,163 @@
+<div class="columns is-mobile is-centered">
+  <div class="column is-6-fullhd is-6-widescreen is-6-desktop is-6-tablet is-12-mobile sign-up-header">
+    <a class="sign-up-header__book-lovers">
+      <span class="sign-up-header__logo">BL<dot></dot></span>
+      <span class="sign-up-header__text">Booklovers</span>
+    </a>
+  </div>
+</div>
+<div class="columns is-mobile is-centered">
+  <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+    <div class="columns is-multiline is-centered is-mobile">
+      <div class="column is-3-fullhd is-4-widescreen is-4-desktop is-5-tablet is-10-mobile">
+        <h2 class="sign-up-info-header">Share you favourite books with others <dot></dot>
+        </h2>
+        <div class="sign-up-info">
+          <div class="sign-up-info__emoji">📕</div>
+          <div class="sign-up-info__text">Discover new books or authors that u did not know <dot></dot>
+          </div>
+        </div>
+        <div class="sign-up-info">
+          <div class="sign-up-info__emoji">💬</div>
+          <div class="sign-up-info__text">Communicate with others thate have same hobbies like you <dot></dot>
+          </div>
+        </div>
+        <div class="sign-up-info">
+          <div class="sign-up-info__emoji">📚</div>
+          <div class="sign-up-info__text">Keep record of all your books in one place <dot></dot>
+          </div>
+        </div>
+        <div class="sign-up-info">
+          <div class="sign-up-info__emoji">🤝</div>
+          <div class="sign-up-info__text">Exchange books that u dont want with others <dot></dot><span
+              class="sign-up-info__soon">Soon!</span></div>
+        </div>
+      </div>
+      <div class="column is-3-fullhd is-4-widescreen is-4-desktop is-5-tablet is-10-mobile">
+        <div class="sign-up">
+          <h2>Join to Booklovers</h2>
+          <div class="sign-up__info">Register and become <span class="sign-up__user-count">1235</span> <span
+              class="sign-up__underscore">booklover</span></div>
+          <ng-container *ngIf="this.facade.signUpForm$ | async as form">
+            <form [formGroup]="form">
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="usernameErrorTemplate">
+                  <nz-input-group [nzSuffix]="userNameSpinnerTempalte">
+                    <input formControlName="username" class="sign-up__input" nz-input type="text"
+                      placeholder="Username" />
+                    <ng-template #usernameErrorTemplate let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                        <div class="sign-up__form-error"> Username is required</div>
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">
+                        <div class="sign-up__form-error"> Username should have
+                          atleast
+                          {{ form.get('username').errors?.minlength?.requiredLength }} characters</div>
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('cannotContainSpace') && !control.hasError('minlength')">
+                        <div class="sign-up__form-error">
+                          Username cannot contain
+                          spaces
+                        </div>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="control.hasError('usernameNotUnique') && !control.hasError('cannotContainSpace')">
+                        <div class="sign-up__form-error">Username is not unique</div>
+                      </ng-container>
+                    </ng-template>
+                    <ng-template #usernNameIndicatorTemplate><i nz-icon nzType="loading" class="sign-up__spinner"></i>
+                    </ng-template>
+                    <ng-template #userNameSpinnerTempalte>
+                      <nz-spin *ngIf="form.get('username').status === 'PENDING'" nzSimple
+                        [nzIndicator]="usernNameIndicatorTemplate"></nz-spin>
+                      <i *ngIf="form.get('username').status === 'VALID'"
+                        class="icon ion-md-checkmark sign-up__valid"></i>
+                    </ng-template>
+                  </nz-input-group>
+                </nz-form-control>
+                <nz-form-control [nzErrorTip]="emailErrorTemplate">
+                  <nz-input-group [nzSuffix]="emailSpinnerTempalte">
+                    <input formControlName="email" class="sign-up__input" nz-input type="text"
+                      placeholder="Email adress" />
+                  </nz-input-group>
+                  <ng-template #emailErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      <div class="sign-up__form-error">Email is required</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('email') && !control.hasError('required')">
+                      <div class="sign-up__form-error"> Email is not valid</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('emailNotUnique') && !control.hasError('email')">
+                      <div class="sign-up__form-error"> Email is not unique</div>
+                    </ng-container>
+                  </ng-template>
+                  <ng-template #emailIndicatorTemplate><i nz-icon nzType="loading" class="sign-up__spinner"></i>
+                  </ng-template>
+                  <ng-template #emailSpinnerTempalte>
+                    <nz-spin *ngIf="form.get('email').status === 'PENDING'" nzSimple
+                      [nzIndicator]="emailIndicatorTemplate"></nz-spin>
+                    <i *ngIf="form.get('email').status === 'VALID'" class="icon ion-md-checkmark sign-up__valid"></i>
+                  </ng-template>
+                </nz-form-control>
+                <nz-form-control [nzErrorTip]="passwordErrorTemplate">
+                  <input formControlName="password" class="sign-up__input" nz-input type="text"
+                    placeholder="Password" />
+                  <ng-template #passwordErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      <div class="sign-up__form-error">
+                        Password is required
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('hasUpperCase') && !control.hasError('required')">
+                      <div class="sign-up__form-error">Password should have atleast one
+                        uppercase letter
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('hasNumber') && !control.hasError('hasUpperCase')">
+                      <div class="sign-up__form-error">Password should contain atleast one number</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('minlength') && !control.hasError('hasNumber')">
+                      <div class="sign-up__form-error">Password should have atleast
+                        {{form.get('password').errors.minlength.requiredLength}} characters.</div>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+                <nz-form-control [nzErrorTip]="repeatPasswordErrorTemplate">
+                  <input formControlName="repeatPassword" class="sign-up__input" nz-input type="password"
+                    placeholder="Repeat password" />
+                  <ng-template #repeatPasswordErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      <div class="sign-up__form-error">
+                        Confirm password is required
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('passwordMismatch') && !control.hasError('required')">
+                      <div class="sign-up__form-error"> Confirm password do not match</div>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+                <div class="sign-up__terms">
+                  <nz-form-control>
+                    <label class="sign-up__terms-checkbox"
+                      [ngClass]="{'sign-up__terms-error':!form.get('terms').value && form.get('terms').dirty}"
+                      formControlName="terms" nz-checkbox><span class="sign-up__terms-checkbox-text">By creating an
+                        account to the <a>terms of use</a> and our <a>privacy policy</a></span></label>
+                  </nz-form-control>
+                  <label formControlName="newsletter" nz-checkbox><span class="sign-up__terms-checkbox-text">Send
+                      Newsletter</span> </label>
+                </div>
+                <button [nzLoading]="this.facade.tryingToSignUp$ | async" [disabled]="!form.valid"
+                  (click)="signUp(form)" class="sign-up__btn" nz-button nzType="primary">Sign up</button>
+              </nz-form-item>
+            </form>
+          </ng-container>
+          <div class="sign-up__navigation">
+            <div>Already have an account?</div><a [routerLink]="['/sign_in']" class="sign-up__navigation-link">Sign
+              in!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

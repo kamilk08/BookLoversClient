@@ -1,0 +1,23 @@
+@import "../../../../../shared/variables";
+
+.browse-pagination::ng-deep.ant-pagination::ng-deep.ant-pagination-prev::ng-deep.ant-pagination-item-link{
+  border:none;
+  font-weight: $boldWeight;
+  font-size: 1.25rem;
+}
+
+.browse-pagination::ng-deep.ant-pagination::ng-deep.ant-pagination-next::ng-deep.ant-pagination-item-link{
+  border:none;
+  font-weight: $boldWeight;
+  font-size: 1.25rem;
+}
+
+.browse-pagination::ng-deep.ant-pagination::ng-deep.ant-pagination-item{
+  border: none;
+  font-weight: $boldWeight;
+  font-size: 1.25rem;
+}
+
+.browse-pagination::ng-deep.ant-pagination::ng-deep.ant-pagination-item.ant-pagination-item-active{
+  color: $primaryColor;
+}

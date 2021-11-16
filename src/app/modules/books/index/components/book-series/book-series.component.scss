@@ -1,0 +1,47 @@
+@import "../../../../shared/variables";
+
+$book-series: ".book-series";
+
+#{$book-series} {
+  font-size: 1.05rem;
+  position: relative;
+  display: flex;
+
+  &__text {
+    font-size: 1.05rem;
+    margin-right: 0.5rem;
+  }
+
+  &__value {
+    cursor: pointer;
+    padding-bottom: 0.25rem;
+    position: relative;
+    outline: none;
+    text-decoration: none;
+    color: default;
+    color: $secondaryBlack;
+  }
+
+  &__value::before {
+    background: currentColor;
+    content: "";
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;
+    width: 100%;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 0% 100%;
+    transition: transform 0.5s;
+  }
+
+  &__value:hover::before {
+    transform: scale3d(1, 1, 1);
+  }
+
+  &__value > span {
+    margin-left: 0.5rem;
+    color: $primaryColor;
+  }
+}

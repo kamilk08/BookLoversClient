@@ -1,0 +1,18 @@
+<nz-form-item class="add-book-hashtag">
+  <nz-form-label class="add-book-hashtag__form-label">Hash tags
+    <i class="icon ion-md-help-circle add-book-hashtag__help-icon" nz-tooltip
+      nzTitle="First thoughts that comes to your mind about book."></i>
+  </nz-form-label>
+  <nz-form-control class="add-book-hashtag__items">
+    <nz-tag class="add-book-hashtag__item" *ngFor="let hashTag of hashTags; let i = index" [nzMode]="getMode()"
+      (nzOnClose)="close(hashTag)">
+      <i class="add-book-hashtag__item-icon" nz-icon nzType="number"></i>{{hashTag.hashTagValue}}
+    </nz-tag>
+    <nz-tag *ngIf="!inputVisible" class="add-book-hashtag__item add-book-hashtag__item--editable" nzNoAnimation
+      (click)="showInput()">
+      <i nz-icon nzType="number"></i> New Tag
+    </nz-tag>
+    <input class="add-book-hashtag__input" #inputElement nz-input nzSize="big" *ngIf="inputVisible" type="text"
+      (blur)="addHashTag()" (keydown.enter)="addHashTag()" />
+  </nz-form-control>
+</nz-form-item>

@@ -1,0 +1,171 @@
+<app-navbar></app-navbar>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="series">
+        <ng-container *ngIf="this.pageFacade?.seriesId$ | async as seriesId">
+          <div class="series__top title">{{this.seriesFacade?.seriesTitle$(seriesId) | async}}</div>
+          <div class="series__statistics">
+            <div class="series__statistics-item">
+              <div class="series__statistics-item-left"><i class="icon ion-md-book series__statistics-icon"></i>
+              </div>
+              <div class="series__statistics-item-right">
+                <div class="series__statistics-text">Books</div>
+                <div class="series__statistics-value">{{this.seriesFacade?.seriesBooksCount$(this.seriesId) | async}}
+                </div>
+              </div>
+            </div>
+            <div class="series__statistics-item">
+              <div class="series__statistics-item-left"><i class="icon ion-md-podium series__statistics-icon"></i>
+              </div>
+              <div class="series__statistics-item-right">
+                <div class="series__statistics-text">Average</div>
+                <div class="series__statistics-value">
+                  {{(this.statisticsFacade?.seriesAverage$(this.seriesId) | async) | number:'1.2-2'}}</div>
+              </div>
+            </div>
+            <div class="series__statistics-item">
+              <div class="series__statistics-item-left">
+                <i class="series__statistics-icon series--star-icon" nz-icon nzType="star" nzTheme="outline"></i>
+              </div>
+              <div class="series__statistics-item-right">
+                <div class="series__statistics-text">Ratings</div>
+                <div class="series__statistics-value">{{this.statisticsFacade?.seriesRatingsCount$(this.seriesId) |
+                  async}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.seriesId$ | async as seriesId">
+        <ng-container *ngIf="this.seriesAuthor$(seriesId) | async as author">
+          <div class="author">
+            <a [routerLink]="['/author',author?.identification?.id]" class="author__link">
+              {{author?.basics?.fullName?.value}}
+            </a>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="search">
+        <div class="search__left">
+          <series-books-sorting-options [descending]="this.pageFacade?.descending$ | async"
+            [sortNameText]="(this.pageFacade?.sortType$ | async)?.name" (sortTypeChange)="onSortTypeChange($event)"
+            (sortOrderChange)="onSortOrderChange($event)">
+          </series-books-sorting-options>
+        </div>
+        <div class="search__right">
+          <search-series-book #search (phraseChange)="onBookPhraseChange($event)">
+          </search-series-book>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="series-books" *ngIf="!(this.seriesFacade?.processingBooks$| async) else processingBooks">
+        <ng-container *ngIf="(this.seriesFacade?.seriesBooksPageResult$| async)?.totalItems>0 else noBooks">
+          <div class="series-books__item" *ngFor=" let book of this.seriesBooks$ | async">
+            <div class="columns">
+              <div
+                class="column is-one-fifth-fullhd is-one-quarter-widescreen is-one-quarter-desktop is-one-quarter-tablet is-12-mobile">
+                <series-page-cover [bookId]="book?.identification?.id"></series-page-cover>
+              </div>
+              <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet">
+                <div class="columns">
+                  <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-12-mobile">
+                    <div class="series-books__content">
+                      <div class="series-books__series-book-title">
+                        <a [routerLink]="['/book',book?.identification?.id]"
+                          class="series-books__title">{{book?.basics?.title}}</a>
+                        <span class="series-books__position ml-1">({{book?.series?.positionInSeries}})</span>
+                      </div>
+                      <div class="series-books__authors-box">
+                        <div class="series-books__authors" *ngFor="let author of this.bookAuthors$(book) | async">
+                          <a [routerLink]="['/author',author?.identification?.id]" class="series-books__author-item">
+                            {{author?.basics?.fullName?.value}}
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="series-books__average">
+                          <div class="series-books__icon-box"><i
+                              class="icon ion-md-podium series-books__average-icon"></i></div>
+                          <div class="series-books__average-text">Average</div>
+                          <div class="series-books__average-value">
+                            {{((this.overviewsFacade?.bookAverage$(book?.identification.id) | async) | number: '1.2-2')}}
+                          </div>
+                        </div>
+                        <div class="series-books__statistics">
+                          <div class="series-books__in-bookcases">
+                            <div class="series-books__icon-box"><i
+                                class="icon ion-md-list series-books__bookcase-icon"></i></div>
+                            <div class="series-books__in-bookcases-text">Bookcases</div>
+                            <div class="series-books__in-bookcases-value">
+                              {{this.bookcaseStatisticsFacade?.bookInBookcases$(book?.identification?.id) | async}}</div>
+                          </div>
+                          <div class="series-books__reviews">
+                            <div class="series-books__icon-box"><i
+                                class="icon ion-md-chatboxes series-books__reviews-icon"></i></div>
+                            <div class="series-books__reviews-text">Reviews</div>
+                            <div class="series-books__reviews-value">{{book?.reviews?.length}}</div>
+                          </div>
+                          <div class="series-books__ratings">
+                            <div class="series-books__icon-box"><i
+                                class="icon ion-md-star series-books__ratings-icon"></i></div>
+                            <div class="series-books__ratings-text">Ratings</div>
+                            <div class="series-books__ratings-value">
+                              {{this.overviewsFacade?.allRatings$(book?.identification?.id) | async}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-template #processingBooks>
+        <div class="series-books__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="series-books__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+      <ng-template #noBooks>
+        <div class="series-books__no-books">
+          No books<dot></dot>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="columns is-mobile is-centered">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <ng-container *ngIf="this.seriesFacade?.seriesBooksPageResult$ | async as pageResult">
+        <ng-container *ngIf="pageResult?.totalItems > 0 && !(this.seriesFacade?.processingBooks$ | async)">
+          <series-books-pagination (pageChange)="onBooksPageChange($event)"
+            [pageSize]="this.pageFacade?.pageSize$ | async" [currentPage]="pageResult?.page+1"
+            [totalItems]="pageResult?.totalItems">
+          </series-books-pagination>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

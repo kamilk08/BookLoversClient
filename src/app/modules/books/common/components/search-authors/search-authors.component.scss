@@ -1,0 +1,27 @@
+@import "../../../../shared/variables";
+
+$searchAuthors: ".search-authors";
+
+#{$searchAuthors} {
+  margin-bottom: 0.75rem;
+
+  &__label ::ng-deep label {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 1rem;
+    font-weight: $boldWeight;
+    color: $secondaryBlack;
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+
+  &__input{
+    font-weight: $mediumWeight;
+  }
+
+  &__error{
+    font-weight: $mediumWeight;
+  }
+}

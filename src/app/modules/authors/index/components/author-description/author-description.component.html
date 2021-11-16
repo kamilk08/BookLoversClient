@@ -1,0 +1,27 @@
+<ng-container *ngIf="(this.description!=='' && this.description!==null) else noDescription">
+  <ng-container *ngIf="((this.description?.length >= this.maxDescriptionCount) && !this.expanded) else fullDescription">
+    <div class="author-description author-description--sliced">
+      <span class="author-description__letter">{{firstLetter()}}</span>
+      {{sliceDescription(this.afterBigLetter,this.maxDescriptionCount)}}
+      <div class="author-description__expand" (click)="toggleExpand()"><span
+          class="author-description__expand-link">Expand</span></div>
+    </div>
+  </ng-container>
+  <ng-template #fullDescription>
+    <div class="author-description author-description--full">
+      <span class="author-description__letter">{{firstLetter()}}</span>
+      {{sliceDescription(this.afterBigLetter,this.description?.length)}}
+      <div *ngIf="this.description?.length>=this.maxDescriptionCount" class="author-description__expand"
+        (click)="toggleExpand()"><span class="author-description__expand-link">Collapse</span></div>
+    </div>
+  </ng-template>
+</ng-container>
+<ng-template #noDescription>
+  <div class="author-description">
+    <div class="author-description__no-description">No description<dot></dot>
+    </div>
+  </div>
+</ng-template>
+<div class="author-description-source" *ngIf="this.descriptionSource">
+  <a externalLink [link]="descriptionSource" class="author-description-source__text">Description source</a>
+</div>

@@ -1,0 +1,138 @@
+@import "../../variables";
+
+$navigation: ".navigation";
+$notification-wall: ".notification-wall";
+$notification-wall-header:'.notification-wall-header';
+
+#{$navigation} {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem 1rem 0rem;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+    letter-spacing: -1px;
+    margin-bottom: 0rem;
+    height: 3.125rem;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &__item--right {
+    margin-bottom: 0rem;
+  }
+
+  &__item--logged-in {
+    flex: 0.25;
+    justify-content: flex-end;
+    margin-bottom: 0rem;
+    margin-right: 4rem;
+  }
+
+  &__item-child {
+    font-size: 1rem;
+    padding: 0.5rem;
+    transition: ease-in-out 0.2s all;
+    cursor: pointer;
+  }
+
+  &__item-child--right {
+    font-size: 0.9rem;
+    font-weight: $boldWeight;
+    display: inline-block;
+    text-align: center;
+    margin: 0rem 0.5rem;
+    transition: 0.2s ease-in-out color;
+    color: #8c8c8c;
+  }
+
+  &__item-child--right:last-of-type {
+    height: unset;
+  }
+
+  &__item-child--right:last-of-type {
+    margin-right: 0rem;
+  }
+
+  &__item-child--right:first-of-type {
+    margin-left: 0rem;
+  }
+
+  &__item-child--active {
+    background-color: $primaryBackground;
+    color: $primaryColor;
+    border-radius: 4px;
+  }
+
+
+  &__icon {
+    height: 1.875rem;
+    cursor: pointer;
+    transition: none;
+    font-size: 1.35rem;
+    padding: 0rem 1rem;
+  }
+
+  &__user-menu-icon {
+    font-size: 1.2rem;
+    margin-right: 0.8rem;
+  }
+
+  &__user-menu-text {
+    font-size: 0.85rem;
+  }
+
+  &__user-menu-item.mat-menu-item {
+    line-height: 2.375rem !important;
+    height: 2.375rem !important;
+    padding: 0 0.875rem 0px 0.875rem !important;
+  }
+
+  &__link {
+    color: $black;
+    position: relative;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+  &__item--sign{
+    font-size: 1rem;
+    margin: 0rem 0.25rem;
+  }
+
+  &__link:hover::before {
+    transform: scale3d(1, 1, 1);
+  }
+  &__link::before{
+    background: currentColor;
+    content: '';
+    position: absolute;
+    bottom: calc(0% - 6px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;;
+    width: 100%;
+    transform: scale3d(0,1,1);
+    transform-origin: 50% 100%;
+    transition: transform 0.5s;
+  }
+
+  &item--sign-in{
+    padding: 0.1rem;
+  }
+
+  &__menu{
+    background-color: rgba(18,18,18,.95) !important;
+  }
+}

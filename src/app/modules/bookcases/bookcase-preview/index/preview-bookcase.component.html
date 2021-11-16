@@ -1,0 +1,23 @@
+<ng-container *ngIf="this.pageService?.previewFacade?.loggedInUserBookcase$ | async as bookcase">
+  <div class="preview-bookcase">
+    <div class="preview-bookcase__header">
+      <div>Bookcase</div>
+      <i (click)="this.pageService?.openSettings()" class="icon ion-md-settings preview-bookcase__icon"></i>
+    </div>
+    <div class="columns">
+      <div class="column is-12 preview-bookcase__bookcase">
+        <div class="preview-bookcase__shelves">
+          <preview-bookcase-shelf (click)="addToShelf(shelf)"
+            [hasBook]="pageService?.hasBookOnShelf$(book?.identification?.id,shelf?.identification?.id) | async"
+            [shelfIcon]="pageService?.shelfIcons[i]?.icon" [shelfName]="shelf?.name"
+            [booksOnShelf]="shelf?.books?.length" *ngFor="let shelf of bookcase?.getCoreShelfs(); let i = index;">
+          </preview-bookcase-shelf>
+        </div>
+        <div class="preview-bookcase__see-bookcase">
+          <a class="preview-bookcase__text" [routerLink]="['/bookcase/reader/',this.authService?.userId]">See
+            bookcase</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

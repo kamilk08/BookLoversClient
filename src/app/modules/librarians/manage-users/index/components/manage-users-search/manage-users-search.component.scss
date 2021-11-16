@@ -1,0 +1,71 @@
+@import '../../../../../shared/variables';
+
+$search: '.search';
+
+#{$search}{
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+  &.open{
+    display: inline-block;
+    position: relative;
+    text-align: left;
+  }
+  &.close{
+    display: inline-block;
+    position: relative;
+    text-align: right;
+  }
+
+  &__icon{
+    position: absolute;
+    font-size: 1.5rem;
+    top: 0rem;
+    padding: 1.35rem;
+    border-radius: 50%;
+    color: $primaryColor;
+    transition: left 0.4s ease-in-out,0.2s background-color ease-in, 0.2s color ease-in;
+  }
+  &__icon:hover{
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__icon.open{
+    left: 0.75rem;
+    right: initial;
+    padding: 1.35rem 1.35rem 1.35rem 1rem;
+  }
+
+  &__icon.open:hover{
+    background-color: transparent;
+  }
+
+  &__icon.close{
+    left:13.25rem
+  }
+
+  &__input{
+    border: none;
+    background-color: $secondaryColor;
+    padding: 0.5rem 0rem 0.5rem 1rem;
+    width: 100%;
+    font-size: 1.25rem;
+    text-indent: 2.25rem;
+    border-radius: 8px;
+    transition: width 0.4s ease-in-out,border-radius 0.4s ease-in-out,background-color 0.4s ease-in-out;
+    float: right;
+  }
+  &__input:focus{
+    background-color: $secondaryColor !important;
+    outline: none;
+  }
+
+  &__input.close{
+    width: 0%;
+    background-color: $white;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+}

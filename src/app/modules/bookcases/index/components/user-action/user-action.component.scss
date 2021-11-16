@@ -1,0 +1,30 @@
+@import "../../../../shared/variables";
+
+$user-action:".user-action";
+
+#{$user-action}{
+  color: $black;
+  margin-right: 0.5rem;
+
+  &__icon{
+    font-size: 1.75rem;
+    padding: 1.35rem;
+    transition: 0.2s color ease-in,0.2s background-color ease;
+    border-radius: 50%;
+  }
+
+  &__icon.book--edit-icon:hover{
+    color: $primaryColor;
+    background-color: $primaryBackground;
+  }
+
+  &__icon.book--remove-icon:hover{
+    color: $removeColor;
+    background-color: $removeBackgroundColor;
+  }
+
+  &__icon.book--reviews-icon:hover{
+    color: $infoColor;
+    background-color: $infoBackgroundColor;
+  }
+}

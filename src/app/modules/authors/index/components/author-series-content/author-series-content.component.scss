@@ -1,0 +1,55 @@
+@import '../../../../shared/variables';
+
+$series-content:'.author-series-content';
+$series-statistics: '.author-series-statistics';
+
+#{$series-content}{
+  display: flex;
+  align-items: center;
+
+  &__title{
+    margin-right: 1rem;
+    font-weight: $boldWeight;
+    font-size: 1.15rem;
+  }
+
+  &__books-count{
+    display: flex;
+    font-size: 1.15rem;
+  }
+  &__count-value{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+  }
+}
+
+#{$series-statistics}{
+  display: flex;
+  align-items: center;
+  margin-top: 0.35rem;
+
+  &__average{
+    display: flex;
+    margin-left: 1rem;
+  }
+  &__text{
+    font-weight: $boldWeight;
+  }
+  &__value{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-left: 0.5rem;
+  }
+
+  &__average-box{
+    margin-right: 0.5rem;
+  }
+  &__rate::ng-deep.ant-rate{
+    font-size: 0.95rem;
+    color: $primaryColor;
+  }
+}
+
+@media only screen and (max-width: 610px){
+
+}

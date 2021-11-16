@@ -1,0 +1,131 @@
+@import "../../shared/variables";
+
+$recent-books:'.recent-books';
+$bookcase-header:'.bookcase-header';
+$shelfs:".shelfs";
+$bookcase:".bookcase";
+$pagination: ".pagination";
+$loading: ".loading";
+$no-results: ".no-results";
+
+#{$recent-books}{
+  margin-bottom: 1.5rem;
+
+  &__box{
+    margin-top: 1.5rem;
+  }
+  &__covers{
+    display: flex;
+    margin: 1.5rem 0rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+#{$shelfs}{
+  margin-top: 2rem;
+}
+
+#{$bookcase}{
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+
+  .cover{
+    display: flex;
+  }
+
+  .bookcase--no-results{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    min-height: 25rem;
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+
+  &__no-results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__no-results-text{
+    display: inline-block;
+    padding-bottom: 0.25rem;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__no-results-text::before{
+    background: currentColor;
+    content: '';
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;
+    width: 100%;
+  }
+
+  &__no-results-emoji{
+    margin-top: 1rem;
+  }
+
+  &__divider{
+    background-color: $primaryColor;
+    height: 2px;
+  }
+
+  &__divider:last-child{
+    display: none;
+  }
+
+  &__pagination{
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0rem;
+  }
+}
+
+// #{$pagination}{
+
+// }
+
+#{$loading}{
+  text-align: center;
+  padding: 12rem 0rem 12rem 0rem;
+
+  &__spinner{
+    font-size: 5rem;
+  }
+}
+
+#{$no-results}{
+  text-align: center;
+  padding: 12rem 0rem 12rem 0rem;
+
+  &__box{
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+
+}
+
+@media only screen and (max-width: 1024px){
+  .container{
+    margin: 2rem 2rem 2rem;
+  }
+}
+@media only screen and (max-width: 769px){
+  #{$recent-books}{
+    &__covers{
+      justify-content: center;
+    }
+  }
+
+  #{$bookcase-header}::ng-deep>div{
+    display: flex;
+    flex-direction: column;
+  }
+}

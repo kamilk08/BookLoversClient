@@ -1,0 +1,15 @@
+@import "../../variables";
+
+$dot:".dot";
+
+#{$dot}{
+  width: 5px;
+  height: 6px;
+  display: inline-block;
+  background-color: $primaryColor;
+  margin-left: 0.2rem;
+}
+
+// .dot{
+
+// }

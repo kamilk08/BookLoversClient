@@ -1,0 +1,8 @@
+<div class="remove__text">
+  Do you want to remove <span class="remove__flag">author</span>?
+  This action <span class="remove__flag">cannot</span> be undone.
+</div>
+<div *nzModalFooter>
+  <button class="remove__cancel" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+  <button class="remove__confirm" nz-button nzType="primary" (click)="confirm()">Confirm</button>
+</div>

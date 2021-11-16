@@ -1,0 +1,46 @@
+@import "../../../../shared/variables";
+
+$series-book: ".other-series-book";
+
+
+#{$series-book}{
+
+
+  max-width: 4.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: 0.2s transform ease-in;
+  cursor: pointer;
+  color: $secondaryText;
+  margin-right: 1rem;
+
+  &__no-cover{
+    padding: 3rem 0.5rem;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    background-color: $secondaryColor;
+    margin-bottom: 1rem;
+  }
+
+  &__text{
+    font-size: 0.9rem;
+  }
+
+  &__title{
+    font-size: 0.85rem;
+    font-weight: $boldWeight;
+    margin-top: 1rem;
+  }
+
+  &__image{
+    width: 4.375rem !important;
+    height: 10rem !important;
+  }
+}
+
+#{$series-book}:hover{
+  transform: scale(1.15);
+}
+

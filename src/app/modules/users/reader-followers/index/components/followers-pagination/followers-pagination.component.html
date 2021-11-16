@@ -1,0 +1,5 @@
+<div class="followers-pagination">
+  <nz-pagination class="followers-pagination__paginator" (nzPageIndexChange)="toNextPage($event)"
+    [nzPageIndex]="this.currentPage" [nzTotal]="this.totalItems" [nzPageSize]="this.pageSize">
+  </nz-pagination>
+</div>

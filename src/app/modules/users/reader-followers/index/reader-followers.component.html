@@ -1,0 +1,311 @@
+<app-navbar></app-navbar>
+<div class="container followers">
+  <div class="columns is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-tablet is-12-desktop is-12-mobile">
+      <div class="columns is-mobile is-centered">
+        <div class="column is-9-fullhd is-10-widescreen is-11-desktop is-11-tablet is-11-mobile">
+          <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+            <header class="followers__header mt-3"
+              [countNumber]="this.sumOfFollowersAndFollowings$() | async"
+              [headerText]="this.readersFacade?.userName$(readerId) | async">
+              <div class="followers__statistics">
+                <div class="followers__statistics-item" (click)="moveToFollowers()">
+                  <div class="followers__statistics-item-left">
+                    <i class="icon ion-md-person followers__statistics-icon"></i>
+                  </div>
+                  <div class="followers__statistics-item-right">
+                    <div class="followers__statistics-text">Followers</div>
+                    <div class="followers__statistics-value">
+                      {{this.pageFacade?.currentFollowersCount$ | async}}</div>
+                  </div>
+                </div>
+                <div class="followers__statistics-item" (click)="moveToFollowings()">
+                  <div class="followers__statistics-item-left">
+                    <i class="icon ion-md-contacts followers__statistics-icon"></i>
+                  </div>
+                  <div class="followers__statistics-item-right">
+                    <div class="followers__statistics-text">Followings</div>
+                    <div class="followers__statistics-value">{{this.pageFacade?.currentFollowingsCount$ | async}}</div>
+                  </div>
+                </div>
+              </div>
+            </header>
+          </ng-container>
+        </div>
+      </div>
+      <div class="columns is-mobile is-centered">
+        <div class="column is-9-fullhd is-10-widescreen is-11-desktop is-11-tablet is-11-mobile">
+          <div class="search-followers-box mt-1 mb-1">
+            <search-followers class="search-followers-box__component" (searchPhrase)="onSearchPhrase($event)">
+            </search-followers>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-mobile is-centered">
+        <div class="column is-9-fullhd is-10-widescreen is-11-desktop is-11-tablet is-11-mobile">
+          <ul class="followers__list">
+            <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+              <ng-container *ngIf="this.pageFacade?.showFollowers$ | async else followings">
+                <ng-container *ngIf="!(this.isProcessing$ | async) else processing">
+                  <ng-container
+                    *ngIf="(this.followersFacade?.followersPage$(readerId) | async)?.totalItems > 0 else noResults">
+                    <li class="followers__item" *ngFor="let follower of this.followersFacade?.followers$(readerId) | async">
+                      <div class="followers__item-left">
+                        <div class="followers__content">
+                          <follower-avatar class="followers__user-avatar" [followerId]="follower?.followedById">
+                          </follower-avatar>
+                          <div class="followers__info">
+                            <div class="followers__info-top">
+                              <ng-container *ngIf="this.follower">
+                                <a [routerLink]="['/users',follower?.followedById,'profile']"
+                                  class="followers__username">
+                                  {{this.readersFacade?.userName$(follower?.followedById) | async}}
+                                </a>
+                                <ng-container
+                                  *ngIf="(this.followersFacade?.hasFollowing$(readerId,follower?.followedById) | async) as hasFollowing">
+                                  <ng-container
+                                    *ngIf="this.readersFacade?.reader$(follower?.followedById) | async as reader">
+                                    <stop-following-reader (unFollowChange)="onUnFollowChange($event)"
+                                      [shouldIconBeVisible]="this.shouldAddOrRemoveFollowerSignBeVisible$() | async"
+                                      [followed]="reader"
+                                      [followedBy]="this.readersFacade?.reader$(follower?.followedObjectId) | async">
+                                    </stop-following-reader>
+                                  </ng-container>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="!(this.followersFacade?.hasFollowing$(readerId,follower?.followedById) | async) as hasFollowing">
+                                  <ng-container
+                                    *ngIf="this.readersFacade?.reader$(follower?.followedById) | async as reader">
+                                    <start-following-reader (startFollowingChange)="onFollowChange($event)"
+                                    [shouldIconBeVisible]="this.shouldAddOrRemoveFollowerSignBeVisible$() | async"
+                                    [followed]="reader"
+                                      [followedBy]="this.readersFacade?.reader$(follower?.followedObjectId) | async">
+                                    </start-following-reader>
+                                  </ng-container>
+                                </ng-container>
+                              </ng-container>
+                            </div>
+                            <div class="followers__info-middle">
+                              <div class="followers__role">
+                                Role: <span
+                                  class="followers__role-value">{{this.readersFacade?.role$(follower?.followedById) |
+                                  async}}</span>
+                              </div>
+                              <div class="followers__date">Joined at<span
+                                  class="followers__date-value">{{this.readersFacade?.joinedAt$(follower?.followedById)
+                                  |
+                                  async | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</span>
+                              </div>
+                            </div>
+                            <div class="followers__info-bottom">
+                              <div nzTooltipTitle="Bookcase collection" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-book followers__books"></i>
+                                <div class="followers__books-value">
+                                  {{this.statisticsFacade?.userBooksInBookcase$(follower?.followedById) | async}}</div>
+                              </div>
+                              <div nzTooltipTitle="Followers" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-person followers__icon"></i>
+                                <div class="followers__value">
+                                  {{(this.followersFacade?.followers$(follower?.followedById) |
+                                  async)?.length}}</div>
+                              </div>
+                              <div nzTooltipTitle="Reviews" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-chatboxes followers__reviews"></i>
+                                <div class="followers__reviews-value">
+                                  {{this.statisticsFacade?.reviewsCount$(follower?.followedById) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Added books" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="followers__added-books" nz-icon nzType="folder-add" nzTheme="outline"></i>
+                                <div class="followers__added-books-value">
+                                  {{this.statisticsFacade?.addedBooks$(follower?.followedById) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Added authors" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i nz-icon class="followers__added-authors" nzType="user-add" nzTheme="outline"></i>
+                                <div class="followers__added-authors-value">
+                                  {{this.statisticsFacade?.addedBooks$(follower?.followedById) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Added quotes" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-quote followers__quotes"></i>
+                                <div class="followers__quotes-value">
+                                  {{this.statisticsFacade?.addedQuotes$(follower?.followedById) | async}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="followers__item-right">
+                        <a class="followers__link" nz-dropdown [nzDropdownMenu]="menu">
+                          <i class="icon ion-md-arrow-dropdown followers__arrow"></i>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                          <ul class="followers__menu" nz-menu nzSelectable>
+                            <ng-container *ngIf="this.follower">
+                              <li [routerLink]="['/bookcase/reader',follower.followedById]"
+                                class="followers__see-bookcase" nz-menu-item>
+                                See bookcase
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </nz-dropdown-menu>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <ng-template #followings>
+              <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+                <ng-container *ngIf="!(this.isProcessing$ | async) else processing">
+                  <ng-container
+                    *ngIf="(this.followersFacade?.followingsPage$(readerId)| async)?.totalItems > 0 else noResults">
+                    <li class="followers__item"
+                      *ngFor="let follower of this.followersFacade?.followings$(readerId) | async">
+                      <div class="followers__item-left">
+                        <div class="followers__content">
+                          <follower-avatar class="followers__user-avatar" [followerId]="follower?.followedObjectId">
+                          </follower-avatar>
+                          <div class="followers__info">
+                            <div class="followers__info-top">
+                              <ng-container *ngIf="this.follower">
+                                <a [routerLink]="['/users',follower?.followedObjectId,'profile']"
+                                  class="followers__username">
+                                  {{this.readersFacade?.userName$(follower?.followedObjectId) | async}}
+                                </a>
+                              </ng-container>
+                              <ng-container
+                                *ngIf="(this.followersFacade?.hasFollowing$(readerId,follower?.followedObjectId) | async) as hasFollowing">
+                                <ng-container
+                                  *ngIf="(this.readersFacade?.reader$(follower?.followedObjectId) | async) as reader">
+                                  <stop-following-reader (unFollowChange)="onUnFollowChange($event)" [followed]="reader"
+                                    [followedBy]="this.readersFacade?.reader$(follower?.followedById) | async">
+                                  </stop-following-reader>
+                                </ng-container>
+                              </ng-container>
+                            </div>
+                            <div class="followers__info-middle">
+                              <div class="followers__role">
+                                User
+                              </div>
+                              <div class="followers__date">Joined at<span
+                                  class="followers__date-value">{{this.readersFacade?.joinedAt$(follower?.followedObjectId)
+                                  | async | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</span>
+                              </div>
+                            </div>
+                            <div class="followers__info-bottom">
+                              <div nzTooltipTitle="Bookcase collection" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-book followers__books"></i>
+                                <div class="followers__books-value">
+                                  {{this.statisticsFacade?.userBooksInBookcase$(follower?.followedObjectId) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Followers" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-person followers__icon"></i>
+                                <div class="followers__value">
+                                  {{(this.followersFacade?.followers$(follower?.followedObjectId) |
+                                  async)?.length}}</div>
+                              </div>
+                              <div nzTooltipTitle="Reviews" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-chatboxes followers__reviews"></i>
+                                <div class="followers__reviews-value">
+                                  {{this.statisticsFacade?.reviewsCount$(follower?.followedObjectId) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Added books" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="followers__added-books" nz-icon nzType="folder-add" nzTheme="outline"></i>
+                                <div class="followers__added-books-value">
+                                  {{this.statisticsFacade?.addedBooks$(follower?.followedObjectId) | async}}
+                                </div>
+                              </div>
+                              <div nzTooltipTitle="Added authors" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i nz-icon class="followers__added-authors" nzType="user-add" nzTheme="outline"></i>
+                                <div class="followers__added-authors-value">
+                                  {{this.statisticsFacade?.addedBooks$(follower?.followedObjectId) | async}}
+                                </div>
+                              </div>
+
+                              <div nzTooltipTitle="Added quotes" nzTooltipPlacement="topRight" nz-tooltip
+                                class="followers__info-bottom-item">
+                                <i class="icon ion-md-quote followers__quotes"></i>
+                                <div class="followers__quotes-value">
+                                  {{this.statisticsFacade?.addedQuotes$(follower?.followedObjectId) | async}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="followers__item-right">
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+                          <i class="icon ion-md-arrow-dropdown followers__arrow"></i>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                          <ul class="followers__menu" nz-menu nzSelectable>
+                            <ng-container *ngIf="this.follower">
+                              <li [routerLink]="['/bookcase/reader/',follower?.followedObjectId]"
+                                class="followers__see-bookcase" nz-menu-item>
+                                See bookcase
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </nz-dropdown-menu>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-template>
+            <ng-template #processing>
+              <div class="followers__spinner-box">
+                <ng-template #indicatorTemplate>
+                  <i nz-icon nzType="loading" class="followers__spinner"></i>
+                </ng-template>
+                <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+              </div>
+            </ng-template>
+            <ng-template #noResults>
+              <div class="followers__no-followers">
+                No results<dot></dot>
+              </div>
+            </ng-template>
+          </ul>
+        </div>
+      </div>
+      <div class="columns is-mobile is-centered">
+        <div class="column is-9-fullhd is-10-widescreen is-11-desktop is-11-tablet is-11-mobile">
+          <ng-container *ngIf="this.pageFacade?.readerId$ | async as readerId">
+            <ng-container *ngIf="!(this.isProcessing$ | async) && this.pageFacade?.showFollowers$ | async">
+              <followers-pagination
+                [currentPage]="this.followersFacade?.currentFollowersPage$(readerId) | async"
+                [totalItems]="this.followersFacade?.followersTotalItems$(readerId) | async"
+                [pageSize]="this.pageFacade.pageSize$ | async" (changePage)="onFollowersChangePage($event)">
+              </followers-pagination>
+            </ng-container>
+            <ng-container
+              *ngIf="!(this.isProcessing$ | async) && this.pageFacade?.showFollowings$ | async">
+              <followers-pagination [currentPage]="this.followersFacade?.currentFollowingsPage$(readerId) | async"
+                [totalItems]="this.followersFacade?.followingsTotalItems$(readerId) | async"
+                [pageSize]="this.pageFacade?.pageSize$ | async" (changePage)="onFollowingsChangePage($event)">
+              </followers-pagination>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

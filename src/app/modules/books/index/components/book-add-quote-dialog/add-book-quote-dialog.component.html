@@ -1,0 +1,33 @@
+<div class="add-book-quote">
+  <form nz-form [formGroup]="pageService?.quoteForm">
+    <div class="add-book-quote__header"><i class="icon ion-md-quote"></i>
+      <div class="add-book-quote__tip">Add quote from book that is worth remembering</div>
+    </div>
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="quoteErrorTemplate">
+        <textarea formControlName="content" class="add-book-quote__content" rows="6" nz-input></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template #quoteErrorTemplate let-control>
+      <ng-container *ngIf="control.hasError('required')">
+        <div class="add-book-quote__error">
+          Quote content is required
+        </div>
+      </ng-container>
+      <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">Quote need atelast
+        <div class="add-book-quote__error">
+          {{control.errors.minlength.requiredLength}} characters
+        </div>
+      </ng-container>
+      <ng-container *ngIf="control.hasError('maxlength') && !control.hasError('minlength')">
+        <div class="add-book-quote__error">
+          Quote cannot have more then {{control.errors.maxlength.requiredLength}}
+        </div>
+      </ng-container>
+    </ng-template>
+  </form>
+</div>
+<div *nzModalFooter>
+  <button class="cancel" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+  <button class="submit" nz-button nzType="primary" (click)="addQuote()">Add</button>
+</div>

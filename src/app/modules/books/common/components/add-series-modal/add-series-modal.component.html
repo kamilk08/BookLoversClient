@@ -1,0 +1,43 @@
+<div class="columns">
+    <div class="column is-12">
+        <form nz-form class="add-series" [formGroup]="pageService?.addSeriesForm">
+            <nz-form-item class="add-series__name">
+                <nz-form-label class="add-series__label">
+                    Name
+                </nz-form-label>
+                <div class="add-series__name-box">
+                    <nz-form-control class="add-series__form-control"
+                        [nzErrorTip]="seriesErrorTemplate">
+                        <input class="add-series__series-input" type="text" formControlName="name" nz-input />
+                    </nz-form-control>
+                    <nz-spin *ngIf="pageService.name.status === 'PENDING'" class="add-series__spinner" nzSimple>
+                    </nz-spin>
+                    <i *ngIf="pageService.name.status === 'VALID'"
+                        class="icon ion-md-checkmark add-series__is-unique"></i>
+                </div>
+                <ng-template #seriesErrorTemplate let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                        <div class="add-series__form-error"> Series name is required</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('minlength') && !control.hasError('required')">
+                        <div class="add-series__form-error">Series
+                            should have atleast {{pageService.name.errors.minlength.requiredLength}} characters</div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('maxlength') && !control.hasError('minlength')">
+                        <div class="add-series__form-error">
+                            Series cannot have more then {{pageService.name.errors.maxlength.requiredLength}}
+                            characters
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('seriesNotUnique') && !control.hasError('maxlength')">
+                        <div class="add-series__form-error">Series name is not unique</div>
+                    </ng-container>
+                </ng-template>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div *nzModalFooter class="actions">
+    <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+    <button class="actions__submit" nz-button nzType="primary" (click)="submit()">Submit</button>
+</div>

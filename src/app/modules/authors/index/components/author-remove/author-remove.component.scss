@@ -1,0 +1,13 @@
+@import '../../../../shared/variables';
+
+$remove:'.remove';
+
+#{$remove}{
+  &__text{
+    font-size: 1rem;
+  }
+  &__flag{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+  }
+}

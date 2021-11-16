@@ -1,0 +1,33 @@
+@import "../../shared/variables";
+
+$unauthorized: '.unauthorized';
+
+#{$unauthorized}{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 8.5rem;
+  background-color: $secondaryColor;
+  border-radius: 4px;
+
+  &__top{
+    font-size: 8rem;
+  }
+  &__dot::ng-deep > span{
+    width: 0.625rem !important;
+    height: 0.688rem !important;
+  }
+
+  &__back,
+  &__bottom{
+    font-size: 2.25rem;
+    font-weight: $boldWeight;
+  }
+}
+
+@media only screen and (max-width:579px){
+  #{$unauthorized}{
+    padding: 5.5rem;
+  }
+}

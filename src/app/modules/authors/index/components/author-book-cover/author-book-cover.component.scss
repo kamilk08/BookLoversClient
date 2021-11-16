@@ -1,0 +1,68 @@
+@import '../../../../shared/variables';
+
+$author-book-cover: ".author-book-cover";
+$cover:".cover";
+
+#{$author-book-cover} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 10.563rem;
+  max-width: 10.563rem;
+  height: 15.938rem;
+  background-color: $coverBackground;
+  margin: 0rem 0rem 1rem 0rem;
+}
+
+#{$cover}{
+  margin-bottom: 1rem;
+
+  &__image{
+    display: flex;
+    flex-direction: column;
+    min-width: 10.563rem;
+    max-width: 10.563rem;
+    height: 15.938rem;
+  }
+
+  &__no-cover{
+    display: flex;
+    flex-direction: column;
+    min-width: 10.563rem;
+    max-width: 10.563rem;
+    height: 15.938rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__no-cover-text{
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+  }
+}
+
+@media only screen and (max-width:1216px){
+
+  #{$cover}{
+    &__no-cover-text{
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media only screen and (max-width:1024px){
+  #{$cover}{
+    &__no-image{
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media only screen and (max-width:769px){
+  #{$cover}{
+    &__no-image{
+      font-size: 1.3rem;
+    }
+  }
+}

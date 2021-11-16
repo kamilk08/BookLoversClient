@@ -1,0 +1,8 @@
+<div class="header">
+  <div><span *ngIf="this.countNumber else noResults" class="header__number">({{countNumber}})</span>{{headerText}}
+    <ng-template #noResults>
+      <span class="header__number">(0)</span>
+    </ng-template>
+  </div>
+  <ng-content></ng-content>
+</div>

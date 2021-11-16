@@ -1,0 +1,62 @@
+@import "../../shared/variables";
+
+$tickets:'.tickets';
+$item:'.item';
+
+#{$tickets}{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__right{
+    display: flex;
+  }
+
+  &__solved{
+    font-weight: $boldWeight;
+  }
+
+  &__manage-tickets{
+    color: $secondaryBlack;
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+    margin-right: 2rem;
+    transition: 0.2s color;
+  }
+
+  &__manage-tickets:hover{
+    color: $descriptionGray;
+  }
+
+  &__processing{
+    display: flex;
+    justify-content: center;
+    padding: 12rem 0rem;
+  }
+
+  &__no-tickets{
+    padding: 12rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    font-weight: $boldWeight;
+    color: $black;
+  }
+
+  &__processing-spinner{
+    font-size: 3.75rem;
+  }
+}
+
+#{$item}:nth-child(even){
+  ::ng-deep .ticket-item{
+    background-color: $secondaryColor !important;
+  }
+}
+
+@media only screen and (max-width:769px){
+  .container{
+    margin: 2rem 2rem 2rem;
+  }
+}

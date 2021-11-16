@@ -1,0 +1,33 @@
+<ng-container *ngIf="this.readerId===this.authService?.userId else readOnlyAvatar">
+  <div class="profile-avatar" *ngIf="!(this.loadAvatarError$ | async) && !this.imageService.encodedImage && !this.show">
+    <input (change)="changeAvatar($event)" class="profile-avatar__input" type="file">
+    <img class="profile-avatar__image" (error)="onError()" [src]="this.avatarUrl()">
+    <div class="profile-avatar__remove">
+      <button (click)="removeAvatar()" nz-button nzType="primary">Remove</button>
+    </div>
+  </div>
+  <div class="profile-avatar__box" *ngIf="(this.loadAvatarError$ | async) || this.show">
+    <input (change)="changeAvatar($event)" class="profile-avatar__input" type="file">
+    <div class="profile-avatar__error">Image<dot></dot>
+    </div>
+  </div>
+  <div *ngIf="this.imageService.encodedImage && !this.show" class="profile-avatar">
+    <input (change)="changeAvatar($event)" class="profile-avatar__input" type="file">
+    <img class="profile-avatar__image" [src]="this.imageService.encodedImage">
+    <div class="profile-avatar__image" *ngIf="this.imageService.encodedImage ===''"></div>
+    <div class="profile-avatar__remove">
+      <button (click)="removeAvatar()" nz-button nzType="primary">Remove</button>
+    </div>
+  </div>
+</ng-container>
+<ng-template #readOnlyAvatar>
+  <div *ngIf="(this.loadAvatarError$ | async) else noError">
+    <div class="profile-avatar__image error">Image<dot></dot>
+    </div>
+  </div>
+  <ng-template #noError>
+    <div>
+      <img class="profile-avatar__image" (error)="onError()" [src]="this.avatarUrl()">
+    </div>
+  </ng-template>
+</ng-template>

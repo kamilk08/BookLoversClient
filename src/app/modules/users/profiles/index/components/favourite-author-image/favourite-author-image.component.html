@@ -1,0 +1,8 @@
+<div *ngIf="this.imageLoadError$ | async else noError"  class="favourite-author-image__default">
+  Image<dot></dot>
+</div>
+<ng-template #noError>
+  <div>
+    <img class="favourite-author-image__img" [src]="this.authorImageUrl()" (error)="onError($event)">
+  </div>
+</ng-template>

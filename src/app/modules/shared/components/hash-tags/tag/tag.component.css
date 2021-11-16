@@ -1,0 +1,23 @@
+.tags__item{
+    display: inline-block;
+}
+
+.tag{
+    font-size: 1rem;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 0px;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 1216px){
+  .tag{
+    font-size: 0.8rem !important;
+  }
+}
+
+@media only screen and (max-width: 1024px){
+  .tag{
+    font-size: 0.8rem !important;
+  }
+}

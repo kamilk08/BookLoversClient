@@ -1,0 +1,27 @@
+.rectangle{
+    padding: 0.6rem;
+    border: 2px solid #000;
+    margin-right: 0.5rem;
+    transition: border-color .3s ease-in-out, color .3s ease-in-out,background-color .3s ease-in-out;
+}
+
+.rectangle__text{
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.rectangle.active > .rectangle__text{
+  color: #fff;
+}
+
+.rectangle.active > .rectangle__dot-box > .rectangle__dot::ng-deep .dot {
+  background-color: #fff;
+}
+
+
+.rectangle.active{
+  background-color: #7B60EA;
+  color: #fff;
+  border: 2px solid #7B60EA;
+}

@@ -1,0 +1,15 @@
+@import "../../../../shared/variables";
+
+$book-basics-item: ".book-basics-item";
+
+#{$book-basics-item}{
+  display: flex;
+  margin: 0.5rem 0rem;
+
+  &__title{
+    display: inline-block;
+    width: 35%;
+    font-weight: $boldWeight;
+  }
+
+}

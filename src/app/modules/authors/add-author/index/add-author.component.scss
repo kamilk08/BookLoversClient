@@ -1,0 +1,81 @@
+@import "../../../shared/variables";
+
+$author-modal: ".author-modal";
+$actions: ".actions";
+
+@mixin label {
+  &__label ::ng-deep label {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $secondaryText
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+};
+
+#{$author-modal}{
+  padding: 0.75rem 0.75rem 0rem 0.75rem;
+
+  @include label();
+
+  &__form-box{
+    margin-bottom: 0rem;
+  }
+
+  &__image{
+    display: flex;
+    height: 22rem;
+    width: 100%;
+  }
+
+  &__item{
+    margin-bottom: 0.45rem;
+  }
+
+  &__item.sex{
+    margin-bottom: 1rem;
+  }
+  &__item.birthplace{
+    margin-top: 1rem;
+  }
+
+  &__item.description-source{
+    width: 40%;
+  }
+  &__item.website{
+    width: 40%;
+  }
+
+  &__item.categories{
+    width: 85%;
+  }
+
+  &__label{
+    font-weight: 700;
+    margin-bottom: 0rem;
+}
+
+  &__label::ng-deep > label{
+      font-size: 0.9rem !important;
+  }
+
+  &__error{
+    font-size: 0.8rem;
+  }
+
+  &__others,
+  &__dates{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+}
+
+#{$actions}{
+  padding: 0.75rem;
+}

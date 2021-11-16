@@ -1,0 +1,49 @@
+@import "../../../../../shared/variables";
+
+$profile-avatar: '.profile-avatar';
+
+#{$profile-avatar}{
+  &__input{
+    position: absolute;
+    opacity: 0;
+    z-index: 999;
+    width: 10rem;
+    height: 10rem;
+  }
+
+  &__image{
+    position: relative;
+    border-radius: 50%;
+    height: 10rem;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $secondaryColor;
+
+    font-weight: $boldWeight;
+    font-size: 1.25rem;
+  }
+
+  &__remove{
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__error{
+    font-weight: $boldWeight;
+    font-size: 1.25rem;
+  }
+
+  &__box{
+    position: relative;
+    border-radius: 50%;
+    height: 10rem;
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $secondaryColor;
+  }
+}

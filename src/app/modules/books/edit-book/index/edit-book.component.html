@@ -1,0 +1,313 @@
+<app-navbar></app-navbar>
+<div *ngIf="this.bookFacade?.bookById$(this.bookId) | async as book" class="container">
+  <div class="columns is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+      <div class="columns is-multilne edit-book">
+        <div class="column column edit-book__left is-3-fullhd is-3-widescreen is-3-desktop is-12-tablet is-12-mobile">
+          <edit-book-cover [bookId]="this.bookId" (coverChange)="onCoverChange($event)">
+          </edit-book-cover>
+        </div>
+        <div class="column edit-book__right is-9-fullhd is-9-widescreen is-9-desktop is-12-tablet is-12-mobile">
+          <div class="pb-1 pb-3">
+            <div class="columns is-centered is-multiline is-mobile">
+              <div class="column is-7-fullhd is-7-widescreen is-7-desktop is-11-tablet is-11-mobile mt-2">
+                <ng-container *ngIf="this.editBookFacade?.editForm$ | async as form">
+                  <form nz-form [formGroup]="form">
+                    <section-header (sectionExpand)="onBasicsSectionExpand()" header="Basics"></section-header>
+                    <section-content [expand]="this.editBookFacade?.sectionState$(this.toggleOptions?.basics) | async">
+                      <div class="ml-2 mr-2 mb-2">
+                        <nz-form-item class="book-basics__title">
+                          <nz-form-label class="book-basics__label">Title</nz-form-label>
+                          <nz-form-control [nzErrorTip]="titleErrorTemplate">
+                            <input formControlName="title" nz-input class="book-basics__input" />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #titleErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            <div class="book-basics__error">Book title is required</div>
+                          </ng-container>
+                        </ng-template>
+                        <search-authors [isFiltering]="authorFacade?.isFiltering$ | async"
+                          [authors]="authorFacade?.filteredAuthors$ | async"
+                          [selectedAuthors]="authorFacade.multipleAuthors$(this.getBookAuhtors(book)) | async"
+                          (search)="onAuthorSearch($event)" [form]="form">
+                          <div class="book-basics__add">Didnt find author?
+                            <span (click)="addNewAuthor()" class="book-basics__link">Add
+                              new
+                              one!
+                            </span>
+                          </div>
+                        </search-authors>
+                        <nz-form-item class="book-basics__released">
+                          <search-publisher [form]="form"
+                            [publishers]="this.publisherFacade?.searchedPublishers$ | async"
+                            [selectedPublisher]="this.publisherFacade.publisherById$(book?.publisher?.publisherId) | async"
+                            [isFiltered]="publisherFacade?.isFiltered$ | async"
+                            (search)="onPublisherSearch($event)" class="book-basics__search-publisher">
+                            <div class="book-basics__add">Didnt find publisher?
+                              <span (click)="addNewPublisher()" class="book-basics__link">Add new
+                                one!
+                              </span>
+                            </div>
+                          </search-publisher>
+                          <nz-form-item class="book-basics__published">
+                            <nz-form-label class="book-basics__label">Published
+                            </nz-form-label>
+                            <nz-form-control>
+                              <nz-date-picker class="book-basics__date-picker" formControlName="published"></nz-date-picker>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </nz-form-item>
+                        <nz-form-item class="book-basics__isbn">
+                          <nz-form-label class="book-basics__label">
+                            ISBN
+                            <i class="icon ion-md-help-circle book-basics__help-icon" nz-tooltip
+                              nzTitle="13-digit number that identifies book."></i>
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="isbnErrorTemplate">
+                            <input class="book-basics__input" nz-input formControlName="isbn" />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #isbnErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            <div class="book-basics__error">
+                              Book ISBN number is required
+                            </div>
+                          </ng-container>
+                          <ng-container *ngIf="!control.hasError('required') && control.hasError('maxlength')">
+                            <div class="book-basics__error">
+                              Max ISBN number legnth is
+                              {{control.errors.maxlength.requiredLength}}
+                            </div>
+                          </ng-container>
+                        </ng-template>
+                        <nz-form-item class="book-basics__category">
+                          <nz-form-label class="book-basics__label">Category
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="categoryErrorTemplate">
+                            <nz-select formControlName="category" nzMode="default" class="book-basics__input"
+                              nzAllowClear nzPlaceHolder="Choose category">
+                              <nz-option-group nzLabel="Fiction">
+                                <nz-option *ngFor="let subCategory of this.fictionSubCategories" [nzValue]="subCategory"
+                                  [nzLabel]="subCategory.name">
+                                </nz-option>
+                              </nz-option-group>
+                              <nz-option-group nzLabel="Non-fiction">
+                                <nz-option *ngFor="let subCategory of this.nonFitctionSubCategories"
+                                  [nzValue]="subCategory" [nzLabel]="subCategory.name">
+                                </nz-option>
+                              </nz-option-group>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #categoryErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            <div class="book-basics__error">
+                              Category is required
+                            </div>
+                          </ng-container>
+                        </ng-template>
+                      </div>
+                    </section-content>
+                    <section-header (sectionExpand)="onDescripionSectionExpand()" header="Description">
+                    </section-header>
+                    <section-content [expand]="this.editBookFacade?.sectionState$(this.toggleOptions?.description) | async">
+                      <div class="ml-2 mr-2 mb-2">
+                        <nz-form-item class="book-description__content">
+                          <nz-form-label class="book-description__label">Content
+                            <i class="icon ion-md-help-circle book-description__help-icon" nz-tooltip
+                              nzTitle="What do you want other to call you"></i>
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="descriptionErrorTemplate">
+                            <textarea formControlName="description" rows="6" nz-input>
+                                                      </textarea>
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #descriptionErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('maxlength')">
+                            <div class="book-description__error">
+                              Max ISBN number legnth is
+                              {{control.errors.maxlength.requiredLength}}
+                            </div>
+                          </ng-container>
+                        </ng-template>
+                        <nz-form-item class="book-description__source">
+                          <nz-form-label class="book-description__label">Description source
+                            <i class="icon ion-md-help-circle book-description__help-icon" nz-tooltip
+                              nzTitle="What do you want other to call you"></i>
+                          </nz-form-label>
+                          <nz-form-control>
+                            <input class="book-description__input" nz-input formControlName="descriptionSource">
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                    </section-content>
+                    <section-header (sectionExpand)="onSeriesSectionExpand()" header="Series"></section-header>
+                    <section-content [expand]="this.editBookFacade?.sectionState$(this.toggleOptions?.series) | async">
+                      <div class="ml-2 mr-2 mb-2">
+                        <search-series (search)="onSeriesSearch($event)"
+                          [series]="seriesFacade?.searchedBookSeries$ | async"
+                          [selectedSeries]="seriesFacade?.seriesById$(book?.series?.seriesId) | async"
+                          [isFiltered]="seriesFacade?.isBookSeriesFiltered$ | async" [form]="form">
+                          <div class="book-series__add book-series--add-series">Didnt find series?
+                            <span (click)="addNewSeries()" class="book-series__link">Add
+                              new
+                              one!
+                            </span>
+                          </div>
+                        </search-series>
+                        <search-publisher-cycle [form]="form"
+                          [selectedCycles]="this.cycleFacade?.multiplePublisherCycles$(this.getCycles(book)) | async "
+                          [publisherCycles]="this.cycleFacade?.searchedPublisherCycles$ | async"
+                          [isFiltered]="cycleFacade?.isPublisherCycleFiltered$ | async"
+                          (search)="onPublisherCycleSearch($event)">
+                        </search-publisher-cycle>
+                        <div class="book-series__add book-series--add-cycle">Didnt find publisher cycle?
+                          <span (click)="addNewPublisherCycle()" class="book-series__link">Add new
+                            one!
+                          </span>
+                        </div>
+                      </div>
+                    </section-content>
+                    <section-header (sectionExpand)="onDetailsSectionExpand()" header="Details"></section-header>
+                    <section-content [expand]="this.editBookFacade?.sectionState$(toggleOptions?.details) | async">
+                      <div class="ml-2 mr-2 mb-2">
+                        <add-book-hashtag (hashTagAdded)="onNewHashTag($event.hashTag);"
+                          (hashTagRemoved)="onRemoveHashTag($event.hashTag);"
+                          [bookHashTags]="form?.get('hashTags')?.value">
+                        </add-book-hashtag>
+                        <nz-form-item class="book-details__language">
+                          <nz-form-label class="book-details__label">Language
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="languageErrorTemplate">
+                            <nz-select formControlName="language" class="book-details__input" nzAllowClear
+                              nzPlaceHolder="Choose language">
+                              <nz-option [nzValue]="language" [nzLabel]="language?.name"
+                                *ngFor="let language of this.bookLanguages">
+                              </nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #languageErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('min') || control.hasError('max')">
+                            <div class="book-details__error">Invalid language</div>
+                          </ng-container>
+                        </ng-template>
+                        <nz-form-item class="book-details__pages">
+                          <nz-form-label class="book-details__label">Pages count
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="">
+                            <input nz-input formControlName="pages"
+                              class="book-details__input book-details--pages-input">
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #pagesErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('min')">
+                            Minimal pages count is {{control.errors.min.min}}
+                          </ng-container>
+                        </ng-template>
+                      </div>
+                    </section-content>
+                    <section-header header="Cover" (sectionExpand)="onCoverSectionExpand()"></section-header>
+                    <section-content [expand]="this.editBookFacade?.sectionState$(this.toggleOptions?.cover) | async">
+                      <div class="ml-2 mr-2 mb-2">
+                        <nz-form-item class="book-cover__content">
+                          <nz-form-label class="book-cover__label">Cover source
+                            <i class="icon ion-md-help-circle book-cover__help-icon" nz-tooltip
+                              nzTitle="Source of book cover."></i>
+                          </nz-form-label>
+                          <nz-form-control>
+                            <input class="book-cover__input" nz-input formControlName="coverSource">
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item class="book-cover__type">
+                          <nz-form-label class="book-cover__label">Cover type
+                          </nz-form-label>
+                          <nz-form-control [nzErrorTip]="coverTypeErrorTemplate">
+                            <nz-select formControlName="coverType" class="book-cover__input" nzAllowClear
+                              nzPlaceHolder="Choose category">
+                              <nz-option [nzValue]="cover" [nzLabel]="cover.type" *ngFor="let cover of this.coverTypes">
+                              </nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                        <ng-template #coverTypeErrorTemplate let-control>
+                          <ng-container *ngIf="control.hasError('min') || control.hasError('max')">
+                            <div class="book-cover__error">Invalid category type</div>
+                          </ng-container>
+                        </ng-template>
+                      </div>
+                    </section-content>
+                    <div class="actions">
+                      <button (click)="clear()" class="actions__clear" nz-button nzSize="large"
+                        nzType="default">Clear</button>
+                      <button (click)="submitForm(form)" class="actions__edit" nz-button nzSize="large" nzType="primary">Edit
+                        book</button>
+                    </div>
+                  </form>
+                </ng-container>
+              </div>
+              <div class="column is-5-fullhd is-5-widescreen is-5-desktop is-11-tablet is-11-mobile">
+                <div class="tips">
+                  <div class="tips__item">
+                    <div class="tips__header">
+                      <span class="tips__header-left">(1)</span>
+                      <span class="tips__header-right">Managing Rights</span>
+                    </div>
+                    <div class="tips__content">Librarians have right to changes,editing book or even removing
+                      book from
+                      site without giving a reason
+                    </div>
+                  </div>
+                  <div class="tips__item">
+                    <div class="tips__header">
+                      <span class="tips__header-left">(2)</span>
+                      <span class="tips__header-right">Do not add</span>
+                    </div>
+                    <div class="tips__content">
+                      School books,private handwritten books,books
+                      without professional translation,brochures or child cut-outs,coloring
+                      books should not
+                      be added to site
+                    </div>
+                  </div>
+                  <div class="tips__item">
+                    <div class="tips__header">
+                      <span class="tips__header-left">(3)</span>
+                      <span class="tips__header-right">Duplicates</span>
+                    </div>
+                    <div class="tips__content">
+                      Duplicated books,books with obscene words or false information will be
+                      removed without giving a reason.
+                    </div>
+                  </div>
+                  <div class="tips__item">
+                    <div class="tips__header">
+                      <span class="tips__header-left">(4)</span>
+                      <span class="tips__header-right">Breaking rules</span>
+                    </div>
+                    <div class="tips__content">
+                      Any user <span class="book__tip-bold">(librarian or
+                        reader)</span> that is not complying with the
+                      rules
+                      may be susspended or even banned from the site;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.bookFacade?.isProcessing$ | async">
+  <div class="edit-book__processing">
+    <ng-template #indicatorTemplate>
+      <div><i nz-icon nzType="loading" class="edit-book__processing-spinner"></i></div>
+    </ng-template>
+    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+  </div>
+</div>
+<footer></footer>

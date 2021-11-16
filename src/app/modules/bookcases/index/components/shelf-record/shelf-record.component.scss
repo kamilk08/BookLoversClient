@@ -1,0 +1,15 @@
+@import "../../../../shared/variables";
+
+$shelf-record:".shelf-record";
+
+#{$shelf-record}{
+  font-size: 1rem;
+
+  &__added-at{
+    color: $primaryColor;
+    margin-right: 0.5rem;
+    font-weight: $boldWeight;
+  }
+
+
+}

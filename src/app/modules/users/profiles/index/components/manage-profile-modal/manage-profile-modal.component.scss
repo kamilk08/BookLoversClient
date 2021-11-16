@@ -1,0 +1,38 @@
+@import "../../../../../shared/variables";
+
+$manage-profile:'.manage-profile';
+
+#{$manage-profile}{
+  &__item{
+    display: flex;
+    width: 100%;
+}
+
+&__label{
+    font-weight: $boldWeight;
+    margin-right: 1rem;
+}
+
+&__label.manage-profile--firstname-label{
+    margin-right: 2.1rem;
+}
+
+&__input{
+    width: 85%;
+    margin-bottom: 0rem;
+}
+
+&__input.manage-profile--sex{
+    width: 35%;
+}
+
+&--city,
+&--country{
+    width: 70%;
+}
+
+&__footer{
+    padding: 0.5rem;
+}
+
+}

@@ -1,0 +1,47 @@
+@import "../../../shared/variables";
+
+$timeline:'.timeline';
+
+#{$timeline}{
+
+  &__item{
+    display: flex;
+  }
+
+  &__item:nth-child(even){
+    background-color: $secondaryColor;
+  }
+
+  &__settings-icon{
+    font-size: 1.5rem;
+    padding: 1.35rem;
+    transition: 0.2s color ease-in, 0.2s background-color ease;
+    border-radius: 50%;
+  }
+
+  &__settings-icon:hover{
+    background-color: $primaryHover;
+    color: $primaryColor;
+  }
+
+  &__spinner-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12rem 0rem;
+  }
+
+  &__spinner{
+    font-size: 3.75rem;
+  }
+
+  &__options{
+    display: flex;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .container{
+    margin: 2rem 2rem 2rem;
+  }
+}

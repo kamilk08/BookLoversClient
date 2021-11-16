@@ -1,0 +1,4 @@
+<a [routerLink]="['/book/',this.bookId]" class="recently-added-book" [ngClass]="{'active':active,'':!active }">
+  <ng-content select="[cover]"></ng-content>
+  <ng-content select="[info]"></ng-content>
+</a>

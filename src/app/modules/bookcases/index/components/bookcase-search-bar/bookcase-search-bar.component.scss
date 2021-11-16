@@ -1,0 +1,21 @@
+@import "../../../../shared/variables";
+
+$search:".bookcase-search-bar";
+
+#{$search}{
+  margin-top: 1.5rem;
+
+  &__input{
+    border: none;
+    background-color: $secondaryColor;
+    padding: 1rem 0rem 1rem 1rem;
+    width: 100%;
+    font-size: 2rem;
+    border-radius: 8px;
+  }
+
+  &__input:focus{
+    outline: none;
+    background-color: $secondaryColor;
+  }
+}

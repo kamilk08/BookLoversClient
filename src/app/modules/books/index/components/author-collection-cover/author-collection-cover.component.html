@@ -1,0 +1,4 @@
+<div  class="author-collection-cover">
+  <img *ngIf="!(this.coverLoadError$ | async)" (error)="onError($event)" [src]="this.bookUrl()" class="author-collection-cover"/>
+  <div *ngIf="this.coverLoadError$ | async" class="author-collection-cover__cover-box"><div class="author-collection-cover__text">Cover<dot></dot></div></div>
+</div>

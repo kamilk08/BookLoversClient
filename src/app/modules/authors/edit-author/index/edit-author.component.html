@@ -1,0 +1,155 @@
+<ng-container *ngIf="this.facade?.editAuthorForm$ | async as form">
+  <form class="author-modal" nz-form [formGroup]="form">
+    <div class="columns is-centered is-multiline is-mobile author-modal__form-box">
+      <div class="column is-4-fullhd is-4-widescreen is-4-desktop is-4-tablet is-7-mobile">
+        <edit-author-image [authorId]="this.author?.identification?.id" (imageSelect)="onImageSelect($event)"
+          class="author-modal__image">
+        </edit-author-image>
+      </div>
+      <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-8-tablet is-12-mobile author-modal__basics">
+        <nz-form-item class="author-modal__item">
+          <nz-form-label class="author-modal__label">
+            Firstname
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="firstNameErrorTemplate">
+            <input class="author-modal__input" nz-input formControlName="firstName" />
+          </nz-form-control>
+        </nz-form-item>
+        <ng-template #firstNameErrorTemplate let-control>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            <div class="author-modal__error">
+              Authors name cannot have more then {{control.errors.maxlength.requiredLength}}
+              characters
+            </div>
+          </ng-container>
+        </ng-template>
+        <nz-form-item class="author-modal__item">
+          <nz-form-label class="author-modal__label" nzRequired>Secondname</nz-form-label>
+          <nz-form-control [nzErrorTip]="secondNameErrorTemplate">
+            <input class="author-modal__input" nz-input formControlName="secondName">
+          </nz-form-control>
+        </nz-form-item>
+        <ng-template #secondNameErrorTemplate let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            <div class="author-modal__error">Authors lastname is required</div>
+          </ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            <div class="author-modal__error">
+              Authors last name cannot have more then {{control.errors.maxlength.requiredLength}}
+            </div>
+          </ng-container>
+        </ng-template>
+        <nz-form-item class="author-modal__item sex">
+          <nz-form-label class="author-modal__label">Sex</nz-form-label>
+          <nz-form-control [nzErrorTip]="sexErrorTemplate">
+            <nz-select formControlName="sex" [nzAllowClear]="false" nzPlaceHolder="Select sex">
+              <nz-option *ngFor="let sex of this.sexes" [nzValue]="sex?.id" [nzLabel]="sex?.name">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <ng-template #sexErrorTemplate let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            <div class="author-modal__error">Sex is required</div>
+          </ng-container>
+          <ng-container *ngIf="control.hasError('min') || control.hasError('max')">
+            <div class="author-modal__error">
+              Invalid sex option
+            </div>
+          </ng-container>
+        </ng-template>
+        <nz-form-item class="author-modal__item">
+          <div class="author-modal__dates">
+            <div class="author-modal__birth-date">
+              <nz-form-label class="author-modal__label">Birthdate</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker formControlName="birthDate">
+                </nz-date-picker>
+              </nz-form-control>
+            </div>
+            <div class="author-modal__death-date">
+              <nz-form-label class="author-modal__label">Deathdate</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker formControlName="deathDate"></nz-date-picker>
+              </nz-form-control>
+            </div>
+          </div>
+        </nz-form-item>
+        <nz-form-item class="author-modal__item birthplace">
+          <nz-form-label class="author-modal__label">Birthplace</nz-form-label>
+          <nz-form-control [nzErrorTip]="birthPlaceTemplateError">
+            <input class="author-modal__input" nz-input formControlName="birthPlace">
+          </nz-form-control>
+        </nz-form-item>
+        <ng-template #birthPlaceTemplateError let-control>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            Authors last name cannot have more then {{control.errors.maxlength.requiredLength}}
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+    <div class="columns author-modal__description">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet">
+        <nz-form-item class="author-modal__item">
+          <nz-form-label class="author-modal__label">Description</nz-form-label>
+          <nz-form-control [nzErrorTip]="descriptionErrorTemplate">
+            <textarea rows="6" nz-input formControlName="about"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <ng-template #descriptionErrorTemplate let-control>
+          <ng-container *ngIf="control.hasError('maxlength')">
+            <div class="author-modal__error">
+              Authors description cannot have more then {{control.errors.maxlength.requiredLength}}
+            </div>
+          </ng-container>
+        </ng-template>
+        <div class="author-modal__others">
+          <nz-form-item class="author-modal__item description-source">
+            <nz-form-label class="author-modal__label">Source</nz-form-label>
+            <nz-form-control [nzErrorTip]="sourceErrorTemplate">
+              <input class="author-modal__input" nz-input formControlName="descriptionSource">
+            </nz-form-control>
+          </nz-form-item>
+          <ng-template #sourceErrorTemplate let-control>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              <div class="author-modal__error">
+                Authors description source have more then {{control.errors.maxlength.requiredLength}}
+              </div>
+            </ng-container>
+          </ng-template>
+          <nz-form-item class="author-modal__item website">
+            <nz-form-label class="author-modal__label">Website</nz-form-label>
+            <nz-form-control>
+              <input class="author-modal__input" nz-input formControlName="website">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <nz-form-item class="author-modal__item categories">
+          <nz-form-label class="label">
+            <i class="icon ion-md-help-circle" nz-tooltip nzTitle="Author most popular book categories."></i>
+            Categories
+          </nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="categories" nzMode="multiple" nzPlaceHolder="Select categories">
+              <nz-option-group nzLabel="Fiction">
+                <nz-option *ngFor="let subCategory of this.fictionSubCategories" [nzValue]="subCategory.id"
+                  [nzLabel]="subCategory?.name">
+                </nz-option>
+              </nz-option-group>
+              <nz-option-group nzLabel="Non-fiction">
+                <nz-option *ngFor="let subCategory of this.nonFictionSubCategories" [nzValue]="subCategory.id"
+                  [nzLabel]="subCategory?.name">
+                </nz-option>
+              </nz-option-group>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div *nzModalFooter class="actions">
+    <button (click)="onClear()" class="actions__clear" nz-button nzSize="large" nzType="default">Clear</button>
+    <button (click)="onSubmit(form)" class="actions__add" nz-button nzSize="large" nzType="primary">Edit</button>
+  </div>
+</ng-container>
+

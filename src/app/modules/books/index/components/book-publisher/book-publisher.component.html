@@ -1,0 +1,6 @@
+<div class="book-publisher">
+    <div class="book-publisher__text">Publisher:</div>
+    <ng-container *ngIf="this.publisherId">
+      <a class="book-publisher__value" [routerLink]="[publisherLink,publisherId]">{{publisherName}}</a>
+    </ng-container>
+</div>

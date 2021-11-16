@@ -1,0 +1,6 @@
+<a (click)="activate()" class="rectangle" [ngClass]="{'active':isActive,'':!isActive}">
+  <span class="rectangle__text">{{value}}</span>
+  <span class="rectangle__dot-box">
+    <dot class="rectangle__dot"></dot>
+  </span>
+</a>

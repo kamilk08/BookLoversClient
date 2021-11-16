@@ -1,0 +1,110 @@
+@import "../../../../shared/variables";
+
+$book-ticket:'.book-ticket';
+
+#{$book-ticket}{
+  padding: 1rem 0rem;
+
+  &__top{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__author-box{
+    margin-bottom: 0.5rem;
+  }
+
+  &__author{
+    color: $secondaryBlack;
+    font-size: 1.25rem;
+    transition: 0.2s color;
+    margin-bottom: 0.5rem;
+  }
+  &__author:hover{
+    color: $descriptionGray;
+  }
+
+  &__published,
+  &__category,
+  &__isbn{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &__published-text,
+  &__category-text,
+  &__isbn-text{
+    color: $secondaryBlack;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  &__published-value,
+  &__category-value,
+  &__isbn-value{
+    color: $secondaryBlack;
+    font-size: 1rem;
+  }
+
+  &__category-value{
+    color: $primaryColor;
+  }
+
+  &__details{
+    display: flex;
+  }
+
+  &__language,
+  &__pages{
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: $secondaryBlack;
+  }
+
+  &__pages{
+    margin-right: 0.5rem;
+  }
+
+  &__language-text,
+  &__pages-text{
+    margin-right: 0.5rem;
+  }
+
+  &__pages-value,
+  &__language-value{
+    color: $primaryColor;
+  }
+
+  &__description-source{
+    color: $secondaryBlack;
+    transition: 0.2s color;
+  }
+
+  &__description-source:hover{
+    color: $descriptionGray;
+  }
+
+
+  &__cover{
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: $boldWeight;
+    min-height: 20rem;
+  }
+
+  &__hashtags{
+    display: flex;
+  }
+
+  &__hashtag-item{
+    margin-right: 0.5rem;
+  };
+
+  &__hashtag-item:last-of-type{
+    margin-right: 0rem;
+  }
+
+}

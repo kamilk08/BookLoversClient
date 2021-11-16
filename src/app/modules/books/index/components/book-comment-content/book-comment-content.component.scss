@@ -1,0 +1,169 @@
+@import "../../../../shared/variables";
+
+$book-comment: ".book-comment";
+
+@keyframes heart {
+  0%,
+  25.5% {
+    font-size: 0;
+  }
+  100% {
+    color: $primaryColor;
+  }
+}
+@keyframes spoilerEye {
+  0%,
+  25.5% {
+    font-size: 0;
+  }
+  100% {
+    color: $infoColor;
+  }
+}
+@keyframes flag {
+  0%,
+  25.5% {
+    font-size: 0;
+  }
+  100% {
+    color: $removeColor;
+  }
+}
+
+#{$book-comment} {
+  padding: 0rem 1rem 0rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  &__basics {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__basics-left {
+    display: flex;
+    font-size: 1.5rem;
+    align-items: flex-end;
+  }
+
+  &__username {
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+    margin-right: 1rem;
+    color: $secondaryText;
+    transition: 0.2 color;
+  }
+
+  &__username:hover{
+    color: $descriptionGray;
+  }
+
+
+  &__stars::ng-deep.ant-rate {
+    color: $primaryColor !important;
+     font-size: 1.1rem;
+  }
+
+  &__basics-right {
+    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: $boldWeight;
+    color: $descriptionGray;
+  }
+
+  &__content {
+    padding: 0.8rem 0rem;
+    font-size: 0.95rem;
+  }
+
+  &__show-review-box{
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  &__show-review{
+    font-weight: $boldWeight;
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__likes {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: $boldWeight;
+  }
+
+  &__likes-count {
+    margin-left: 0.5rem;
+    color: $primaryColor !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+  }
+
+  &__action-icon {
+    font-size: 1.3rem;
+    transition: background-color 0.2s, color 0.2s;
+    padding: 1.25rem;
+    border-radius: 50%;
+  }
+  &__action-icon:hover {
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__action-icon--like-icon {
+    animation: heart 0.6s cubic-bezier(0.57, 0.65, 0.35, 1.56);
+  }
+  &__action-icon--spoiler-icon {
+    animation: spoilerEye 0.6s cubic-bezier(0.57, 0.65, 0.35, 1.56);
+  }
+  &__action-icon--report-icon {
+    animation: flag 0.6s cubic-bezier(0.57, 0.65, 0.35, 1.56);
+  }
+
+  &__action-icon.book-comment__action-icon--spoiler-icon:hover {
+    background-color: rgba(255, 152, 0, 0.12);
+    color: $infoColor;
+  }
+
+  &__action-icon.book-comment__action-icon--report-icon:hover {
+    background-color: rgba(229, 57, 53, 0.12);
+    color: $removeColor;
+  }
+
+  &__action-icon--report-icon.active {
+    color: $removeColor;
+  }
+
+  &__action-icon--spoiler-icon.active {
+    color: $infoColor;
+  }
+
+  &__action-icon--like-icon.active {
+    color: $primaryColor;
+  }
+
+  &__action-icon--report-icon.no-animate,
+  &__action-icon--spoiler-icon.no-animate,
+  &__action-icon--like-icon.no-animate {
+    animation: none;
+  }
+
+  &__action-icon:last-of-type {
+    margin-right: 0rem;
+  }
+}

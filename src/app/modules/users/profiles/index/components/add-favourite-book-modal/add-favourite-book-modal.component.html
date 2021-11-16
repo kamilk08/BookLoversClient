@@ -1,0 +1,95 @@
+<div class="columns is-centered">
+  <div class="column is-11">
+    <div class="search-favourite-book">
+      <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixIconButton">
+        <input class="search-favourite-book__input" [formControl]="searchBookControl" placeholder="input here" nz-input (change)="onChange($event)" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSize="large" nzSearch>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="!(this.bookFacade?.filteringBooks$ | async) else processingBooks">
+  <ng-container *ngIf="(this.bookFacade?.filteredBooksByTitle$ | async)?.length >0 else noBooks">
+    <ng-container *ngFor="let book of this.bookFacade?.filteredBooksByTitle$ | async">
+      <div class="columns is-centered">
+        <div class="column is-11">
+          <div class="columns favourite-book">
+            <div class="column is-3">
+              <add-favourite-book-modal-cover [bookId]="book?.identification?.id"></add-favourite-book-modal-cover>
+            </div>
+            <div class="column is-9">
+              <div class="favourite-book__content">
+                <div class="favourite-book__level favourite-book__level--main">
+                  <div class="favourite-book__title">{{this.book?.basics.title}}</div>
+                  <div>
+                    <nz-rate class="favourite-book__stars" nzAllowHalf nzDisabled
+                      [ngModel]="(this.overviewsFacade?.singleOverview$(this.book.identification?.id) | async)?.average">
+                    </nz-rate>
+                  </div>
+                </div>
+                <div class="favourite-book__level favourite-book__level--author">
+                  <div class="favourite-book__authors" *ngFor="let author of book?.authors">
+                    {{(this.authorsFacade?.authorById$(author?.authorId) | async)?.basics.fullName.value}}
+                  </div>
+                </div>
+                <div class="favourite-book__level favourite-book__level--stats">
+                  <div class="favourite-book__average">Average: <span
+                      class="favourite-book__average-value">{{(this.overviewsFacade.singleOverview$(this.book?.identification?.id)| async)?.average}}</span>
+                  </div>
+                  <div class="favourite-book__ratings">Ratings: <span
+                      class="favourite-book__ratings-count">{{(this.overviewsFacade.singleOverview$(this.book?.identification?.id)| async)?.ratings?.length}}</span>
+                  </div>
+                  <div class="favourite-book__reviews">Reviews: <span
+                      class="favourite-book__reviews-value">{{book?.reviews?.length}}</span>
+                  </div>
+                </div>
+                <div class="favourite-book__level favourite-book__level--details">
+                  <div class="favourite-book__sub-category">Category: <span
+                      class="favourite-book__subcategory-value">{{book?.basics?.bookCategory.name}}</span>
+                  </div>
+                  <div class="favourite-book__language">Language: <span
+                      class="favourite-book__language-value">{{book?.details?.language?.name}}</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button (click)="this.addFavouriteBook(book?.identification?.guid)"
+                  *ngIf="!(this.hasFavouriteBook$(this.authService?.userId,book?.identification.guid) | async)"
+                  class="favourite-book__add" nz-button nzType="primary">
+                  Add favourite
+                  <i nz-icon nzTheme="outline"></i>
+                </button>
+                <button (click)="this.removeFavouriteBook(book?.identification?.guid)"
+                  *ngIf="this.hasFavouriteBook$(this.authService?.userId,book?.identification.guid) | async"
+                  class="favourite-book__add" nz-button nzType="primary">
+                  Remove favourite
+                  <i nz-icon nzTheme="outline"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-template #noBooks>
+  <div class="favourite-book__no-authors-box">
+    <div class="favourite-book__no-authors">No books<dot></dot>
+    </div>
+  </div>
+</ng-template>
+<ng-template #processingBooks>
+  <div class="favourite-book__processing">
+    <ng-template #indicatorTemplate>
+      <div><i nz-icon nzType="loading" class="favourite-book__spinner"></i></div>
+    </ng-template>
+    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+  </div>
+</ng-template>
+<div *nzModalFooter class="favourite-book__footer">
+</div>

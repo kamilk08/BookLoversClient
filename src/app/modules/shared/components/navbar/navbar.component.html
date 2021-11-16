@@ -1,0 +1,58 @@
+<nav class="navigation">
+  <div class="container navigation__container">
+    <h1 class="navigation__logo">BookLovers</h1>
+    <ng-container *ngIf="this.authService?.isLoggedIn()">
+      <ul class="navigation__item navigation__item--right navigation__item--logged-in"
+        *ngIf="(authFacade?.user$ | async) as user">
+        <li nz-dropdown [nzDropdownMenu]="menu" class="navigation__item-child navigation__item-child--right">
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul class="navigation__menu" nz-menu>
+              <li nz-menu-item (click)="moveToProfilePage(user)">
+                <i class="icon ion-md-person navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Profile</span>
+              </li>
+              <li nz-menu-item (click)="moveToBookcasePage(user)">
+                <i class="icon ion-md-archive navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Bookcase</span>
+              </li>
+              <li nz-menu-item (click)="moveToFollowersPage(user)">
+                <i class="icon ion-md-contacts navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Followers</span>
+              </li>
+              <li nz-menu-item (click)="moveToCommentsPage(user)">
+                <i class="icon ion-md-list navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Comments</span>
+              </li>
+              <ng-container *ngIf="this.isSuperAdmin(user)">
+                <li nz-menu-item (click)="moveToLibrarians()">
+                  <i class="icon ion-md-people navigation__user-menu-icon"></i>
+                  <span class="navigation__user-menu-text">Manage users</span>
+                </li>
+              </ng-container>
+              <li nz-menu-item (click)="moveToTickets(user)">
+                <i class="icon ion-md-filing navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Tickets</span>
+              </li>
+              <li (click)="logout()" nz-menu-item>
+                <i class="icon ion-md-exit navigation__user-menu-icon"></i>
+                <span class="navigation__user-menu-text">Logout</span>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+          <span class="navigation__icon-text">User</span>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="!this.authService?.isLoggedIn()">
+      <ul class="navigation__item navigation__item--right">
+        <li class="navigation__item nav--right__login">
+          <a class="navigation__link" (click)="moveToLoginPage()">Login</a>
+        </li>
+        <li class="navigation__item navigation__item--sign">/</li>
+        <li class="navigation__item navigation__item__sign-up">
+          <a class="navigation__link" (click)="moveToRegisterPage()">Register</a>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</nav>

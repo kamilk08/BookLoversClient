@@ -1,0 +1,8 @@
+<div *ngIf="(this.coverLoadError$ | async) else noError" class="favourite__book-cover">
+  Cover<dot></dot>
+</div>
+<ng-template #noError>
+  <div>
+    <img class="profile__img" (error)="onError($event)" [src]="coverUrl()">
+  </div>
+</ng-template>

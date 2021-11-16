@@ -1,0 +1,153 @@
+<app-navbar></app-navbar>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <ng-container *ngIf="this.pageFacade?.publisherId$ | async as publisherId">
+        <div class="publisher" *ngIf="this.publisherFacade?.publisherById$(publisherId) | async as publisher">
+          <div class="publisher__top title">{{publisher?.name}}</div>
+          <div class="publisher__statistics">
+            <div class="publisher__statistics-item">
+              <div class="publisher__statistics-item-left"><i class="icon ion-md-book publisher__statistics-icon"></i>
+              </div>
+              <div class="publisher__statistics-item-right">
+                <div class="publisher__statistics-text">Books</div>
+                <div class="publisher__statistics-value">{{publisher?.books?.length}}</div>
+              </div>
+            </div>
+            <div class="publisher__statistics-item">
+              <div class="publisher__statistics-item-left"><i class="icon ion-md-podium publisher__statistics-icon"></i>
+              </div>
+              <div class="publisher__statistics-item-right">
+                <div class="publisher__statistics-text">Average</div>
+                <div class="publisher__statistics-value">{{(this.statisticsFacade?.publisherAverage$(this.publisherId) |
+                  async) | number:'1.2-2'}}</div>
+              </div>
+            </div>
+            <div class="publisher__statistics-item">
+              <div class="publisher__statistics-item-left"><i class="icon ion-md-sync publisher__statistics-icon"></i>
+              </div>
+              <div class="publisher__statistics-item-right">
+                <div class="publisher__statistics-text">Cycles</div>
+                <div class="publisher__statistics-value">{{publisher?.cycles?.length}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="search">
+        <div class="search__left">
+          <publisher-books-sorting-options [descending]="this.pageFacade?.sortOrder$ | async"
+            [sortNameText]="(this.pageFacade?.sortType$ | async)?.name" (sortTypeChange)="onSortTypeChange($event)"
+            (sortOrderChange)="onSortOrderChange($event)">
+          </publisher-books-sorting-options>
+        </div>
+        <div class="search__right">
+          <search-publisher-book #search (phraseChange)="onBookPhraseChange($event)">
+          </search-publisher-book>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-2">
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+      <div class="publisher-books" *ngIf="!(this.showSpinner$ | async) else processingBooks">
+        <ng-container *ngIf="this.publisherFacade?.publisherBooksPageResult$ | async as pageResult">
+          <ng-container *ngIf="pageResult?.items?.length > 0 else noBooks">
+            <div class="publisher-books__item" *ngFor="let book of (this.publisherBooks$| async)">
+              <div class="columns is-mobile publisher-books__item-child">
+                <div
+                  class="column is-one-fifth-fullhd is-one-quarter-widescreen is-one-quarter-desktop is-one-quarter-tablet is-12-mobile">
+                  <publisher-page-cover [bookId]="book?.identification?.id"></publisher-page-cover>
+                </div>
+                <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-9-mobile">
+                  <div class="columns is-mobile">
+                    <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-9-tablet is-12-mobile">
+                      <div class="publisher-books__content">
+                        <a [routerLink]="['/book',book?.identification?.id]"
+                          class="publisher-books__title">{{book?.basics?.title}}</a>
+                        <div class="publisher-books__authors">
+                          <a [routerLink]="['/author',author?.identification?.id]"
+                            *ngFor="let author of this.bookAuthors$(book) | async" class="publisher-books__author-item">
+                            {{author?.basics?.fullName?.value}}
+                          </a>
+                        </div>
+                        <div>
+                          <div class="publisher-books__average">
+                            <div class="publisher-books__icon-box"><i
+                                class="icon ion-md-podium publisher-books__average-icon"></i></div>
+                            <div class="publisher-books__average-text">Average</div>
+                            <div class="publisher-books__average-value">
+                              {{((this.ratingsOverviewFacade?.bookAverage$(book?.identification?.id) | async) | number:
+                              '1.2-2')}}</div>
+                          </div>
+                          <div class="publisher-books__statistics">
+                            <div class="publisher-books__in-bookcases">
+                              <div class="publisher-books__icon-box"><i
+                                  class="icon ion-md-list publisher-books__bookcase-icon"></i></div>
+                              <div class="publisher-books__in-bookcases-text">Bookcases</div>
+                              <div class="publisher-books__in-bookcases-value">
+                                {{this.bookcaseStatisticsFacade?.bookInBookcases$(book?.identification?.id) | async}}
+                              </div>
+                            </div>
+                            <div class="publisher-books__reviews">
+                              <div class="publisher-books__icon-box"><i
+                                  class="icon ion-md-chatboxes publisher-books__reviews-icon"></i></div>
+                              <div class="publisher-books__reviews-text">Reviews</div>
+                              <div class="publisher-books__reviews-value">{{book?.reviews?.length}}</div>
+                            </div>
+                            <div class="publisher-books__ratings">
+                              <div class="publisher-books__icon-box"><i
+                                  class="icon ion-md-star publisher-books__ratings-icon"></i></div>
+                              <div class="publisher-books__ratings-text">Ratings</div>
+                              <div class="publisher-books__ratings-value">
+                                {{this.ratingsOverviewFacade?.allRatings$(book?.identification.id) | async}}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #noBooks>
+            <div class="publisher-books__no-books">
+              No books<dot></dot>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+      <ng-template #processingBooks>
+        <div class="publisher-books__processing">
+          <ng-template #indicatorTemplate>
+            <div><i nz-icon nzType="loading" class="publisher-books__processing-spinner"></i></div>
+          </ng-template>
+          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="columns is-centered is-mobile">
+    <div class="column is-9-full-hd is-9-widescreen is-10-desktop is-10-tablet is-11-mobile">
+      <ng-container *ngIf="(this.publisherFacade.publisherBooksPageResult$ | async) as pageResult">
+        <ng-container *ngIf="pageResult?.totalItems > 0 && !(this.showSpinner$ | async)">
+          <publisher-books-pagination (pageChange)="onBooksPageChange($event)"
+            [pageSize]="this.pageFacade?.booksCount$ | async" [currentPage]="pageResult?.page +1"
+            [totalItems]="pageResult?.totalItems">
+          </publisher-books-pagination>
+        </ng-container>
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,19 @@
+ .cover{
+    min-width: 225px;
+    max-width: 225px;
+    min-height: 375px;
+    max-height: 375px;
+    background-color: #fbfbfb;
+}
+.cover.no-image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.cover__text{
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+

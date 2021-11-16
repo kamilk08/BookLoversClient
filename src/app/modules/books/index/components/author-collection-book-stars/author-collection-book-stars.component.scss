@@ -1,0 +1,13 @@
+@import "../../../../shared/variables";
+
+$author-collection: ".author-collection";
+
+#{$author-collection}{
+  &__book-rating{
+    text-align: center;
+  }
+
+  &__stars::ng-deep>ul{
+     color: $primaryColor !important;
+  }
+}

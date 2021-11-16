@@ -1,0 +1,39 @@
+<ng-container [formGroup]="form">
+    <div class="search-series">
+        <div class="search-series__box">
+            <nz-form-item style="margin-bottom: 0.5rem">
+                <nz-form-label class="search-series__label">Series
+                </nz-form-label>
+                <nz-select [compareWith]="compare" formControlName="series" class="search-series__input" nzMode="default"
+                    nzPlaceHolder="Select series" nzAllowClear nzShowSearch nzServerSearch
+                    (nzOnSearch)="searchSeries($event)">
+                    <ng-container *ngFor="let serie of series">
+                        <nz-option *ngIf="!isFiltered" [nzValue]="serie" [nzLabel]="serie?.seriesName">
+                        </nz-option>
+                    </ng-container>
+                    <nz-option *ngIf="isFiltered" nzDisabled nzCustomContent>
+                        <i nz-icon nzType="loading"></i>
+                        Loading
+                        Data...
+                    </nz-option>
+                </nz-select>
+            </nz-form-item>
+            <ng-content>
+            </ng-content>
+        </div>
+        <nz-form-item class="search-series__series-position">
+            <nz-form-label class="search-series__label">Position
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="seriesPositionErrorTemplate">
+                <input class="search-series__position-input" formControlName="seriesPosition" nz-input/>
+            </nz-form-control>
+        </nz-form-item>
+        <ng-template #seriesPositionErrorTemplate let-control>
+            <ng-container *ngIf="control.hasError('min')">
+                <div class="search-series__form-error">
+                    Min series position is {{control.errors.min.min}}
+                </div>
+            </ng-container>
+        </ng-template>
+    </div>
+</ng-container>

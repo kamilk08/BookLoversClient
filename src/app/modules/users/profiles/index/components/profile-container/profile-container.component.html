@@ -1,0 +1,14 @@
+<ng-content select="[header]"></ng-content>
+<div class="columns mt-2 profile-container">
+  <div class="column is-3-fullhd is-3-widescreen is-3-desktop is-4-tablet profile-container__avatar">
+    <ng-content select="[avatar]"></ng-content>
+    <ng-container *ngIf="this.authService?.isLoggedIn()">
+      <div *ngIf="!isProfileOwner" class="profile-container__follow-user mt-2"><a
+          [ngClass]="{'followed':this.followed,'':!this.followed}" (click)="follow()"
+          class="profile-container__follow-link">{{this.followed ? 'Unfollow' : 'Follow'}}</a> </div>
+    </ng-container>
+  </div>
+  <div class="column is-9-fullhd is-9-widescreen is-9-desktop is-8-tablet">
+    <ng-content select="[content]"></ng-content>
+  </div>
+</div>

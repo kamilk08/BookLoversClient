@@ -1,0 +1,48 @@
+@import '../../../../shared/variables';
+
+$add-publisher-cycle: ".add-publisher-cycle";
+$actions:".actions";
+
+#{$add-publisher-cycle} {
+  &__publisher,
+  &__name {
+    margin-bottom: 0.5rem;
+  }
+  &__label{
+    font-weight: $boldWeight;
+  }
+
+  &__label::ng-deep label::after{
+    content: '' !important;
+  }
+
+  &__name-box{
+    display: flex;
+    align-items: center;
+  }
+
+  &__form-control{
+    width: 100%;
+  }
+
+  &__spinner{
+    margin-left: 1rem;
+  }
+  &__is-unique{
+    font-size: 1.75rem;
+    margin-left: 1rem;
+    color: $primaryColor;
+  }
+
+  &__form-error{
+    font-size: 0.8rem;
+  }
+
+  &__publisher-box{
+    width: 100%;
+  }
+}
+
+#{$actions}{
+  text-align: right;
+}

@@ -1,0 +1,43 @@
+@import '../../../../shared/variables';
+
+$pagination: ".quotes-pagination-box";
+
+#{$pagination} {
+  text-align: right;
+  margin-top: 2.5rem;
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-next::ng-deep.ant-pagination-item-link {
+    border: none;
+    font-weight: $boldWeight;
+    font-size: 0.9rem;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-prev::ng-deep.ant-pagination-item-link{
+    border:none;
+    font-weight: $boldWeight;
+    font-size: 0.9rem;
+}
+
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item {
+    border: none;
+    font-weight: $boldWeight;
+    font-size: 0.9rem;
+    border-radius: 50%;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item.ant-pagination-item-active {
+    color: $primaryColor;
+  }
+
+  &__paginator::ng-deep.ant-pagination::ng-deep.ant-pagination-item:hover {
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  #{$pagination}{
+    text-align: center;
+  }
+}

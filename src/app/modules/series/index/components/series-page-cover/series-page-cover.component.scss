@@ -1,0 +1,32 @@
+@import "../../../../shared/variables";
+
+$cover:'.cover';
+
+
+#{$cover}{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 15.625rem;
+  max-width: 10.938rem;
+  min-width: 7.813rem;
+  background-color: $secondaryColor;
+
+  &__box{
+    font-size: 1.55rem;
+    font-weight: $boldWeight;
+  }
+
+  &__image{
+    min-height: 15.625rem;
+    margin: 0 auto;
+  }
+}
+
+
+
+@media only screen and (max-width: 769px){
+  #{$cover}{
+    margin: 0 auto;
+  }
+}

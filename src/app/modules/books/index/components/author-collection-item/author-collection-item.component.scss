@@ -1,0 +1,11 @@
+@import "../../../../shared/variables";
+
+$author-item: ".author-collection-item";
+
+#{$author-item}{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  color: $secondaryText;
+}
+

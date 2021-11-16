@@ -1,0 +1,92 @@
+@import "../../../../shared/variables";
+
+$author-ticket:'.author-ticket';
+
+#{$author-ticket}{
+  padding: 1rem 0rem;
+  &__top{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__top-right{
+    display: flex;
+  }
+
+  &__sex,
+  &__birthdate,
+  &__death{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  &__death-text,
+  &__sex-text,
+  &__birthdate-text,
+  &__isbn-text{
+    color: $secondaryBlack;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  &__genre{
+    margin-right: 0.5rem;
+  }
+
+  &__genre:last-of-type{
+    margin-right: 0rem;
+  }
+
+  &__death-value,
+  &__sex-value,
+  &__birthdate-value{
+    color: $secondaryBlack;
+    font-size: 1rem;
+  }
+
+  &__description{
+    font-size: 1rem;
+  }
+
+  &__description-source{
+    display: flex;
+  }
+
+  &__description-source-link{
+    color: $secondaryBlack;
+    transition: 0.2s color;
+  }
+
+  &__description-source-link:hover{
+    color: $descriptionGray;
+  }
+
+  &__website{
+    display: flex;
+  }
+
+  &__website-text,
+  &__description-source-text,
+  &__website-text{
+    font-weight: $boldWeight;
+  }
+
+  &__website-link{
+    color: $secondaryBlack;
+    transition: 0.2s color;
+  }
+
+  &__website-link:hover{
+    color: $descriptionGray;
+  }
+
+  &__image{
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: $boldWeight;
+    min-height: 20rem;
+  }
+
+}

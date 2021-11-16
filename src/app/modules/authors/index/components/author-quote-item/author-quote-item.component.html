@@ -1,0 +1,25 @@
+<div class="author-quote-item">
+  <div>
+    <div class="columns is-mobile mb-0">
+      <div class="column is-12-mobile author-quote-item__content">
+        <div (click)="toggle()" class="author-quote-item__icon-box">
+          <i *ngIf="this.isTooLong()" nz-tooltip nzTooltipTitle="Expand" class="icon ion-md-quote"></i>
+          <i *ngIf="!this.isTooLong()" class="icon ion-md-quote"></i>
+        </div>
+        <ng-container *ngIf="this.isTooLong()">
+          <div class="author-quote-item__quote" *ngIf="!this.expanded">{{sliceQuoteText(0,this.maxQuoteText)}}</div>
+          <div class="author-quote-item__quote" *ngIf="this.expanded">{{this.quote?.content?.quoteText}}</div>
+        </ng-container>
+        <ng-container *ngIf="!this.isTooLong()">
+          <p class="author-quote-item__quote">{{this.quote?.content?.quoteText}}</p>
+        </ng-container>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-12 author-quote-item__written-by">
+        <div class="author-quote-item__author">{{author?.basics?.fullName?.value}}</div>
+      </div>
+    </div>
+  </div>
+  <ng-content></ng-content>
+</div>

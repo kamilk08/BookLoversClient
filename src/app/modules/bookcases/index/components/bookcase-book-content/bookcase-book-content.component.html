@@ -1,0 +1,67 @@
+<div class="bookcase-book-content">
+  <div class="columns is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+      <div class="columns is-mobile bookcase-book-content__data">
+        <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-8-tablet is-8-mobile">
+          <ng-container *ngIf="this.book">
+            <a [routerLink]="['/book/',book?.identification?.id]"
+              class="bookcase-book-content__title title">{{book?.basics?.title}}</a>
+          </ng-container>
+          <a class="bookcase-book-content__authors">
+            <ng-container *ngFor="let author of authors">
+              <ng-container *ngIf="author">
+                <span [routerLink]="['/author/',author?.identification?.id]"
+                  class="bookcase-book-content__author-item">{{author?.basics?.fullName?.value}}
+                </span>
+              </ng-container>
+            </ng-container>
+          </a>
+          <div *ngIf="series" class="bookcase-book-content__series">
+            <div>
+              <span class="bookcase-book-content__series-text">Series:</span>
+              <a [routerLink]="['/series',series?.identification?.id]"
+                class="bookcase-book-content__series-value">{{series?.seriesName}}
+              </a>
+              <span class="bookcase-book-content__position">({{this.book?.series?.positionInSeries}})</span>
+            </div>
+          </div>
+          <ng-content select="[shelfTags]"></ng-content>
+        </div>
+        <div class="column is-4-fullhd is-4-widescreen is-4-desktop is-4-tablet is-4-mobile">
+          <ng-content select="[shelfRecord]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="columns is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+      <div class="bookcase-book-content__statistics-box">
+        <div class="bookcase-book-content__statistics">
+          <div class="bookcase-book-content__average">
+            <span class="bookcase-book-content__text">Average:</span>
+            <span class="bookcase-book-content__value">{{this.ratingsOverview?.average | number:'1.2-2'}}</span>
+          </div>
+          <div class="bookcase-book-content__ratings-count">
+            <span class="bookcase-book-content__text">
+              Ratings:
+            </span>
+            <span class="bookcase-book-content__value">{{this.ratingsOverview?.ratings.length}}</span>
+          </div>
+          <div class="bookcase-book-content__reviews">
+            <span class="bookcase-book-content__text">Reviews:
+              <span class="bookcase-book-content__value">{{book?.reviews?.length}}</span>
+            </span>
+          </div>
+          <div class="bookcase-book-content__in-bookcases">
+            <span class="bookcase-book-content__text">In bookcases:</span><span
+              class="bookcase-book-content__value">{{bookcasesCount}}</span>
+          </div>
+        </div>
+        <ng-content select="[userRating]"></ng-content>
+      </div>
+      <div class="bookcase-book-content__actions">
+        <ng-content select="[userActions]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

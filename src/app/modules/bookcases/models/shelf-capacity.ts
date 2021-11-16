@@ -1,0 +1,1 @@
+export const DEFUALT_SHELF_CAPACITY = 5;

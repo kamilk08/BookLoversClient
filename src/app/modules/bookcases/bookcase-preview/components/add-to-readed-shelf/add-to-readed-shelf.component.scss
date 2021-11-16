@@ -1,0 +1,132 @@
+@import "../../../../shared/variables";
+
+$add-to-readed-shelf: ".add-to-shelf";
+$comment:".comment";
+$actions: ".actions";
+
+@mixin step {
+  &__step{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+}
+
+#{$add-to-readed-shelf}{
+  padding: 1rem 0rem;
+
+  @include step();
+
+  &__on-shelves{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__on-shelves-list{
+    display: flex;
+    align-items: center;
+  }
+
+  &__header{
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+
+  &__choose-shelf{
+    width: 25%;
+  }
+
+  &__select{
+    width: 100%;
+    font-weight: $boldWeight;
+  }
+
+  &__available-shelves{
+    margin: 0rem 0rem 0rem 1.5rem;
+    padding: 1rem 0rem 0.5rem;
+  }
+
+  &__tag::ng-deep.tag-item:first-of-type{
+    margin-right: 0.5rem;
+  }
+}
+
+#{$comment}{
+  @include step();
+
+  &__header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__header-box{
+    font-size: 2rem;
+    font-weight: $boldWeight;
+  }
+
+  &__text{
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+    margin-right: 1rem;
+    color: #444;
+  }
+
+  &__rating-stars::ng-deep.ant-rate{
+    font-size: 1.35rem;
+    color: $primaryColor;
+  }
+
+  &__user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  &__username{
+    font-size: 1rem;
+    margin-top: 1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__input{
+    background-color: $inputBackground;
+  }
+
+  &__spoiler{
+    text-align: right;
+    padding: 0.5rem 0rem;
+  }
+
+  &__spoiler-checkbox{
+    font-size: 1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__spoiler-checkbox::ng-deep.ant-checkbox::ng-deep.ant-checkbox-inner{
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+
+  &__spoiler-checkbox::ng-deep.ant-checkbox::ng-deep.ant-checkbox-inner::after{
+    top: 45% !important;
+    left: 28% !important;
+    width: 5.714286px !important;
+    height: 11.142857px !important;
+  }
+}
+
+#{$actions}{
+  padding: 0.5rem 0rem;
+
+  &__close{
+    font-size: 1rem;
+    height: 2rem;
+  }
+  &__submit{
+    font-size: 1rem;
+    height: 2rem;
+  }
+}

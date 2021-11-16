@@ -1,0 +1,68 @@
+@import '../../../../shared/variables';
+
+$add-book-hashtag: ".add-book-hashtag";
+
+#{$add-book-hashtag} {
+  margin-bottom: 0.5rem;
+
+  &__form-label::ng-deep label{
+    display: flex !important;
+    align-items: center !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    color: $secondaryBlack
+  }
+  &__form-label::ng-deep label::after{
+    content: '' !important;
+  }
+
+  &__help-icon{
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+  }
+
+  &__items{
+    margin-bottom: 0.5rem;
+
+  }
+
+  &__item{
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    background-color: $white;
+    border: 1px solid $black;
+    border-radius: 0px;
+    transition: box-shadow 0.2s ease-in-out;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__item:first-of-type{
+    margin-left: 0rem;
+  }
+
+  &__item:hover{
+    box-shadow: $primaryBoxShadow;
+    color: $black;
+  }
+
+  &__item-icon{
+    font-size: 1rem;
+    margin-right: 0.25rem;
+  }
+
+  &__item--editable{
+    border-style: dashed;
+  }
+
+  &__item--editable:hover{
+    box-shadow: none;
+  }
+
+  &__input{
+    width: 4.875rem;
+    margin-left: 0.5rem;
+  }
+
+}

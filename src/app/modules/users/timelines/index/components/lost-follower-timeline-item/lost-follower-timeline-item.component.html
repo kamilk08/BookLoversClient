@@ -1,0 +1,28 @@
+<div class="timeline-item">
+  <div class="timeline-item__left">
+    <div class="timeline-item__content">
+      <div class="timeline-item__user-avatar">
+        <nz-avatar (click)="navigateToReader()" [nzSize]="48" nzIcon="user"
+          [nzSrc]="this.avatarUrl(this.follower?.identification?.id)">
+        </nz-avatar>
+      </div>
+      <div class="timeline-item__after-avatar">
+        <div class="timeline-item__text"><a (click)="navigateToReader()"
+            class="timeline-item__link">{{this.follower?.details?.userName}}</a> is now longer following you.</div>
+        <div class="timeline-item__date">{{this.activity?.date | amDateFormat:'MM-DD-YYYY'}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="timeline-item__right"> <a nz-dropdown [nzDropdownMenu]="menu">
+      <i class="icon ion-md-arrow-dropdown timeline-item__arrow"></i>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul class="timeline-item__menu" nz-menu nzSelectable>
+        <li (click)="toggleActivity()" *ngIf="this.activity?.show===true" class="timeline-item__hide" nz-menu-item>Hide
+        </li>
+        <li (click)="toggleActivity()" *ngIf="this.activity?.show===false" class="timeline-item__show" nz-menu-item>Show
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+  </div>
+</div>

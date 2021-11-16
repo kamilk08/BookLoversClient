@@ -1,0 +1,101 @@
+@import "../../../../shared/variables";
+
+$ticket-item:'.ticket-item';
+
+#{$ticket-item}{
+  padding: 1.5rem;
+
+  &__top{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__middle{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0rem;
+  }
+
+  &__description{
+    width: 60%;
+    padding: 2rem 0rem;
+    font-size: 1.15rem;
+  }
+
+  &__show-content{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primaryColor;
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__decision{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primaryColor;
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__state{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $secondaryBlack;
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+  }
+
+  &__date{
+    font-weight: $boldWeight;
+    font-size: 1rem;
+  }
+
+  &__title{
+    font-weight: $boldWeight;
+    font-size: 1.4rem;
+  }
+
+  &--decline{
+    color: $removeColor;
+  }
+
+  &__description{
+    font-size: 1rem;
+  }
+
+}
+
+
+@media only screen and (max-width:1024px){
+  #{$ticket-item}{
+
+    &__description{
+      width: 50%;
+      font-size: 1rem;
+    }
+  }
+}
+
+@media only screen and (max-width:768px){
+  #{$ticket-item}{
+    &__middle{
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    &__description{
+      width: 100%;
+      align-items: center;
+      font-size: 1rem;
+    }
+  }
+}

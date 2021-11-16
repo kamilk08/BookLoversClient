@@ -1,0 +1,161 @@
+@import "../../../shared/variables";
+
+$preview-bookcase: ".bookcase-settings";
+$actions: ".actions";
+
+@mixin header {
+  &__header{
+    font-size: 2rem;
+    font-weight: $boldWeight;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+  }
+}
+
+@mixin count {
+  &__count{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+}
+
+#{$preview-bookcase}{
+  @include header();
+  @include count();
+
+  &__header-text{
+    margin-right: 1.5rem;
+  }
+
+  &__shelf-action{
+    display: flex;
+    align-items: center;
+  }
+
+  &__info-icon{
+    display: flex;
+    padding: 1.35rem;
+    font-size: 1rem;
+    transition: 0.2s color ease-in,0.2s background-color ease;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__info-icon:hover{
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__info-icon{
+    font-size: 1.75rem;
+    color: $primaryColor;
+  }
+
+  &__info{
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+  }
+
+  &__dash{
+    color: $primaryColor;
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__content{
+    font-size: 1rem;
+    margin-left: 0.5rem;
+  }
+
+
+  &__user-shelves{
+    padding: 1.25rem 0rem;
+    margin-left: 1.5rem;
+  }
+
+  &__options{
+    padding: 0.5rem 0rem;
+    margin-left: 1.5rem;
+  }
+
+  &__custom-shelves,
+  &__core-shelves{
+    margin-bottom: 1.5rem;
+  }
+
+  &__custom-shelf,
+  &__core-shelf{
+    display:inline-block;
+    margin-right: 0.5rem;
+  }
+
+  &__custom-shelf{
+    margin-bottom: 0.5rem;
+  }
+
+
+  &__shelves-header{
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    font-size: 1.55rem;
+    color:$secondaryBlack;
+    font-weight: $boldWeight;
+  }
+
+  &__options-header{
+    display: inline-block;
+    font-size:2rem;
+    font-weight: $boldWeight;
+    color:$secondaryBlack;
+    padding: 0.2rem 0rem;
+  }
+
+  &__question{
+    width: 50%;
+  }
+
+  &__select-box{
+    width: 50%;
+    margin-right: 4rem;
+    text-align: right;
+  }
+
+  &__select{
+    width: 50%;
+  }
+
+  &__switch::ng-deep .ant-switch{
+    min-width: 4.688rem !important;
+    height: 1.75rem !important;
+    line-height: 1.625rem !important;
+  }
+
+  &__switch::ng-deep .ant-switch::after{
+    top: 0.125rem !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+
+  &__question-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem 0rem;
+    margin: 1.25rem 0rem;
+  }
+
+}
+
+#{$actions}{
+  padding: 0.5rem 0rem;
+
+  &__close,
+  &__submit{
+    font-size: 1rem;
+    height: 2rem;
+  }
+}

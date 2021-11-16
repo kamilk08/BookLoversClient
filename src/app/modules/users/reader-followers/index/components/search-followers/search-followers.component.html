@@ -1,0 +1,6 @@
+<div class="search-followers open" [ngClass]="{'open':expanded,'close':!expanded}">
+  <i (click)="expand()" class="icon ion-md-search search-followers__icon open"
+    [ngClass]="{'open':expanded,'close':!expanded}"></i>
+  <input [formControl]="searchInput" type="text" class="search-followers__input open"
+    [ngClass]="{'open':expanded,'close':!expanded}">
+</div>

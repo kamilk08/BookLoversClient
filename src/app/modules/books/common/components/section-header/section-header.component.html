@@ -1,0 +1,8 @@
+<div class="header">
+  <div>{{header}}<dot></dot>
+  </div>
+  <div class="header__icon-box" (click)="expand()">
+    <i *ngIf="!this.expanded" class="header__icon-caret-down"  nz-icon nzType="caret-down" nzTheme="outline"></i>
+    <i *ngIf="this.expanded" class="header__icon-caret-right" nz-icon nzType="caret-right" nzTheme="outline"></i>
+  </div>
+</div>

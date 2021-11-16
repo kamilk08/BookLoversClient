@@ -1,0 +1,15 @@
+<div class="book-stats">
+    <div class="book-stats__stars">
+        <nz-rate class="book-stats__rate" [ngModel]="average" nzAllowHalf nzDisabled></nz-rate>
+    </div>
+    <div class="book-stats__content">
+        <div class="book-stats__average">
+            <div class="book-stats__text">Average:</div>
+            <div class="book-stats__value">{{average | number:'1.2-2'}}</div>
+        </div>
+        <div class="book-stats__ratings">
+            <div class="book-stats__text">Ratings:</div>
+            <div class="book-stats__value">{{ratingsCount}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+@import "../../../../shared/variables";
+
+$your-rating:".your-rating";
+
+#{$your-rating}{
+  display: inline-block;
+  margin-right: 1rem;
+
+  &__stars::ng-deep.ant-rate{
+    color: $primaryColor !important;
+  }
+}
+
+// .book__your-rating{
+
+// }
+
+// .book__your-rating-stars::ng-deep.ant-rate{
+
+// }

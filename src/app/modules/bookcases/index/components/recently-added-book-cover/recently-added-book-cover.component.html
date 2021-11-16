@@ -1,0 +1,7 @@
+<div>
+  <div *ngIf="this.coverLoadError$ | async" class="cover no-image">
+    <div class="cover__text">Cover<dot></dot>
+    </div>
+  </div>
+  <img *ngIf="!(this.coverLoadError$ | async)" (error)="onError()" [src]="this.coverUrl()" class="cover" />
+</div>

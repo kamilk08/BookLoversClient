@@ -1,0 +1,51 @@
+<div class="profile-content__box">
+  <div class="profile-content__status">
+    <h1 class="profile-content__username">{{reader?.details?.userName}}</h1>
+  </div>
+  <div class="profile-content__details">
+    <div class="profile-content__joined-at">
+      <div class="profile-content__joined-at-text">Joined
+        at:</div>
+      <div class="profile-content__joined-at-value">
+        {{ profile?.about?.joinedAt | amFromUtc | amDateFormat: 'YYYY-MM-DD' }}
+      </div>
+    </div>
+    <div class="profile-content__email">
+      <div class="profile-content__email-text">
+        Email:
+      </div>
+      <div class="profile-content__email-value">
+        {{this.email}}
+      </div>
+    </div>
+    <div class="profile-content__city" *ngIf="profile?.address?.city">
+      <div class="profile-content__city-text">
+        City:
+      </div>
+      <div class="profile-content__city-value">{{profile?.address?.city}}</div>
+    </div>
+    <div class="profile-content__sex">
+      <div class="profile-content__sex-text">Sex:</div>
+      <div class="profile-content__sex-value">
+        {{getSexName()}}
+      </div>
+    </div>
+  </div>
+  <div class="profile-content__about-you" *ngIf="profile?.about?.content else noDescription">
+    <h1 class="profile-content__about">About</h1>
+    <p>{{profile?.about?.content}}</p>
+  </div>
+  <ng-template #noDescription>
+    <div class="profile-content__about-you-no-description">
+      <div class="profile-content__no-description-text">No description<dot></dot></div>
+    </div>
+  </ng-template>
+  <div class="profile-content__social-media">
+    <div class="profile-content__social-pointers">
+      <a externalLink [link]="profile?.about?.webSite" class="profile-content__website" *ngIf="profile?.about?.webSite">{{profile?.about?.webSite}}</a>
+      <div class="profile-content__facebook"><i class="icon ion-logo-facebook profile-content__social-icon"></i></div>
+      <div class="profile-content__twitter"><i class="icon ion-logo-twitter profile-content__social-icon"></i></div>
+      <div class="profile-content__google"><i class="icon ion-logo-googleplus profile-content__social-icon"></i></div>
+    </div>
+  </div>
+</div>

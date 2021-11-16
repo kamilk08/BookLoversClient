@@ -1,0 +1,63 @@
+<div class="columns author-ticket">
+  <div class="column is-3-fullhd is-3-widescreen is-3-desktop is-3-tablet">
+    <div class="author-ticket__image">
+      <img [src]="this.encodedImage">
+    </div>
+  </div>
+  <div class="column is-8-fullhd is-8-widescreen is-8-desktop is-8-tablet is-offset-1">
+    <div class="columns">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet">
+        <div class="author-ticket__top">
+          <div class="author-ticket__fullname title">
+            {{this.content?.basics?.firstName}} {{this.content?.basics?.secondName}}
+          </div>
+          <div class="author-ticket__top-right">
+            <div class="author-ticket__genre" *ngFor="let genre of this.getAuthorGenres()">
+              <tag [tagText]="genre"></tag>
+            </div>
+          </div>
+        </div>
+        <div class="author-ticket__sex">
+          <div class="author-ticket__sex-text">
+            Sex:
+          </div>
+          <div class="author-ticket__sex-value">{{this.getSex()?.name}}</div>
+        </div>
+        <div *ngIf="this.content?.details?.birthDate" class="author-ticket__birthdate">
+          <div class="author-ticket__birthdate-text">Birthdate:</div>
+          <div class="author-ticket__birthdate-value">
+            {{this.content?.details?.birthDate | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+        </div>
+        <div *ngIf="this.content?.details?.deathDate" class="author-ticket__death">
+          <div class="author-ticket__death-text">Death date:</div>
+          <div class="author-ticket__death-value">
+            {{this.content?.details?.deathDate | amFromUtc | amDateFormat: 'YYYY-MM-DD'}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet">
+        <div class="author-ticket__description mb-1">{{this.content?.description?.aboutAuthor}}</div>
+        <div class="author-ticket__description-source mb-1">
+          <div class="author-ticket__description-source-text mr-1">Source:</div>
+          <a class="author-ticket__description-source-link">{{this.content?.description?.descriptionSource}}</a>
+        </div>
+        <div class="author-ticket__website mb-1">
+          <div class="author-ticket__website-text mr-1">
+            Website:
+          </div>
+          <a href="{{this.content?.description?.descriptionSource}}"
+            class="author-ticket__website-link">{{this.content?.description?.webSite}}</a>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="this.manageable">
+      <div class="columns">
+        <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet">
+          <button (click)="approveOrDeclineTicket(true)" class="author-ticket__approve mr-1" nz-button nzSize="large" nzType="primary">Approve ticket</button>
+          <button (click)="approveOrDeclineTicket(false)" class="author-ticket__decline" nz-button nzSize="large" nzType="secondary">Decline ticket</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

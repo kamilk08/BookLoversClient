@@ -1,0 +1,269 @@
+@import "../../../shared/variables";
+
+$edit-book: ".edit-book";
+$book-basics: ".book-basics";
+$panel-arrow: ".panel-arrow";
+$book-description: ".book-description";
+$series: ".book-series";
+$details: ".book-details";
+$cover: ".book-cover";
+$actions: ".actions";
+$tips: ".tips";
+
+@mixin panel {
+  &__panel {
+    font-size: 1.1rem;
+    font-weight: $boldWeight;
+  }
+}
+@mixin label {
+  &__label ::ng-deep label {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    color: $secondaryBlack;
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+}
+@mixin input {
+  &__input {
+    font-weight: $mediumWeight;
+  }
+}
+@mixin error {
+  &__error {
+    font-weight: $mediumWeight;
+  }
+}
+
+@mixin link {
+  &__link {
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+    position: relative;
+    margin-left: 0.25rem;
+  }
+  &__link::before {
+    background: currentColor;
+    content: "";
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;
+    width: 100%;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 0% 100%;
+    transition: transform 0.5s;
+  }
+  &__link:hover::before {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@mixin add {
+  &__add {
+    margin-top: 0.8rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+}
+@mixin help-icon {
+  &__help-icon {
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+  }
+}
+
+#{$edit-book}{
+  &__processing{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    min-height: 14rem;
+    align-items: center;
+   }
+
+   &__processing-spinner{
+    font-size: 2.75rem;
+   }
+}
+
+#{$book-basics} {
+  &__title {
+    margin-bottom: 0.5rem !important;
+  }
+  @include panel();
+  @include label();
+  @include input();
+  @include error();
+  @include add();
+  @include link();
+  @include help-icon();
+
+  &__released {
+    display: flex;
+    margin-bottom: 0.75rem;
+  }
+
+  &__search-publisher {
+    width: 60%;
+    margin-right: 4%;
+  }
+
+  &__published {
+    width: 50%;
+  }
+
+  &__isbn {
+    width: 75%;
+    margin-bottom: 0rem;
+  }
+
+  &__category {
+    width: 50%;
+    margin-bottom: 1rem;
+  }
+}
+
+#{$panel-arrow} {
+  font-size: 0.95rem;
+}
+
+#{$book-description} {
+  @include panel();
+  @include label();
+  @include help-icon();
+  @include error();
+
+  &__content {
+    margin-bottom: 0.5rem;
+  }
+
+  &__source {
+    margin-bottom: 1rem;
+  }
+}
+
+#{$series} {
+  @include panel();
+  @include add();
+  @include link();
+
+  &--add-cycle {
+    margin-bottom: 1rem;
+  }
+}
+
+#{$details} {
+  @include panel();
+  @include label();
+  @include input();
+  @include error();
+
+  &__language {
+    width: 45%;
+    margin-bottom: 0.5rem;
+  }
+
+  &__pages {
+    width: 45%;
+    margin-bottom: 1rem;
+  }
+  &--pages-input {
+    width: 30%;
+  }
+}
+
+#{$cover} {
+  @include panel();
+  @include help-icon();
+  @include input();
+  @include label();
+
+  &__content {
+    margin-bottom: 0.5rem;
+  }
+
+  &__type {
+    margin-bottom: 1rem;
+    width: 40%;
+  }
+}
+
+#{$actions} {
+  text-align: right;
+  padding: 1rem 1rem 1rem;
+
+  &__clear {
+    margin-right: 1rem;
+  }
+}
+
+#{$tips} {
+  &__item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.58rem;
+    padding: 2rem 1rem 2rem 1rem;
+    cursor: pointer;
+    min-height: 13.75rem;
+    max-height: 13.75rem;
+  }
+
+  &__item:nth-child(even) {
+    background-color: $secondaryColor;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    font-size: 1.55rem;
+    font-weight: $boldWeight;
+    margin-bottom: 0.3rem;
+  }
+
+  &__header-left {
+    color:$primaryColor;
+    font-weight: $boldWeight;
+    margin-right: 0.5rem;
+  }
+
+  &__header-right {
+    margin-right: 0.5rem;
+  }
+
+  &__content {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    color: $descriptionGray;
+    line-height: 1.75rem;
+  }
+
+  &__tip-bold {
+    color: $primaryColor;
+    font-weight: $boldWeight;
+  }
+}
+
+.pb-1.pt-1.pl-1.pr-1 {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+@media only screen and (max-width: 1024px){
+  #{$edit-book}{
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+
+@media only screen and (min-width:1024px){
+  .columns.is-multiline{
+    flex-wrap: nowrap;
+  }
+}

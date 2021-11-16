@@ -1,0 +1,39 @@
+@import '../../../../shared/variables';
+
+$quote-likes: '.quote-likes';
+
+#{$quote-likes}{
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: $boldWeight;
+  padding: 2rem 0rem 0rem 1rem;
+
+  &__box{
+    margin-right: 0.75rem;
+  }
+
+  &__count{
+    margin-left: 0.5rem;
+    color: $primaryColor;
+  }
+
+  &__like-icon{
+    font-size: 1.35rem;
+    animation: heart 0.6s cubic-bezier(.57,.65,.35,1.56);
+    transition: background-color 0.2s,color 0.2s;
+    padding: 1.25rem;
+    border-radius: 50%;
+  }
+  &__like-icon:hover{
+    background-color: $primaryBackground;
+    color: $primaryColor;
+  }
+
+  &__like-icon.active{
+    color: $primaryColor;
+  }
+  &__like-icon.no-animate{
+    animation: none;
+  }
+}

@@ -1,0 +1,19 @@
+$profile:'.profile-item';
+
+#{$profile}{
+  &__statistics-icon{
+    font-size: 2.5rem;
+}
+
+  &__statistics-value{
+    margin-top: 1.25rem;
+    font-size: 1.5rem;
+}
+
+&__statistics-text{
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+}

@@ -1,0 +1,3 @@
+<div [ngClass]="{'in-active':this.followed,'':!this.followed}" (click)="followAuthor()" class="follow-author">
+  {{getTextBasedOnFollowState()}}
+</div>

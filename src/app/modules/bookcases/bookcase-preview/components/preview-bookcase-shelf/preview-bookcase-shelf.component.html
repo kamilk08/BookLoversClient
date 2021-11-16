@@ -1,0 +1,6 @@
+<div class="bookcase-shelf" [ngClass]="{'active':hasBook,'':!hasBook}">
+    <div class="bookcase-shelf__name">
+        {{shelfName}}<span class="bookcase-shelf__books-count">({{booksOnShelf}})</span>
+    </div>
+    <div class="bookcase-shelf__icon"><i class="{{shelfIcon}}"></i></div>
+</div>

@@ -1,0 +1,556 @@
+@import "../../shared/variables";
+
+$tags: ".tags";
+$book-container: '.book-container';
+$book-columns: '.book-columns';
+$book: ".book";
+$comments: ".comments";
+$authors-collection: ".authors-collection";
+$book-extras: ".book-extras";
+
+@mixin icon {
+    &__icon {
+        font-size: 1.5rem;
+    }
+}
+
+@mixin smile {
+    &__smile {
+        color: $primaryColor;
+        margin-left: 0.5rem;
+        font-size: 2.5rem;
+    }
+}
+
+@mixin tip {
+    &__tip {
+        color: $descriptionGray;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+}
+
+@mixin link {
+    &__link {
+        display: inline-block;
+        position: relative;
+        padding-bottom: 0.25rem;
+        cursor: pointer;
+    }
+    &__link:hover::before {
+        transform: scale3d(1, 1, 1);
+    }
+    &__link::before {
+        background: currentColor;
+        content: "";
+        position: absolute;
+        bottom: calc(0% - 0px);
+        right: 0px;
+        height: 3px;
+        color: $primaryColor;
+        width: 100%;
+        transform: scale3d(0, 1, 1);
+        transform-origin: 0% 100%;
+        transition: transform 0.5s;
+    }
+}
+
+@mixin count {
+    &__count {
+        color: $primaryColor;
+        font-weight: $boldWeight;
+        margin-right: 0.5rem;
+    }
+}
+
+#{$tags} {
+    display: flex;
+    margin: 1.5rem 0rem;
+    justify-content: center;
+}
+
+#{$book} {
+    padding: 1rem 1.5rem 0rem 1.5rem;
+    @include icon();
+    &__title-box {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.1rem;
+        position: relative;
+    }
+    &__title {
+        display: flex;
+        align-items: center;
+        width: 80%;
+    }
+    &__edit {
+      position: absolute;
+      right: 0rem;
+        font-size: 1rem;
+        padding: 0.75rem 0.75rem;
+        transition: 0.2s background-color ease-in, 0.2s color ease-in;
+        border-radius: 50%;
+    }
+    &__edit:hover {
+        background-color: $primaryBackground;
+        color: $primaryColor;
+    }
+    &__remove{
+        position: absolute;
+        right: 4rem;
+        font-size: 1rem;
+        padding: 0.75rem 0.75rem;
+        transition: 0.2s background-color ease-in, 0.2s color ease-in;
+        border-radius: 50%;
+    }
+    &__remove:hover {
+      background-color: $primaryBackground;
+      color: $primaryColor;
+    }
+
+    &__authors {
+        display: flex;
+        margin-bottom: 0.3rem;
+    }
+    &__publisher-and-series {
+        display: flex;
+    }
+    &__basics {
+        margin-top: 1rem;
+        display: flex;
+    }
+    &__basics-box {
+        width: 50%;
+    }
+    &__ratings {
+        display: flex;
+        align-items: center;
+        margin: 2.25rem 0rem 2.75rem 0rem;
+    }
+    &__ratings-circle {
+        width: 30%;
+        margin-right: 4%;
+        text-align: center;
+    }
+    &__ratings-graph {
+        width: 60%;
+    }
+}
+
+#{$comments} {
+    @include smile();
+    &--user-comment {
+        margin: 2.5rem 0rem 2.5rem 0rem;
+        display: flex;
+        width: 100%;
+    }
+    &--user-comment::ng-deep.columns {
+        width: 100%;
+    }
+    &__item {
+        display: flex;
+        padding: 1rem 1rem;
+    }
+    &__item.even {
+        background-color: $secondaryColor;
+    }
+    &__divider {
+        background-color: $primaryColor;
+        height: 2px;
+        margin-bottom: 2.5rem;
+    }
+    &__add-comment {
+        margin-bottom: 6rem;
+        display: flex;
+        width: 100%;
+    }
+    &__add-comment::ng-deep.columns {
+        width: 100%;
+    }
+    &__loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 0rem;
+        min-height: 25rem;
+    }
+    &__no-results {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.25rem;
+        padding: 8rem 0rem 8rem 0rem;
+    }
+
+    &__no-results-box{
+      padding: 0.75rem 1rem;
+      border: 3px solid $secondaryBlack;
+      font-weight: $boldWeight;
+      color: $secondaryBlack;
+    }
+
+    &__spinner{
+      font-size: 3.25rem;
+    }
+}
+
+#{$authors-collection} {
+    padding: 1.5rem 0rem 2rem;
+    @include count();
+    @include tip();
+    &__header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 2rem;
+        font-weight: $boldWeight;
+
+    }
+    &__header-top{
+      color: $secondaryBlack;
+      transition: 0.2s color;
+    }
+
+    &__header-top:hover{
+      color: $descriptionGray;
+    }
+
+    &__content {
+        padding: 2rem 0rem 3rem 0rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &__no-books {
+        padding: 8rem 0rem 8rem;
+        font-size: 1.25rem;
+        display: flex;
+        justify-content: center;
+    }
+    &__no-books-box{
+      padding: 0.75rem 0.75rem;
+      border: 3px solid $secondaryBlack;
+      font-weight: $boldWeight;
+      color: $secondaryBlack;
+    }
+
+    &__book-title {
+        padding: 0rem 0rem 0.5rem 0rem;
+        margin: 1rem 0rem 0rem 0rem;
+        font-size: 1.25rem;
+        text-align: center;
+    }
+    &__text {
+        display: inline-block;
+        padding-bottom: 0.25rem;
+        cursor: pointer;
+        position: relative;
+    }
+    &__author-fullname {
+        margin: 0.35rem 0rem 0.35rem 0rem;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+    &__item {
+        max-width: 12.75rem;
+        transition: 0.15s ease-in box-shadow, 0.15s ease-in transform;
+        flex: 1 0 21%;
+        margin-right: 0.5rem;
+        margin-top: 1rem;
+    }
+    &__item:last-of-type{
+      margin-right: 0rem;
+    }
+    &__item:hover {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+        transform: scale(1.03);
+    }
+    &__item:nth-child(even) {
+        background-color: $secondaryColor;
+    }
+    &__no-books-link {
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        padding: 0rem;
+        cursor: pointer;
+        color: $secondaryBlack;
+    }
+    &__no-books-link::before {
+        background: currentColor;
+        content: "";
+        position: absolute;
+        bottom: calc(0% - (-5px));
+        right: 0px;
+        height: 3px;
+        color: $primaryColor;
+        width: 100%;
+        transform: scale3d(0, 1, 1);
+        transform-origin: 0% 100%;
+        transition: transform 0.5s;
+    }
+    &__no-books-link:hover::before {
+        transform: scale3d(1, 1, 1);
+    }
+
+    &__processing{
+      margin: 3rem 0rem;
+      padding: 5rem 0rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__processing-spinner{
+      font-size: 3.25rem;
+    }
+}
+
+#{$book-extras} {
+    padding: 0.75rem 3.5rem;
+    @include tip();
+    @include link();
+    @include count();
+    @include icon();
+    @include smile();
+    &__item {
+      margin: 3rem 0rem;
+    }
+    &__item:first-of-type{
+      margin-top: 0rem;
+    }
+
+    &__on-shelves,
+    &__series-content {
+        padding: 0rem 1.25rem 0rem 1.25rem;
+    }
+    &__on-shelves>.book-on-shelves {
+        margin: 3rem 0rem;
+    }
+    &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: $boldWeight;
+    }
+    &__series-books {
+        display: flex;
+        padding: 3rem 0rem;
+        flex-wrap: wrap;
+    }
+    &__show-more {
+        margin-top: 1rem;
+        text-align: right;
+        font-weight: $boldWeight;
+    }
+    &__question {
+        text-align: center;
+        font-size: 1.25rem;
+    }
+    &__no-other-books {
+        text-align: center;
+        padding: 5rem 0rem;
+    }
+    &__empty-series{
+      display: inline-block;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 3px solid $secondaryBlack;
+      font-weight: $boldWeight;
+      color: $secondaryBlack;
+    }
+
+    &__item-content {
+        display: flex;
+        flex-direction: column;
+    }
+    &__shelves-with-book{
+      padding: 3rem 0rem;
+    }
+
+    &__no-shelves-with-book {
+        padding: 5rem 0rem;
+        text-align: center;
+    }
+    &__no-shelves-with-book-text {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+    }
+    &__no-shelfs{
+      display: inline-block;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 3px solid $secondaryBlack;
+      font-weight: $boldWeight;
+      color: $secondaryBlack;
+    }
+
+    &__quotes-header {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    &__add-quote-icon {
+        font-size: 1.5rem;
+        padding: 1.35rem;
+        transition: 0.2s color ease-in, 0.2s background-color ease;
+        border-radius: 50%;
+    }
+    &__add-quote-icon:hover {
+        background-color: $primaryBackground;
+        color: $primaryColor;
+    }
+
+    &__quotes-link{
+      color:$secondaryBlack;
+      transition: 0.2 color;
+    }
+
+    &__quotes-link:hover{
+      color: $descriptionGray;
+    }
+
+    &__quotes{
+      margin:2.25rem 0rem;
+    }
+
+    &__quote {
+        display: flex;
+        border-radius: 4px;
+        margin: 0.5rem 0rem;
+        transition: 0.2s ease-in box-shadow, 0.2s ease-in transform;
+        padding: 0.875rem 0.875rem;
+        min-height: 200px;
+        align-items: center;
+    }
+    &__quote:hover {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+        transform: scale(1.05);
+    }
+
+    &__quote.even {
+        background-color: $secondaryColor;
+    }
+
+    &__no-quotes-box {
+        text-align: center;
+        padding: 5rem 0rem;
+    }
+
+    &__no-quotes{
+      display: inline-block;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 3px solid $secondaryBlack;
+      font-weight: 700;
+      color: $secondaryBlack;
+      cursor: pointer;
+    }
+
+
+    &__processing-spinner{
+      font-size: 2.75rem;
+    }
+
+    &__processing{
+      margin: 3rem 0rem;
+      padding: 5rem 0rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__processing:first-of-type{
+      margin-top: 0rem;
+    }
+
+
+
+
+    &--no-books-smile,
+    &--series-smile,
+    &--quote-smile {
+        font-size: 1.5rem;
+    }
+    &--no-series-link {
+        color: $secondaryBlack;
+    }
+
+    &--quotes-link,
+    &--series-link{
+        color: $secondaryBlack;
+    }
+
+    &--quotes-header{
+      justify-content: space-between;
+    }
+}
+
+
+@media only screen and (max-width: 1408px){
+
+  #{$book-extras}{
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 3.5rem;
+    padding-right: 0rem;
+
+    &__header{
+      font-size: 1.75rem;
+    }
+  }
+
+  #{$authors-collection}{
+
+    &__header{
+      font-size: 1.75rem;
+    }
+  }
+}
+
+@media only screen and (max-width:1215px){
+  #{$book-columns}{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #{$book-extras}{
+    padding: 0.75rem 0rem;
+  }
+
+  #{$book-container}{
+    max-width: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+  }
+
+}
+
+@media only screen and (max-width:1024px){
+
+  #{$book-columns}{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #{$book}{
+    padding: 0rem;
+    &__ratings{
+      flex-direction: column;
+    }
+
+    &__ratings-circle{
+      margin-right: 0rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media only screen and (max-width:769px){
+  .container{
+    margin: 2rem 2rem 2rem;
+  }
+}

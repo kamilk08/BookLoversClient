@@ -1,0 +1,6 @@
+<div class="shelf">
+    <div><label (ngModelChange)="onModelChange($event)" nz-checkbox [(ngModel)]="this.checked"></label>
+        <span class="shelf__name">{{shelf?.name}}</span>
+    </div>
+    <div class="shelf__count">{{shelf?.books?.length}}</div>
+</div>

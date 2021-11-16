@@ -1,0 +1,19 @@
+<div class="book-description">
+  <div class="book-description__box"
+    *ngIf="((this.description?.length >= this.maxDescriptionCount) && !this.expanded) else fullDescription">
+    <span class="book-description__letter">{{firstLetter()}}</span>
+    {{sliceDescription(this.afterBigLetter,this.maxDescriptionCount)}}
+    <div class="book-description__expand" (click)="toggleExpand()"><span
+        class="book-description__expand-link">Expand</span></div>
+  </div>
+  <ng-template #fullDescription>
+    <div class="book-description__box">
+      <span class="book-description__letter">{{firstLetter()}}</span>
+      {{sliceDescription(this.afterBigLetter,this.description?.length)}}
+      <ng-container *ngIf="this.description?.length>this.maxDescriptionCount">
+        <div class="book-description__expand" (click)="toggleExpand()"><span
+            class="book-description__expand-link">Collapse</span></div>
+      </ng-container>
+    </div>
+  </ng-template>
+</div>

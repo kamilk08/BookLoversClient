@@ -1,0 +1,7 @@
+<div class="cover">
+  <img *ngIf="!(this.coverLoadError$ | async)" (load)="onComplete()" (error)="onCoverError()" [src]="this.seriesBookUrl()"
+    class="cover__image" />
+  <div *ngIf="this.coverLoadError$ | async" class="cover__box">
+    Cover<dot></dot>
+  </div>
+</div>

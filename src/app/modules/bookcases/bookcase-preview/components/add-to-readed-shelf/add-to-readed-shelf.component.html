@@ -1,0 +1,89 @@
+<ng-container>
+  <div class="columns add-to-shelf">
+    <div class="column is-12">
+      <div class="add-to-shelf__on-shelves">
+        <div class="add-to-shelf__on-shelves-list">
+          <div class="add-to-shelf__header"><span class="add-to-shelf__step">(1)</span>Shelves:</div>
+        </div>
+        <div class="add-to-shelf__choose-shelf">
+          <nz-select [(ngModel)]="selectPlug" (ngModelChange)="onShelfPick($event)" class="add-to-shelf__select"
+            nzAllowClear nzPlaceHolder="Choose">
+            <nz-option *ngFor="let shelf of this.facade?.avaliableShelves$ | async" [nzValue]="shelf"
+              [nzLabel]="shelf?.name">
+            </nz-option>
+          </nz-select>
+        </div>
+      </div>
+      <div class="add-to-shelf__available-shelves">
+        <ng-container *ngFor="let tag of this.facade?.currentShelfTags$ | async">
+          <removable-tag class="add-to-shelf__tag" *ngIf="tag.tagData?.linkedShelf?.category?.name!=='Readed'"
+            (remove)="onTagRemove($event)" [tagText]="tag.tagText" [tagData]="tag.tagData">
+          </removable-tag>
+          <removable-tag class="add-to-shelf__tag" *ngIf="tag.tagData?.linkedShelf?.category?.name==='Readed'"
+            nzTooltipTitle="Removing book from readed shelf removes your rating and review !"
+            nzTooltipPlacement="rightTop" nz-tooltip (remove)="onTagRemove($event)" [tagText]="tag?.tagText"
+            [tagData]="tag.tagData">
+          </removable-tag>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="comment">
+    <div class="columns">
+      <div class="column is-12">
+        <div class="comment__header">
+          <div class="comment__header-box"><span class="comment__step">(2)</span>Comment:</div>
+          <div class="is-flex">
+            <form nz-form [formGroup]="this.facade?.ratingForm$ | async">
+              <div class="comment__text">Your rating:</div>
+              <nz-rate formControlName="selectedGrade" class="comment__rating-stars"></nz-rate>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-3">
+        <div class="comment__user">
+          <nz-avatar nzIcon="user" [nzSize]="65" [nzSrc]="this.avatarUrl(this.bookcase?.userId)">
+          </nz-avatar>
+          <div class="comment__username">Username</div>
+        </div>
+      </div>
+      <div class="column is-9">
+        <form nz-form [formGroup]="this.facade?.reviewForm$ | async">
+          <div>
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="commentErrorTemplate">
+                <textarea formControlName="comment" class="comment__input" rows="6" nz-input></textarea>
+              </nz-form-control>
+              <ng-template #commentErrorTemplate let-control>
+                <ng-container *ngIf="control.hasError('minlength')">
+                  <div class="comment__error">
+                    Comment must have atleast 3 characters.
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="control.hasError('required')">
+                  <div class="comment__error">
+                    Comment is required.
+                  </div>
+                </ng-container>
+              </ng-template>
+            </nz-form-item>
+          </div>
+          <div class="comment__spoiler">
+            <label formControlName="spoilerComment" class="comment__spoiler-checkbox" nz-checkbox>Mark as
+              spolier
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *nzModalFooter class="actions">
+      <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+      <ng-container *ngIf="this.facade.reviewForm$ | async as reviewForm">
+        <button class="actions__submit" nz-button nzType="primary" (click)="submit(reviewForm)">Ok</button>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

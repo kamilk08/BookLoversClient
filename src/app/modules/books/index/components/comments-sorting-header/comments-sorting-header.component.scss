@@ -1,0 +1,22 @@
+@import "../../../../shared/variables";
+
+$sorting-header: ".comments-sorting-header";
+
+#{$sorting-header}{
+  color: $primaryColor;
+  font-weight: $boldWeight;
+  margin-right: 0.5rem;
+}
+
+@media only screen and (max-width: 1408px){
+  #{$sorting-header}{
+    font-size: 1.75rem;
+  }
+
+}
+
+@media only screen and (max-width:1215px){
+  #{$sorting-header}{
+    font-size: 1.75rem;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="timeline-item__bottom" *ngIf="this.isExpanded">
+  <div class="timeline-item__book">
+    <ng-container *ngIf="this.book">
+      <a [routerLink]="['/book',this.book?.identification?.id]" class="timeline-item__book-cover">
+        <img *ngIf="this.book" [src]="this.bookUrl(this.book?.identification?.id)">
+      </a>
+    </ng-container>
+
+    <div class="timeline-item__book-info">
+      <ng-container *ngIf="this.book">
+        <a class="timeline-item__book-link"
+          [routerLink]="['/book',this.book?.identification?.id]">{{this.book.basics.title}}</a>
+      </ng-container>
+      <a class="timeline-item__author-link" [routerLink]="['/author',this.author?.identification?.id]"
+        *ngFor="let author of this.authors">{{author?.basics?.fullName?.value}}</a>
+      <div class="timeline-item__series" *ngIf="this.book?.series"><span
+          class="timeline-item__series-link-text">Series:</span> <a *ngIf="this.series"
+          [routerLink]="['/series',this.series?.identification?.id]"
+          class="timeline-item__series-link">{{this.series?.seriesName}}</a>
+      </div>
+      <div class="timeline-item__ratings">
+        <div class="timeline-item__average">Average:<span
+            class="timeline-item__average-value">{{this.ratingsOverview?.average}}</span></div>
+        <nz-rate class="timeline-item__star-ratings" [ngModel]="this.ratingsOverview?.average" nzDisabled></nz-rate>
+      </div>
+    </div>
+  </div>
+</div>

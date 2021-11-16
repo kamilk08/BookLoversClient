@@ -1,0 +1,39 @@
+@import "../../../../shared/variables";
+
+$comments-header:".comments-header";
+
+#{$comments-header}{
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: $boldWeight;
+  justify-content: space-between;
+
+
+}
+
+@media only screen and (max-width:769px){
+  #{$comments-header}{
+    flex-direction: column;
+  }
+
+  // .comments-header{
+  //   flex-direction: column;
+  // }
+
+}
+// .comments-header{
+//     display: flex;
+//     align-items: center;
+//     font-size: 2rem;
+//     font-weight: 700;
+//     justify-content: space-between;
+
+// }
+
+// @media only screen and (max-width:769px){
+//   .comments-header{
+//     flex-direction: column;
+//   }
+
+// }

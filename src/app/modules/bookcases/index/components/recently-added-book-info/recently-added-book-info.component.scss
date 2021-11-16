@@ -1,0 +1,19 @@
+@import "../../../../shared/variables";
+
+$title:".recently-added-book-title";
+$author:".recently-added-book-author";
+
+#{$title}{
+  font-size: 1.35rem;
+  font-weight: $boldWeight;
+  margin-top: 1rem;
+  max-width: 15rem;
+  overflow-wrap: break-word;
+}
+
+#{$author}{
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: $descriptionGray;
+  text-align: center;
+}

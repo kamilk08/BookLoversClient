@@ -1,0 +1,55 @@
+@import "../../../../shared/variables";
+
+$book-description: ".book-description";
+
+#{$book-description}{
+  margin-bottom: 2rem;
+
+  &__box{
+    padding: 1rem 0rem;
+    line-height: 1.75rem;
+    font-size: 1.05rem;
+    text-align: justify;
+    letter-spacing: 0.25px;
+    overflow-wrap: break-word;
+  }
+
+  &__letter{
+    font-size: 4.5rem;
+    color: $primaryColor;
+    margin-right: -0.5rem;
+  }
+
+  &__expand{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+
+  }
+
+  &__expand-link{
+    color: $secondaryText;
+    font-weight: $boldWeight;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__expand-link:hover::before{
+    transform: scale3d(1,1,1);
+  }
+
+  &__expand-link::before{
+    background: currentColor;
+    content: '';
+    position: absolute;
+    bottom: calc(0% - 1px);
+    right: 0px;
+    height: 3px;
+    color: $primaryColor;
+    width: 100%;
+    transform: scale3d(0,1,1);
+    transform-origin: 0% 100%;
+    transition: transform 0.5s;
+  }
+}

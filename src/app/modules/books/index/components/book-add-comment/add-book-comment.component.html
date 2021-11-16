@@ -1,0 +1,21 @@
+<div class="columns add-book-comment">
+  <div class="column is-11-fullhd is-11-widescreen is-11-desktop is-11-tablet is-12-mobile">
+    <div class="add-book-comment__shelves">
+      <div class="add-book-comment__on-shelves">On shelves:<ng-content select="[shelfs]"></ng-content>
+      </div>
+      <form [formGroup]="pageService?.addRatingForm">
+        <nz-rate class="add-book-comment__rate" formControlName="stars"></nz-rate>
+      </form>
+    </div>
+    <form [formGroup]="pageService?.addReviewForm">
+      <textarea formControlName="review" class="add-book-comment__input" rows="6" nz-input></textarea>
+      <div class="add-book-comment__actions">
+        <div><label formControlName="spoilerComment" nz-checkbox class="add-book-comment__mark-as-spoiler">Mark as
+            spoiler</label></div>
+        <div> <button class="add-book-comment__clear" nz-button nzType="default" (click)="clear()">Clear</button>
+          <button class="add-book-comment__post" nz-button nzType="primary" (click)="post()">Post</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

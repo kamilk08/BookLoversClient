@@ -1,0 +1,126 @@
+<app-navbar></app-navbar>
+<div class="container timeline">
+  <div class="columns is-mobile">
+    <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+      <div class="columns is-mobile is-centered">
+        <div class="column is-8-fullhd is-9-widescreen is-10-desktop is-10-tablet is-12-mobile">
+          <div class="mt-3">
+            <header header headerText="Timeline" countNumber="1">
+              <ng-container *ngIf="this.viewService?.pageFacade?.timeLineId$ | async as timeLineId">
+                <ng-container *ngIf="this.viewService?.timeLineFacade?.timeLineById$(timeLineId) | async as timeLine">
+                  <div class="timeline__options" *ngIf="this.showTimeLineOptions(timeLine)">
+                    <label class="timeline__include-hidden" nz-checkbox [nzValue]="false"
+                      (nzCheckedChange)="addOrRemoveHiddenActivities($event)">Hidden
+                    </label>
+                    <i (click)="openBookcaseSettings()" nz-tooltip nzTooltipTitle="Bookcase settings"
+                      class="icon ion-md-settings timeline__settings-icon">
+                    </i>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </header>
+            <div class="timeline__items">
+              <ng-container *ngIf="this.viewService?.pageFacade?.timeLineId$ | async as timeLineId">
+                <ng-container *ngIf="this.viewService?.timeLineFacade?.timeLineById$(timeLineId) | async as timeLine">
+                  <ng-container
+                    *ngIf="!(this.viewService?.timeLineFacade?.isProcessingActivities$ | async) else processingActivities">
+                    <ng-container [ngSwitch]="activity?.activityType?.id"
+                      *ngFor="let activity of this.viewService?.activities$ | async">
+                      <ng-container
+                        *ngIf="this.viewService?.booksFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book">
+                        <new-book-in-bookcase-timeline-item
+                          [reader]="this.viewService?.readersFacade?.reader$(timeLine.readerId) | async"
+                          [activity]="activity"
+                          [book]="this.viewService?.booksFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async"
+                          (moveToReader)="onMoveToReader($event)"
+                          (details)="this.onBookActivityExpandChange(activity.activityType,$event)"
+                          (toggle)="onActivityToggle(activity)" class="timeline__item"
+                          *ngSwitchCase="this.viewService?.activityTypesEnum?.NEW_BOOK_IN_BOOKCASE">
+                          <new-book-in-bookcase-details [book]="book"
+                            [authors]="this.viewService?.bookAuthors$(activity?.activityData?.activityObjectGuid) | async"
+                            [ratingsOverview]="this.viewService?.bookOverview$(activity?.activityData?.activityObjectGuid) | async"
+                            [series]="this.viewService?.bookSeries$(activity?.activityData?.activityObjectGuid) | async"
+                            [shelf]="this.viewService?.bookOnCurrentShelf$(timeLineId,activity?.activityData?.activityObjectGuid) | async">
+                          </new-book-in-bookcase-details>
+                        </new-book-in-bookcase-timeline-item>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="this.viewService.readersFacade.readerByGuid$(activity?.activityData?.activityObjectGuid) | async as follower">
+                        <new-follower-timeline-item *ngSwitchCase="this.viewService?.activityTypesEnum?.NEW_FOLLOWER"
+                          [follower]="follower" [activity]="activity" (toggle)="onActivityToggle(activity)"
+                          (moveToReader)="onMoveToReader($event)" class="timeline__item">
+                        </new-follower-timeline-item>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="this.viewService?.readersFacade?.readerByGuid$(activity?.activityData?.activityObjectGuid) | async as follower">
+                        <lost-follower-timeline-item [follower]="follower" [activity]="activity"
+                          (moveToReader)="onMoveToReader($event)" (toggle)="onActivityToggle(activity)"
+                          *ngSwitchCase="this.viewService?.activityTypesEnum?.LOST_FOLLOWER" class="timeline__item">
+                        </lost-follower-timeline-item>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="this.viewService?.booksFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book">
+                        <book-added-timeline-item
+                          [reader]="this.viewService?.readersFacade?.reader$(timeLine.readerId) | async"
+                          [activity]="activity" [book]="book" (moveToReader)="onMoveToReader($event)"
+                          (details)="this.onBookActivityExpandChange(activity.activityType,$event)"
+                          (toggle)="onActivityToggle(activity)" class="timeline__item"
+                          *ngSwitchCase="this.viewService?.activityTypesEnum?.ADDED_BOOK">
+                          <ng-container>
+                            <new-book-in-bookcase-details [book]="book"
+                              [authors]="this.viewService?.bookAuthors$(activity?.activityData?.activityObjectGuid) | async"
+                              [ratingsOverview]="this.viewService?.bookOverview$(activity?.activityData?.activityObjectGuid) | async"
+                              [series]="this.viewService?.bookSeries$(activity?.activityData?.activityObjectGuid) | async">
+                            </new-book-in-bookcase-details>
+                          </ng-container>
+                        </book-added-timeline-item>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="this.viewService?.booksFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book">
+                        <book-review-timeline-item
+                          [reader]="this.viewService?.readersFacade?.reader$(timeLine.readerId) | async"
+                          [activity]="activity" [book]="book" (moveToReader)="onMoveToReader($event)"
+                          (details)="this.onBookReviewExpandChange(activity.activityType,$event)"
+                          (toggle)="onActivityToggle(activity)" class="timeline__item"
+                          *ngSwitchCase="this.viewService?.activityTypesEnum?.NEW_REVIEW">
+                          <ng-container
+                            *ngIf="this.viewService?.booksFacade?.bookByGuid$(activity?.activityData?.activityObjectGuid) | async as book">
+                            <book-review-timeline-item-details [book]="book"
+                              [authors]="this.viewService?.bookAuthors$(activity?.activityData?.activityObjectGuid) | async"
+                              [ratingsOverview]="this.viewService?.bookOverview$(activity?.activityData?.activityObjectGuid) | async"
+                              [series]="this.viewService?.bookSeries$(activity?.activityData?.activityObjectGuid) | async"
+                              [review]="this.viewService?.reviewsFacade?.userBookReview$(timeLine.readerId,book?.identification.id) | async">
+                            </book-review-timeline-item-details>
+                          </ng-container>
+                        </book-review-timeline-item>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #processingActivities>
+                    <div class="timeline__spinner-box">
+                      <ng-template #indicatorTemplate>
+                        <div><i nz-icon nzType="loading" class="timeline__spinner"></i></div>
+                      </ng-template>
+                      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+          <div class="columns is-mobile mb-3">
+            <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+              <ng-container *ngIf="this.viewService?.timeLineFacade?.activitiesPageResult$ | async as pageResult">
+                <timeline-items-pagination [pageSize]="this.viewService?.pageFacade?.pageSize$ | async"
+                  (pageChange)="changeTimeLinePage($event)"
+                  [currentPage]="this.viewService?.pageFacade?.currentPage$ | async"
+                  [totalItems]="pageResult?.totalItems">
+                </timeline-items-pagination>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>

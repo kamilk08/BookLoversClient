@@ -1,0 +1,31 @@
+@import "../../../../shared/variables";
+
+$remove-from-bookcase: ".remove-from-bookcase";
+$actions: ".actions";
+
+#{$remove-from-bookcase}{
+  display: flex;
+  flex-direction: column;
+
+  &__info{
+    font-size: 1.25rem;
+    padding: 0.8rem 0.8rem 0rem 0.8rem;
+  }
+
+  &__show{
+    font-weight: $boldWeight;
+    color: $primaryColor;
+    font-size: 1.25rem;
+    margin: 0rem 0.25rem;
+  }
+}
+
+#{$actions}{
+  padding: 0.5rem;
+
+  &__cancel,
+  &__submit{
+    font-size: 1rem;
+    height: 2.2rem;
+  }
+}

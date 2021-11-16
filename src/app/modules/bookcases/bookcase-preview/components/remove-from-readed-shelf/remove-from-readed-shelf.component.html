@@ -1,0 +1,9 @@
+<div class="remove-from-shelf">
+  <div class="remove-from-shelf__box">
+      Removing book from readed shelf will remove also review and book rating. Do you want to proccede <span class="change-shelf__exclamation">❗</span>
+  </div>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__clear" nz-button nzType="secondary" (click)="cancel()">Cancel</button>
+  <button class="actions__submit" nz-button nzType="primary" (click)="ok()">Ok</button>
+</div>

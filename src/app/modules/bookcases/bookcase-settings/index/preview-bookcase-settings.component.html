@@ -1,0 +1,116 @@
+<div class="columns">
+  <div class="column is-12">
+    <div class="bookcase-settings">
+      <div class="bookcase-settings__header">
+        <div class="bookcase-settings__shelf-action">
+          <span class="bookcase-settings__header-text"> My shelfs:</span>
+          <button nz-button nzType="primary" (click)="addShelf()">Add shelf</button>
+        </div>
+        <div class="bookcase-settings__info-box"><i nzPopoverTrigger="click" nz-popover nzPopoverPlacement="right"
+            [nzPopoverContent]="contentTemplate" class="icon ion-md-help bookcase-settings__info-icon"></i>
+        </div>
+      </div>
+      <ng-template #contentTemplate>
+        <div class="bookcase-settings__info">
+          <span class="bookcase-settings__dash"><i class="icon ion-md-checkbox"></i></span>
+          <span class="bookcase-settings__content">Book that is in
+            bookcase can be only on the one of
+            the core shelves.
+          </span>
+        </div>
+        <div class="bookcase-settings__info"><span class="bookcase-settings__dash"><i
+              class="icon ion-md-checkbox"></i></span>
+          <span class="bookcase-settings__content">Core
+            shelves are not removable and
+            user cannot
+            change their name.
+          </span>
+        </div>
+        <div class="bookcase-settings__info"><span class="bookcase-settings__dash"><i
+              class="icon ion-md-checkbox"></i></span>
+          <span class="bookcase-settings__content">User can have as many custom
+            shelves as he
+            wants.
+          </span>
+        </div>
+        <div class="bookcase-settings__info"><span class="bookcase-settings__dash"><i
+              class="icon ion-md-checkbox"></i></span>
+          <span class="bookcase-settings__content">
+            User can modify custom shelf as he
+            wants.
+          </span>
+        </div>
+      </ng-template>
+      <div class="bookcase-settings__user-shelves">
+        <div class="bookcase-settings__core-shelves">
+          <div class="bookcase-settings__shelves-header"><span class="bookcase-settings__count">({{this.coreShelvesCount$
+              | async}})</span>Core shelves:
+          </div>
+          <ul class="bookcase-settings__shelves-list">
+            <li class="bookcase-settings__core-shelf">
+              <tag tagText="Readed"></tag>
+            </li>
+            <li class="bookcase-settings__core-shelf">
+              <tag tagText="Now reading"></tag>
+            </li>
+            <li class="bookcase-settings__core-shelf">
+              <tag tagText="Want to read"></tag>
+            </li>
+          </ul>
+        </div>
+        <div class="bookcase-settings__custom-shelves">
+          <div class="bookcase-settings__shelves-header"><span
+              class="bookcase-settings__count">({{this.customShelvesCount$ | async}})</span>Custom shelfs:
+          </div>
+          <ul class="bookcase-settings__shelves-list">
+            <custom-shelf class="bookcase-settings__custom-shelf" *ngFor="let shelf of (this.customShelves$ | async)"
+              [shelf]="shelf">
+            </custom-shelf>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="bookcase-settings__options-header">Options:
+        </div>
+        <form nz-form [formGroup]="this.pageFacade?.settingsForm$ | async">
+          <div class="bookcase-settings__options">
+            <div class="bookcase-settings__question-box">
+              <div class="bookcase-settings__question"><span class="bookcase-settings__count">(1)</span><span>Who can
+                  see my
+                  bookcase?</span>
+              </div>
+              <div class="bookcase-settings__select-box">
+                <nz-select formControlName="privacy" class="bookcase-settings__select" nzAllowClear
+                  nzPlaceHolder="Choose">
+                  <nz-option nzValue="1" nzLabel="Private"></nz-option>
+                  <nz-option nzValue="2" nzLabel="OtherReaders"></nz-option>
+                  <nz-option nzValue="3" nzLabel="Public"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <div class="bookcase-settings__question-box">
+              <div class="bookcase-settings__question"><span class="bookcase-settings__count">(2)</span> <span>Choose
+                  shelf
+                  capacity</span></div>
+              <div class="bookcase-settings__select-box">
+                <nz-select formControlName="shelfCapacity" class="bookcase-settings__select" nzAllowClear
+                  nzPlaceHolder="Choose">
+                  <nz-option nzValue="20" nzLabel="20"></nz-option>
+                  <nz-option nzValue="50" nzLabel="50"></nz-option>
+                  <nz-option nzValue="100" nzLabel="100"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div *nzModalFooter class="actions">
+  <button class="actions__close" nz-button nzType="default" (click)="close()">Close</button>
+  <ng-container *ngIf="this.pageFacade?.settingsForm$ | async as form">
+    <button class="actions__submit" nz-button nzType="primary" (click)="submit(form)">Ok</button>
+  </ng-container>
+
+</div>

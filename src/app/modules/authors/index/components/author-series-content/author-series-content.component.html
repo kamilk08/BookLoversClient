@@ -1,0 +1,21 @@
+<div class="author-series-content">
+  <div class="author-series-content__title">{{bookSeries?.seriesName}}</div>
+  <div class="author-series-content__books-count">
+    <div class="author-series-content__count-value">({{bookSeries?.books?.length}} books)</div>
+  </div>
+</div>
+<div class="author-series-statistics">
+  <div>
+    <nz-rate class="author-series-statistics__rate" [ngModel]="seriesStatistics?.average" nzAllowHalf nzDisabled>
+    </nz-rate>
+  </div>
+  <div class="author-series-statistics__average">
+    <div class="author-series-statistics__average-box"><span class="author-series-statistics__text">Average:</span><span
+        class="author-series-statistics__value">{{seriesStatistics?.average | number:'1.2-2'}}</span>
+    </div>
+    <div>
+      <span class="author-series-statistics__text">Ratings:</span>
+      <span class="author-series-statistics__value">{{seriesStatistics?.ratingsCount}}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="columns is-mobile is-centered">
+  <div class="column is-12-fullhd is-12-widescreen is-12-desktop is-12-tablet is-12-mobile">
+    <div class="columns is-centered">
+      <div class="column is-6-fullhd is-6-widescreen verify-account-header">
+        <a class="verify-account-header__book-lovers">
+          <span class="verify-account-header__logo">BL<dot></dot></span>
+          <span class="verify-account-header__text">Booklovers</span>
+        </a>
+      </div>
+    </div>
+    <div class="columns is-centered is-mobile">
+      <div class="column is-3-fullhd is-3-widescreen is-6-desktop is-6-tablet is-10-mobile verify-account">
+        <h1>Verify account</h1>
+        <div class="verify-account__comment">
+          You will have to verify your email to complete registration.
+        </div>
+      </div>
+    </div>
+    <div class="columns is-mobile is-centered">
+      <div class="column is-4-fullhd is-4-widescreen is-6-desktop is-6-tablet is-10-mobile verify-account-content">
+        <div class="verify-account-content__emoji">📧</div>
+        <div class="verify-account-content__description">An email has been sent to testemail@gmail.com with a
+          verification
+          number.
+          If you have not recieved an email, please check your spam folder.
+        </div>
+      </div>
+    </div>
+    <div class="columns is-mobile is-centered">
+      <div class="column is-4-fullhd is-4-widescreen is-6-desktop is-6-tablet is-10-mobile">
+        <form class="verify-account-form" nz-form [formGroup]="this.facade?.verifyAccountForm$ | async">
+          <nz-form-item class="verify-account-form__item">
+            <nz-form-control [nzErrorTip]="emailErrorTemplate">
+              <input formControlName="email" class="verify-account-form__email" nz-input placeholder="Email"
+                nzSize="large" />
+              <ng-template let-control #emailErrorTemplate>
+                <ng-container *ngIf="control.hasError('required')">
+                  <div class="verify-account-form__error">Email is required.</div>
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="verify-account-form__item" nzErrorTip="Verify code is missing">
+            <nz-form-control [nzErrorTip]="tokenErrorTemplate">
+              <input formControlName="token" class="verify-account-form__token" nz-input placeholder="Verification code"
+                nzSize="large" />
+              <ng-template let-control #tokenErrorTemplate>
+                <ng-container *ngIf="control.hasError('required')">
+                  <div class="verify-account-form__error">Token is required.</div>
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <ng-container *ngIf="this.facade?.verifyAccountForm$ | async as form">
+            <button [nzLoading]="this.facade?.tryingToVerify$ | async" (click)="verifyAccount(form)"
+              class="verify-account-form__submit" nz-button nzType="primary" nzSize="large">Verify</button>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="book-comment">
+  <div class="book-comment__basics">
+    <div class="book-comment__basics-left">
+      <ng-container *ngIf="reader">
+        <a [routerLink]="['/users/',reader?.identification?.id,'profile']"
+          class="book-comment__username">{{reader?.details?.userName}}</a>
+      </ng-container>
+      <nz-rate class="book-comment__stars" [ngModel]="rating?.stars" nzAllowHalf nzDisabled>
+      </nz-rate>
+    </div>
+    <div class="book-comment__basics-right">{{review?.reviewContent?.reviewDate | amFromUtc |
+      amDateFormat:'YYYY-MM-DD'}}</div>
+  </div>
+  <div class="book-comment__content">
+    <ng-container *ngIf="!this.isSpoiler() else spoilerTemplate">{{review?.reviewContent?.reviewText}}</ng-container>
+    <ng-template #spoilerTemplate>
+      <div>
+        <nz-skeleton></nz-skeleton>
+        <div *ngIf="!this.isSpoilerFor" class="book-comment__show-review-box">
+          <a (click)="showOrHideReview()" class="book-comment__show-review">{{this.spoiler ? 'Spoiler alert':'Hide
+            review'}}</a>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="book-comment__actions">
+    <div class="book-comment__likes">Likes:
+      <div class="book-comment__likes-count">{{review?.likes?.length}}</div>
+    </div>
+    <div class="book-comment__icons" *ngIf="(this.isSpoilerFor || showActionsBar)&&this.reader">
+      <i (click)="addOrRemoveLike()" [ngClass]="{'ion-md-heart-empty no-animate':!liked,'ion-md-heart active':liked }"
+        class="icon book-comment__action-icon book-comment__action-icon--like-icon"></i>
+      <i (click)="addOrRemoveSpoiler()"
+        [ngClass]="{'ion-md-eye no-animate':!isSpoilerFor,'ion-md-eye-off active':isSpoilerFor }"
+        class="icon book-comment__action-icon book-comment__action-icon--spoiler-icon"></i>
+      <i (click)="report()" [ngClass]="{'no-animate':!reported,'active':reported}"
+        class="icon icon ion-md-flag book-comment__action-icon book-comment__action-icon--report-icon"></i>
+    </div>
+  </div>
+</div>

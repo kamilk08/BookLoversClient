@@ -1,0 +1,45 @@
+@import '../../../../shared/variables';
+
+$bookcontent: ".author-book-content";
+
+#{$bookcontent}{
+  &__title{
+    display: flex;
+    justify-content: center;
+    font-weight: $boldWeight;
+    font-size: 1.15rem;
+    position: relative;
+    text-align: center;
+  }
+
+  &__ratings{
+    margin: 0.5rem 0rem;
+  }
+
+  &__stars{
+    margin: 0.5rem 0rem;
+    text-align: center;
+  }
+
+  &__average{
+    display: flex;
+  }
+
+  &__average-left{
+    margin-right: 0.5rem;
+  }
+
+  &__text{
+    font-weight: $boldWeight;
+  }
+
+  &__value{
+    color:$primaryColor;
+    font-weight: $boldWeight;
+    margin-left: 0.5rem;
+  }
+
+  &__rate::ng-deep.ant-rate{
+    color: $primaryColor;
+  }
+}

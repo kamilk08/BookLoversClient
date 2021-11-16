@@ -1,0 +1,113 @@
+@import "../../../../../shared/variables";
+
+$review-item:'.review-item';
+
+
+#{$review-item}{
+  padding: 2rem 1rem;
+  width: 100%;
+
+  &__top{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__top-left{
+    display: flex;
+  }
+
+  &__nickname{
+    font-size: 1.5rem;
+    font-weight: $boldWeight;
+  }
+
+  &__date{
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  &__book-title-box{
+    text-align: center;
+  }
+
+  &__book-title{
+    font-size: 1.25rem;
+    text-align: center;
+    margin: 1rem 0rem;
+    color: #363636;
+    cursor: pointer;
+  }
+
+  &__book-title:hover{
+    color: $descriptionGray;
+  }
+
+  &__book-authors{
+    text-align: center;
+  }
+
+
+  &__author{
+    font-size: 1rem;
+    text-align: center;
+    margin: 1rem 0rem;
+    color: $secondaryBlack;
+    transition: 0.2s color;
+    cursor: pointer;
+  }
+
+  &__author:hover{
+    color: $descriptionGray;
+  }
+
+  &__content{
+    font-size: 1rem;
+    text-align: justify;
+    min-height: 9rem;
+  }
+
+  &__bottom{
+    display: flex;
+  }
+
+  &__likes{
+    display: flex;
+    align-items: center;
+  }
+
+  &__likes{
+    display: flex;
+    align-items: center;
+  }
+
+  &__likes-text{
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+  }
+
+  &__likes-value{
+    margin-left: 0.5rem;
+  }
+
+  &__likes-icon{
+    font-size: 1.35rem;
+    color: $primaryColor;
+  }
+
+  &__stars::ng-deep.ant-rate {
+    color: $primaryColor !important;
+     font-size: 1.1rem;
+  }
+}
+
+#{$review-item}:nth-child(even){
+  background-color: $secondaryColor;
+}
+
+@media only screen and (max-width: 769px){
+  #{$review-item}{
+    display: flex;
+    flex-direction: column;
+  }
+}

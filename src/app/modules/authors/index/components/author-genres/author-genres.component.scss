@@ -1,0 +1,17 @@
+$authorGenres: ".author-genres";
+
+#{$authorGenres}{
+  margin-left: 1.5rem;
+
+  > tag{
+    margin-right: 0.5rem;
+  }
+}
+
+// .author-genres{
+
+// }
+
+// .author-genres > tag{
+//   margin-right: 0.5rem;
+// }

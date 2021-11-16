@@ -1,0 +1,26 @@
+@import "../../../../shared/variables";
+
+$book-on-shelf:".book-on-shelf";
+
+#{$book-on-shelf}{
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 0.5rem 0rem;
+  transition: 0.2s color ease-in;
+  cursor: pointer;
+
+  &__name{
+    cursor: pointer;
+    font-weight: $boldWeight;
+  }
+
+  &__count{
+    color: $primaryColor;
+    font-weight: $boldWeight;
+  }
+}
+
+#{$book-on-shelf}:hover{
+  color: $primaryColor;
+}

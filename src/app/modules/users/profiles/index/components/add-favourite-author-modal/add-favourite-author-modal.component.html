@@ -1,0 +1,78 @@
+<div class="columns">
+  <div class="column is-12">
+    <div class="search-favourite-author">
+      <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixIconButton">
+        <input class="search-favourite-author__input" [formControl]="searchAuthorControl" placeholder="input here" nz-input (change)="onChange($event)" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSize="large" nzSearch>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="!(this.authorsFacade.isFiltering$ | async) else processingAuthors">
+  <ng-container *ngIf="(this.authorsFacade.filteredAuthors$ | async)?.length >0 else noAuthors">
+    <div class="columns favourite-author"
+      *ngFor="let author of (this.authorsFacade.filteredAuthors$ | async); let i = index">
+      <div class="column is-2 favourite-author__image">
+        <add-favourite-author-modal-cover [authorId]="author?.identification?.id"></add-favourite-author-modal-cover>
+      </div>
+      <div class="column is-10">
+        <div class="columns favourite-author__search-item">
+          <div class="column is-7">
+            <div class="favourite-author__info">
+              <div class="favourite-author__fullname">{{author?.basics?.fullName?.value}}</div>
+              <div class="favourite-author__collection"><span
+                  class="favourite-author__collection-value">{{author?.books?.length}}</span> more books</div>
+              <div *ngIf="author?.details?.birthDate" class="favourite-author__birth-date">Birthdate: <span
+                  class="favourite-author__birth-date-value">{{author?.details?.birthDate | amFromUtc | amDateFormat: 'YYYY-MM-DD' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="favourite-author__statistics">
+              <div class="favourite-author__followers">Followers: <span
+                  class="favourite-author__followers-value">{{author?.followers?.length}}</span>
+              </div>
+              <div class="favourite-author__book-average">Books average:<span
+                  class="favourite-author__book-average-value">{{(this.statisticsFacade.authorStatistics$(author?.identification?.id) | async)?.average}}</span>
+              </div>
+            </div>
+            <div>
+              <button (click)="addFavourite(author?.identification?.guid)"
+                *ngIf="!(this.hasFavouriteAuthor$(this.authService?.userId,author?.identification.guid) | async)"
+                class="favourite-author__add" nz-button nzType="primary">
+                Add favourite
+                <i nz-icon nzTheme="outline"></i>
+              </button>
+              <button (click)="removeFavourite(author?.identification?.guid)"
+                *ngIf="this.hasFavouriteAuthor$(this.authService?.userId,author?.identification.guid) | async"
+                class="favourite-author__add" nz-button nzType="primary">
+                Remove favourite
+                <i nz-icon nzTheme="outline"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #noAuthors>
+  <div class="favourite-author__no-authors-box">
+    <div class="favourite-author__no-authors">No authors<dot></dot>
+    </div>
+  </div>
+</ng-template>
+<ng-template #processingAuthors>
+  <div class="favourite-author__processing">
+    <ng-template #indicatorTemplate>
+      <div><i nz-icon nzType="loading" class="favourite-author__spinner"></i></div>
+    </ng-template>
+    <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+  </div>
+</ng-template>
+<div *nzModalFooter class="favourite-author__footer">
+</div>

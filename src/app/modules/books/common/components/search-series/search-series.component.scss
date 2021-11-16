@@ -1,0 +1,38 @@
+@import "../../../../shared/variables";
+
+$search-series: ".search-series";
+
+#{$search-series} {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  &__box {
+    width: 50%;
+  }
+
+  &__label ::ng-deep label {
+    font-weight: $boldWeight;
+    font-size: 1rem;
+    color: $secondaryBlack;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  &__label ::ng-deep label::after {
+    content: "" !important;
+  }
+
+  &__input {
+    font-weight: $mediumWeight;
+  }
+
+  &__error {
+    font-weight: $mediumWeight;
+  }
+
+  &__series-position{
+    margin-bottom: 0.5rem;
+    width: 40%;
+  }
+}

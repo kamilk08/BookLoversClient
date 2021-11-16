@@ -1,0 +1,25 @@
+<ng-container [formGroup]="form">
+    <nz-form-item class="search-authors">
+        <nz-form-label class="search-authors__label">Authors</nz-form-label>
+        <nz-form-control [nzErrorTip]="authorsErrorTemplate">
+            <nz-select [compareWith]="compare" formControlName="authors" class="search-authors__input" nzMode="multiple"
+                nzPlaceHolder="Select users" nzAllowClear nzShowSearch nzServerSearch
+                (nzOnSearch)="onSearchChange($event)">
+                <ng-container *ngFor="let author of authors">
+                    <nz-option *ngIf="!isFiltering" [nzValue]="author" [nzLabel]="author?.basics?.fullName?.value">
+                    </nz-option>
+                </ng-container>
+                <nz-option *ngIf="isFiltering" nzDisabled nzCustomContent>
+                    <i nz-icon nzType="loading"></i> Loading...
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+        <ng-template #authorsErrorTemplate let-control>
+            <ng-container *ngIf="control.hasError('required')">
+                <div class="search-authors__error">Book needs atleast one author</div>
+            </ng-container>
+        </ng-template>
+        <ng-content>
+        </ng-content>
+    </nz-form-item>
+</ng-container>

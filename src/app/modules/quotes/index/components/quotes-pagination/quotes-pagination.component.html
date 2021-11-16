@@ -1,0 +1,5 @@
+<div class="quotes-pagination-box">
+  <nz-pagination class="quotes-pagination-box__paginator" (nzPageIndexChange)="toNextPage($event)"
+    [nzPageIndex]="currentPage" [nzTotal]="this.totalItems" [nzPageSize]="this.pageSize">
+  </nz-pagination>
+</div>

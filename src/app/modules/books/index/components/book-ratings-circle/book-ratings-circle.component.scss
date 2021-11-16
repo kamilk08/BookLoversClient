@@ -1,0 +1,19 @@
+@import "../../../../shared/variables";
+
+$book-ratings-circle: ".book-ratings-circle";
+
+#{$book-ratings-circle}{
+  position: relative;
+
+  &__average{
+    position: absolute;
+    top: 39%;
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+  }
+
+  &__circle::ng-deep.ant-progress::ng-deep.ant-progress-inner::ng-deep.ant-progress-text{
+    display: none;
+  }
+}
